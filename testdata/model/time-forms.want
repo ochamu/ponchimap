@@ -1,0 +1,10 @@
+16:25	schema.format	/nodes/0/evidence/0/checked_at	no-zone	-
+24:25	schema.format	/nodes/0/evidence/1/valid_time	date-only-period	-
+32:25	schema.format	/nodes/0/evidence/2/valid_time	reversed-period	-
+39:25	schema.format	/nodes/0/evidence/3/checked_at	no-such-day	-
+55:25	schema.format	/nodes/0/evidence/5/valid_time	three-parts	-
+62:25	schema.format	/nodes/0/evidence/6/checked_at	one-digit-hour	-
+69:25	schema.format	/nodes/0/evidence/7/checked_at	offset-of-a-day	-
+84:25	schema.format	/nodes/0/evidence/9/valid_time	ends-a-nanosecond-early	-
+92:25	schema.format	/nodes/0/evidence/10/valid_time	ten-digits-of-a-second	-
+99:67	schema.format	/coverage/0/checked_at	cv	-

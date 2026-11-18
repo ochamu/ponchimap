@@ -1,0 +1,71 @@
+{
+  "status": "partial",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/probe.json#d",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-database-id"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#p1",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          },
+          {
+            "id": "@2/findings/probe.json#s1",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "docs/runbook.md",
+              "start_line": 4,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T13:00:00Z",
+            "acquisition_id": "aq-probe-2"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.incomplete_acquisition",
+      "path": "findings/probe.json",
+      "pointer": "/acquisition/complete"
+    }
+  ],
+  "added": [],
+  "removed": []
+}

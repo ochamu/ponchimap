@@ -1,0 +1,35 @@
+{
+  "status": "partial",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.incomplete_acquisition",
+      "path": "findings/scan.json",
+      "pointer": "/acquisition/complete"
+    }
+  ],
+  "acquisitions": [
+    {
+      "id": "aq-scan-2",
+      "source": "repository-scan",
+      "route": "repository",
+      "complete": true
+    },
+    {
+      "id": "aq-scan-3",
+      "source": "repository-scan",
+      "route": "repository",
+      "complete": false
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+schema_version: "0.1"
+title: 0x1F
+labels:
+  n101: 017
+  n102: +5
+  n103: .5
+  e101: .inf
+  e102: 1e999
+layout:
+  seed: 0o7

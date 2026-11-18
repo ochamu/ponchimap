@@ -1,0 +1,8 @@
+schema_version: "0.1"
+statements:
+  - target_id: "@1/findings/scan.json#worker"
+    supports:
+      - key: role
+        value: 顧客向けのAPI
+    source: 利用者の説明
+    checked_at: "2026-11-16T10:00:00Z"

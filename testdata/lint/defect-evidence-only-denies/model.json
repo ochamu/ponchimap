@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "x",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "p",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": false
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

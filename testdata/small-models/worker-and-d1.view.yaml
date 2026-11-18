@@ -1,0 +1,12 @@
+schema_version: "0.1"
+view: overview
+labels:
+  n001: "API処理"
+  n002: "アプリ用DB"
+groups:
+  - id: "g-app"
+    kind: "logical"
+    label: "アプリのバックエンド"
+    members: ["n001", "n002"]
+layout:
+  direction: "right"

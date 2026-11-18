@@ -1,0 +1,199 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-scan-2",
+    "source": "repository-scan",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T15:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "w-dev",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-api-dev"
+      },
+      "evidence": [
+        {
+          "id": "w-dev-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.dev.toml",
+            "start_line": 1,
+            "end_line": 5
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db-dev",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "db-dev-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.dev.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "w-prod",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-api-prod"
+      },
+      "evidence": [
+        {
+          "id": "w-prod-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.prod.toml",
+            "start_line": 1,
+            "end_line": 5
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db-prod",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "prod",
+      "identity": {
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "db-prod-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.prod.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "b-dev",
+      "from": "w-dev",
+      "to": "db-dev",
+      "relation": "configuration",
+      "slot": "DB",
+      "environment": "dev",
+      "evidence": [
+        {
+          "id": "b-dev-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db-dev"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.dev.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "b-prod",
+      "from": "w-prod",
+      "to": "db-prod",
+      "relation": "configuration",
+      "slot": "DB",
+      "environment": "prod",
+      "evidence": [
+        {
+          "id": "b-prod-1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db-prod"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.prod.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    }
+  ]
+}

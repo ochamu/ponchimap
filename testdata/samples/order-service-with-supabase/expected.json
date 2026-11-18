@@ -1,0 +1,333 @@
+{
+  "nodes": {
+    "n401": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n402": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n403": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n404": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n405": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n406": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n407": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n408": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n409": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n410": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n411": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n412": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n413": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n414": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n415": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n416": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n417": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n418": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n419": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n420": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n421": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n422": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n423": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n424": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n425": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n426": {
+      "frame": "solid",
+      "marks": []
+    }
+  },
+  "edges": {
+    "e401": {
+      "line": "solid",
+      "label": "サイト名の問い合わせ（観測）"
+    },
+    "e402": {
+      "line": "solid",
+      "label": "注文画面の取得（観測）"
+    },
+    "e403": {
+      "line": "solid",
+      "label": "注文の送信"
+    },
+    "e404": {
+      "line": "solid",
+      "label": "注文DBの接続設定"
+    },
+    "e405": {
+      "line": "solid",
+      "label": "注文の保存"
+    },
+    "e406": {
+      "line": "solid",
+      "label": "操作記録DBの接続設定（未照合）"
+    },
+    "e407": {
+      "line": "solid",
+      "label": "添付画像の保存"
+    },
+    "e408": {
+      "line": "solid",
+      "label": "後続作業の送信先設定"
+    },
+    "e409": {
+      "line": "solid",
+      "label": "作業の受け取り先設定（未照合）"
+    },
+    "e410": {
+      "line": "solid",
+      "label": "処理結果の記録"
+    },
+    "e411": {
+      "line": "solid",
+      "label": "添付画像の読み取り"
+    },
+    "e412": {
+      "line": "solid",
+      "label": "通知内容の送信"
+    },
+    "e413": {
+      "line": "solid",
+      "label": "注文確認メールの送信"
+    },
+    "e414": {
+      "line": "solid",
+      "label": "状態の保存先設定"
+    },
+    "e415": {
+      "line": "solid",
+      "label": "状態の保存先設定（未照合）"
+    },
+    "e416": {
+      "line": "solid",
+      "label": "状態の保存先設定（未照合）"
+    },
+    "e417": {
+      "line": "solid",
+      "label": "ログインの要求"
+    },
+    "e418": {
+      "line": "solid",
+      "label": "ログイン情報の検証"
+    },
+    "e419": {
+      "line": "solid",
+      "label": "プロフィールの読み取り"
+    },
+    "e420": {
+      "line": "solid",
+      "label": "変更通知の送信先設定"
+    },
+    "e421": {
+      "line": "solid",
+      "label": "プロフィール画像の保存"
+    },
+    "e422": {
+      "line": "solid",
+      "label": "変更完了通知の送信"
+    },
+    "e423": {
+      "line": "solid",
+      "label": "支払い手続きの開始（観測）"
+    },
+    "e424": {
+      "line": "solid",
+      "label": "支払い結果の通知（観測）"
+    },
+    "e425": {
+      "line": "solid",
+      "label": "注文処理のエラー報告"
+    },
+    "e426": {
+      "line": "solid",
+      "label": "作業処理のエラー報告"
+    },
+    "e427": {
+      "line": "solid",
+      "label": "注文説明文の作成要求"
+    },
+    "e428": {
+      "line": "solid",
+      "label": "画面の公開要求"
+    },
+    "e429": {
+      "line": "solid",
+      "label": "APIの公開要求"
+    },
+    "e430": {
+      "line": "solid",
+      "label": "担当者による注文の確認"
+    },
+    "e431": {
+      "line": "solid",
+      "label": "運用担当者による応答確認（観測）"
+    },
+    "e432": {
+      "line": "solid",
+      "label": "端末への通知要求"
+    },
+    "e433": {
+      "line": "solid",
+      "label": "ログイン状態の読み取り"
+    },
+    "e434": {
+      "line": "solid",
+      "label": "表示結果の読み取り"
+    },
+    "e435": {
+      "line": "solid",
+      "label": "売上集計の問い合わせ"
+    }
+  },
+  "boundaries": [
+    {
+      "label": "配信アカウント",
+      "members": [
+        "n402",
+        "n403",
+        "n404",
+        "n405",
+        "n406",
+        "n407",
+        "n408",
+        "n409",
+        "n410",
+        "n411",
+        "n412",
+        "n413",
+        "n425"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "利用者情報プロジェクト",
+      "members": [
+        "n414",
+        "n415",
+        "n416",
+        "n417",
+        "n418"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "東京リージョン",
+      "members": [
+        "n415",
+        "n416",
+        "n417"
+      ],
+      "parent_label": "利用者情報プロジェクト"
+    },
+    {
+      "label": "開発アカウント",
+      "members": [
+        "n423"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "管理画面プロジェクト",
+      "members": [
+        "n424"
+      ],
+      "parent_label": ""
+    }
+  ],
+  "logical_groups": [],
+  "aggregates": [
+    {
+      "id": "agg-kv",
+      "members": [
+        "n411",
+        "n412",
+        "n413"
+      ],
+      "frame": "solid",
+      "marks": {
+        "unverified": 2
+      }
+    }
+  ],
+  "hidden": [
+    "n425"
+  ]
+}

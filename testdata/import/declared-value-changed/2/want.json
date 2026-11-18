@@ -1,0 +1,138 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#worker",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-worker"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 3,
+              "end_line": 7
+            },
+            "checked_at": "2026-11-16T11:00:00Z",
+            "acquisition_id": "aq-scan-2"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-database-id"
+        },
+        "attributes": {
+          "region": "weur"
+        },
+        "evidence": [
+          {
+            "id": "@2/findings/scan.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              },
+              {
+                "key": "region",
+                "value": "weur"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 9,
+              "end_line": 12
+            },
+            "checked_at": "2026-11-16T11:00:00Z",
+            "acquisition_id": "aq-scan-2"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/scan.json#binding",
+        "from": "@1/findings/scan.json#worker",
+        "to": "@1/findings/scan.json#db",
+        "relation": "configuration",
+        "slot": "DB",
+        "attributes": {
+          "purpose": "DB接続設定"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#b1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/scan.json#db"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 9,
+              "end_line": 12
+            },
+            "checked_at": "2026-11-16T11:00:00Z",
+            "acquisition_id": "aq-scan-2"
+          }
+        ]
+      }
+    ],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "acquisitions": [
+    {
+      "id": "aq-scan-2",
+      "source": "repository-scan",
+      "route": "repository",
+      "complete": true
+    }
+  ],
+  "marks": {
+    "@1/findings/scan.json#worker": [
+      "unverified"
+    ],
+    "@1/findings/scan.json#db": [
+      "unverified"
+    ],
+    "@1/findings/scan.json#binding": [
+      "unverified"
+    ]
+  }
+}

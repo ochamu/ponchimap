@@ -1,0 +1,1 @@
+The node that left and the node that came have different IDs, so the label of the old node becomes a warning and does not move to the new node.

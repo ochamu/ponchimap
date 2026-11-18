@@ -1,0 +1,20 @@
+{
+  "name": "memo-app",
+  "private": true,
+  "workspaces": ["web"],
+  "scripts": {
+    "dev:web": "npm --workspace web run dev",
+    "dev:api": "wrangler dev",
+    "build": "npm --workspace web run build",
+    "deploy:dev": "npm run build && firebase deploy --only hosting -P default && wrangler deploy",
+    "deploy:production": "npm run build && firebase deploy --only hosting -P production && wrangler deploy --env production",
+    "db:migrate:dev": "wrangler d1 migrations apply memo-db-dev --remote",
+    "db:migrate:production": "wrangler d1 migrations apply memo-db --remote --env production"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20261001.0",
+    "firebase-tools": "^15.0.0",
+    "typescript": "^5.6.0",
+    "wrangler": "^4.40.0"
+  }
+}

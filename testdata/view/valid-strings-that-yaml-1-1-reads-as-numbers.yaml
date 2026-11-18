@@ -1,0 +1,4 @@
+schema_version: "0.1"
+labels:
+  n101: 1_000
+  n102: 0b11

@@ -1,0 +1,10 @@
+error	2:7	schema.type	/view	-	a string
+error	3:8	schema.type	/title	-	a string
+error	5:9	schema.type	/labels/n101	-	a string
+error	6:9	schema.type	/labels/n102	-	a string
+error	7:8	schema.type	/labels/n103	-	null
+error	8:9	schema.type	/labels/e101	-	a string
+error	9:13	schema.type	/boundaries	-	an array
+error	13:14	schema.type	/groups/0/members	g-a	an array
+error	14:9	schema.type	/hidden	-	an array
+error	15:9	schema.type	/layout	-	an object

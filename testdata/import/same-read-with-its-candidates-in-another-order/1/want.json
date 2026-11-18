@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [
+    "@1/findings/scan.json#worker",
+    "@1/findings/scan.json#db",
+    "@1/findings/scan.json#binding"
+  ]
+}

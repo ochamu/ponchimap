@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [
+    "@2/findings/probe-dev.json#db",
+    "@2/findings/probe-dev.json#b"
+  ],
+  "removed": []
+}

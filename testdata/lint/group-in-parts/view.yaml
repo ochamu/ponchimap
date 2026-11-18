@@ -1,0 +1,5 @@
+schema_version: "0.1"
+groups:
+  - id: g-app
+    label: "アプリ"
+    members: [n001, n002]

@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev", "branch": "main"},
+  "groups": [],
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "service",
+      "provider": "p",
+      "service": "s",
+      "label": "API",
+      "identity": {"anything": {"goes": ["here"]}},
+      "attributes": {"tier": "web"},
+      "evidence": [
+        {
+          "id": "ev-a",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true, "confidence": 0.9}],
+          "ref": {"type": "file", "path": "src/a.ts", "column": 4},
+          "checked_at": "2026-11-13T00:00:00Z",
+          "source": "scan"
+        }
+      ]
+    },
+    {"id": "b", "kind": "service", "provider": "p", "service": "s", "evidence": []}
+  ],
+  "edges": [
+    {"id": "e", "from": "a", "to": "b", "relation": "implementation", "label": "calls", "attributes": {"weight": 2}, "evidence": []}
+  ],
+  "coverage": [
+    {
+      "id": "cv",
+      "scope": {"provider": "p", "cluster": "main", "filter": {"fields": ["existence"], "namespace": "default"}},
+      "status": "complete",
+      "checked_at": "2026-11-13T00:00:00Z",
+      "note": "full listing"
+    }
+  ]
+}

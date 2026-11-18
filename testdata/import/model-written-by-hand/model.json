@@ -1,0 +1,354 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n101",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-worker"
+      },
+      "attributes": {
+        "role": "API処理"
+      },
+      "evidence": [
+        {
+          "id": "ev101",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-01"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 1,
+            "end_line": 5
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev102",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-01"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/aq101.json"
+          },
+          "checked_at": "2026-11-13T09:01:00Z",
+          "acquisition_id": "aq101"
+        },
+        {
+          "id": "ev103",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "API処理"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/worker.ts",
+            "start_line": 8,
+            "end_line": 32
+          },
+          "checked_at": "2026-11-13T09:03:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n102",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "attributes": {
+        "role": "利用者データの保存"
+      },
+      "evidence": [
+        {
+          "id": "ev104",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-01"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 1,
+            "end_line": 12
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev105",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "利用者データの保存"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/db/users.ts",
+            "start_line": 8,
+            "end_line": 26
+          },
+          "checked_at": "2026-11-13T09:03:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n103",
+      "kind": "service",
+      "provider": "resend",
+      "service": "resend",
+      "environment": "dev",
+      "identity": {},
+      "attributes": {
+        "role": "メール送信"
+      },
+      "evidence": [
+        {
+          "id": "ev106",
+          "kind": "hint",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "package.json",
+            "start_line": 18,
+            "end_line": 18
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev107",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "メール送信"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/mail/send.ts",
+            "start_line": 5,
+            "end_line": 22
+          },
+          "checked_at": "2026-11-13T09:03:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e101",
+      "from": "n101",
+      "to": "n102",
+      "relation": "configuration",
+      "slot": "DB",
+      "attributes": {
+        "purpose": "DB接続設定"
+      },
+      "evidence": [
+        {
+          "id": "ev108",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n102"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 8,
+            "end_line": 12
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e102",
+      "from": "n101",
+      "to": "n102",
+      "relation": "implementation",
+      "attributes": {
+        "purpose": "利用者データの保存"
+      },
+      "evidence": [
+        {
+          "id": "ev109",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/db/users.ts",
+            "start_line": 8,
+            "end_line": 26
+          },
+          "checked_at": "2026-11-13T09:03:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e103",
+      "from": "n101",
+      "to": "n103",
+      "relation": "implementation",
+      "attributes": {
+        "purpose": "登録確認メールの送信"
+      },
+      "evidence": [
+        {
+          "id": "ev110",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/mail/send.ts",
+            "start_line": 5,
+            "end_line": 22
+          },
+          "checked_at": "2026-11-13T09:03:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv101",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "environment": "dev",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n101"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "対象Workerの存在と所属のみ取得完了",
+      "checked_at": "2026-11-13T09:01:00Z",
+      "acquisition_id": "aq101"
+    },
+    {
+      "id": "cv102",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "environment": "dev",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n101"
+        ],
+        "filter": {
+          "slot": "DB",
+          "fields": [
+            "connection.target"
+          ]
+        }
+      },
+      "status": "not_attempted",
+      "reason": "DBバインディングの実環境設定は照会していない",
+      "checked_at": "2026-11-13T09:03:00Z"
+    },
+    {
+      "id": "cv103",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "environment": "dev",
+        "service": "cloudflare.d1",
+        "target_ids": [
+          "n102"
+        ],
+        "filter": {
+          "fields": [
+            "existence"
+          ]
+        }
+      },
+      "status": "denied",
+      "reason": "対象D1の照会権限がなく、存在を確認できなかった",
+      "checked_at": "2026-11-13T09:02:00Z",
+      "acquisition_id": "aq102"
+    }
+  ]
+}

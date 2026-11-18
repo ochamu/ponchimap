@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-2",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T13:00:00Z",
+    "complete": false
+  },
+  "nodes": [
+    {
+      "id": "d",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "s1",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/runbook.md",
+            "start_line": 4,
+            "end_line": 5
+          },
+          "checked_at": "2026-11-16T13:00:00Z"
+        }
+      ]
+    }
+  ]
+}

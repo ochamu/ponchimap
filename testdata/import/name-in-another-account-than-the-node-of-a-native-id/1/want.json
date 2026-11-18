@@ -1,0 +1,108 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-dev",
+          "logical_name": "orders",
+          "native_id": "6f1c2a3b-0000-4000-8000-00000000d1de"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/probe.json#p1",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/doc.json#prod",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-prod",
+          "logical_name": "orders"
+        },
+        "attributes": {
+          "role": "本番の注文データを保存する"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/doc.json#s-prod",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              },
+              {
+                "key": "role",
+                "value": "本番の注文データを保存する"
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "docs/architecture.md",
+              "start_line": 12,
+              "end_line": 13
+            },
+            "checked_at": "2026-11-16T09:30:00Z",
+            "acquisition_id": "aq-doc-1"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [
+    "@1/findings/scan.json#db",
+    "@1/findings/doc.json#prod"
+  ],
+  "mapping": {
+    "findings/probe.json#db": "@1/findings/scan.json#db"
+  }
+}

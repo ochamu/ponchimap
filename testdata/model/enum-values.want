@@ -1,0 +1,6 @@
+7:15	schema.enum	/nodes/0/kind	a	-
+13:19	schema.enum	/nodes/0/evidence/0/kind	ev-a	-
+16:54	schema.enum	/nodes/0/evidence/0/supports/1/value/kind	ev-a	-
+18:27	schema.enum	/nodes/0/evidence/0/ref/type	ev-a	-
+26:53	schema.enum	/edges/0/relation	e	-
+29:41	schema.enum	/coverage/0/status	cv	-

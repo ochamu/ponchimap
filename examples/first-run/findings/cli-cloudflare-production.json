@@ -1,0 +1,86 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "cli-cloudflare-production-20261116-091000",
+    "source": "cli-cloudflare-production",
+    "route": "cli",
+    "operation": "wrangler deployments status --name memo-api; wrangler d1 list; GET /accounts/example-memo-account/workers/scripts/memo-api/settings",
+    "target": {"provider": "cloudflare", "account_id": "example-memo-account", "environment": "production"},
+    "checked_at": "2026-11-16T09:10:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "api", "kind": "resource", "provider": "cloudflare", "service": "cloudflare.workers",
+      "identity": {"account_id": "example-memo-account", "logical_name": "memo-api"},
+      "attributes": {"service_name": "Cloudflare Workers", "category": "compute"},
+      "evidence": [{
+        "id": "api-deployed", "kind": "deployed",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "account", "id": "example-memo-account"}}
+        ],
+        "ref": {"type": "query", "path": "wrangler deployments status --name memo-api"},
+        "checked_at": "2026-11-16T09:10:00Z"
+      }]
+    },
+    {
+      "id": "db", "kind": "resource", "provider": "cloudflare", "service": "cloudflare.d1",
+      "identity": {"account_id": "example-memo-account", "logical_name": "memo-db"},
+      "attributes": {"service_name": "Cloudflare D1", "category": "database"},
+      "evidence": [{
+        "id": "db-deployed", "kind": "deployed",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "account", "id": "example-memo-account"}}
+        ],
+        "ref": {"type": "query", "path": "wrangler d1 list"},
+        "checked_at": "2026-11-16T09:10:00Z"
+      }]
+    }
+  ],
+  "edges": [
+    {
+      "id": "api-binds-db", "from": "api", "to": "db", "relation": "configuration", "slot": "DB",
+      "evidence": [{
+        "id": "api-binds-db-deployed", "kind": "deployed",
+        "supports": [{"key": "connection.configured", "value": true}, {"key": "connection.target", "value": "db"}],
+        "ref": {"type": "query", "path": "GET /accounts/example-memo-account/workers/scripts/memo-api/settings"},
+        "checked_at": "2026-11-16T09:10:00Z"
+      }]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "api-checked",
+      "scope": {
+        "provider": "cloudflare", "account_id": "example-memo-account", "environment": "production",
+        "service": "cloudflare.workers", "target_ids": ["api"], "filter": {"fields": ["existence"]}
+      },
+      "status": "complete",
+      "reason": "memo-api に本番の配置がある",
+      "checked_at": "2026-11-16T09:10:00Z"
+    },
+    {
+      "id": "db-checked",
+      "scope": {
+        "provider": "cloudflare", "account_id": "example-memo-account", "environment": "production",
+        "service": "cloudflare.d1", "target_ids": ["db"], "filter": {"fields": ["existence"]}
+      },
+      "status": "complete",
+      "reason": "D1 の一覧に memo-db がある",
+      "checked_at": "2026-11-16T09:10:00Z"
+    },
+    {
+      "id": "api-bindings-checked",
+      "scope": {
+        "provider": "cloudflare", "account_id": "example-memo-account", "environment": "production",
+        "service": "cloudflare.workers", "target_ids": ["api"],
+        "filter": {"slot": "DB", "fields": ["connection.configured", "connection.target"]}
+      },
+      "status": "complete",
+      "reason": "memo-api の設定で、バインディング DB が memo-db を指している",
+      "checked_at": "2026-11-16T09:10:00Z"
+    }
+  ]
+}

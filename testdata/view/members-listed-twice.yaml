@@ -1,0 +1,15 @@
+schema_version: "0.1"
+groups:
+  - id: g-a
+    label: "A"
+    members: [n101, n102]
+  - id: g-b
+    label: "B"
+    members: [n102, n103]
+aggregates:
+  - id: a-a
+    label: "集約A"
+    members: [n101]
+  - id: a-b
+    label: "集約B"
+    members: [n101, n103]

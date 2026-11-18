@@ -1,0 +1,9 @@
+schema_version: "0.1"
+statements:
+  - target_id: "@1/findings/scan.json#worker"
+    supports:
+      - key: role
+        value: 顧客向けのAPI
+    source: 移行の計画
+    checked_at: "2026-11-16T10:00:00Z"
+    valid_time: "2027-01-01T00:00:00Z"

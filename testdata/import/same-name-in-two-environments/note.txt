@@ -1,0 +1,1 @@
+dev and prod each have a database of one name in one account. A name is told apart by its environment (key 3), so the two stay two nodes.

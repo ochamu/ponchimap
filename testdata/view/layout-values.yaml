@@ -1,0 +1,6 @@
+schema_version: "0.1"
+layout:
+  engine: dagre
+  direction: left
+  seed: 2.5
+  spacing: 3

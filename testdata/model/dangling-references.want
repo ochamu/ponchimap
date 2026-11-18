@@ -1,0 +1,7 @@
+6:53	model.unknown_reference	/target/scope/0/target_ids/1	-	-
+18:62	model.unknown_reference	/nodes/0/evidence/0/supports/0/value	ev-a	-
+26:26	model.unknown_reference	/edges/0/from	e1	-
+30:13	model.unknown_reference	/edges/1/to	e2	-
+37:51	model.unknown_reference	/edges/1/evidence/0/supports/0/value	ev-e2	-
+49:60	model.unknown_reference	/coverage/0/scope/target_ids/2	cv	-
+49:68	model.unknown_reference	/coverage/0/scope/target_ids/3	cv	-

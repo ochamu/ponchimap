@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-1",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:01:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "db0",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "acct-0",
+        "native_id": "db-2"
+      },
+      "evidence": [
+        {
+          "id": "p0",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db1",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "acct-1",
+        "native_id": "db-2"
+      },
+      "evidence": [
+        {
+          "id": "p1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    }
+  ]
+}

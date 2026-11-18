@@ -1,0 +1,159 @@
+{
+  "status": "partial",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#worker",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-worker"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-database-id"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/doc.json#s1",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "region",
+                "value": "apac"
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "docs/architecture.md",
+              "start_line": 12,
+              "end_line": 14
+            },
+            "checked_at": "2026-11-16T09:30:00Z",
+            "acquisition_id": "aq-doc-1"
+          },
+          {
+            "id": "@2/findings/doc.json#s2",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "region",
+                "value": "weur"
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "docs/architecture.md",
+              "start_line": 40,
+              "end_line": 44
+            },
+            "checked_at": "2026-11-16T12:00:00Z",
+            "valid_time": "2027-01-01T00:00:00Z",
+            "acquisition_id": "aq-doc-2"
+          }
+        ],
+        "attributes": {
+          "region": "apac"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/scan.json#binding",
+        "from": "@1/findings/scan.json#worker",
+        "to": "@1/findings/scan.json#db",
+        "relation": "configuration",
+        "slot": "DB",
+        "attributes": {
+          "purpose": "DB接続設定"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#b1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/scan.json#db"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          }
+        ]
+      }
+    ],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.incomplete_acquisition",
+      "path": "findings/doc.json",
+      "pointer": "/acquisition/complete"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+The same read given again with its nodes and the evidence of a node in another order. The order of the candidates is no part of what the read says, so the records take it for the same read: no import.acquisition_changed, and nothing changes.

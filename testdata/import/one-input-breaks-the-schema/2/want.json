@@ -1,0 +1,12 @@
+{
+  "status": "error",
+  "model": "unchanged",
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "schema.required",
+      "path": "findings/broken.json",
+      "pointer": "/acquisition/source"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+schema_version: "0.1"
+title: "一つ目"
+labels:
+  n101: "a"
+  "n101": "b"
+title: "二つ目"
+layout:
+  seed: 1
+  seed: 2.5

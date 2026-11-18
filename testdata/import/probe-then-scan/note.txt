@@ -1,0 +1,1 @@
+The case scan-then-probe with the probe first. same-as says the facts and the IDs are those of scan-then-probe.

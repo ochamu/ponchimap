@@ -1,0 +1,1 @@
+M2 and M3: the unfinished read restates the database (same kind, all the keys), so that old item goes. The worker's old item stays, and so does the coverage of the old read while an item of it stays.

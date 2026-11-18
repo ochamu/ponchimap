@@ -1,0 +1,9 @@
+schema_version: "0.1"
+boundaries:
+  - level: region
+groups:
+  - kind: logical
+  - id: g-b
+aggregates:
+  - id: agg-a
+    members: [n101]

@@ -1,0 +1,9 @@
+schema_version: "0.1"
+groups:
+  - id: n101
+    label: "ノードと同じID"
+    members: [n102]
+aggregates:
+  - id: e101
+    label: "関係と同じID"
+    members: [n103, n999]

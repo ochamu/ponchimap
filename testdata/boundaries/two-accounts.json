@@ -1,0 +1,427 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "prod"
+  },
+  "nodes": [
+    {
+      "id": "web",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.ecs",
+      "attributes": {
+        "role": "注文を受け付ける"
+      },
+      "evidence": [
+        {
+          "id": "ev-web",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "111122223333"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0aaa1111bbbb2222c"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/web.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.rds",
+      "attributes": {
+        "role": "注文を保存する"
+      },
+      "evidence": [
+        {
+          "id": "ev-db",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "111122223333"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0aaa1111bbbb2222c"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/db.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "assets",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.s3",
+      "attributes": {
+        "role": "画像を配信する"
+      },
+      "evidence": [
+        {
+          "id": "ev-assets",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "111122223333"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/assets.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "web-dev",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.ecs",
+      "attributes": {
+        "role": "開発用の受付"
+      },
+      "evidence": [
+        {
+          "id": "ev-web-dev",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "444455556666"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0ddd3333eeee4444f"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/boundaries/web-dev.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db-dev",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.rds",
+      "attributes": {
+        "role": "開発用の保存先"
+      },
+      "evidence": [
+        {
+          "id": "ev-db-dev",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "444455556666"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0ddd3333eeee4444f"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/boundaries/db-dev.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "edge",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "attributes": {
+        "role": "入口で振り分ける"
+      },
+      "evidence": [
+        {
+          "id": "ev-edge",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "cf-account-0001"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/edge.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "mail",
+      "kind": "resource",
+      "provider": "resend",
+      "service": "resend",
+      "attributes": {
+        "role": "完了メールを送る"
+      },
+      "evidence": [
+        {
+          "id": "ev-mail",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/mail.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-edge-web",
+      "from": "edge",
+      "to": "web",
+      "relation": "configuration",
+      "slot": "ORIGIN",
+      "attributes": {
+        "purpose": "注文の転送"
+      },
+      "evidence": [
+        {
+          "id": "ev-e-edge-web",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "web"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/e-edge-web.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e-web-db",
+      "from": "web",
+      "to": "db",
+      "relation": "configuration",
+      "slot": "DATABASE_URL",
+      "attributes": {
+        "purpose": "注文の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev-e-web-db",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/e-web-db.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e-web-assets",
+      "from": "web",
+      "to": "assets",
+      "relation": "configuration",
+      "slot": "ASSET_BUCKET",
+      "attributes": {
+        "purpose": "画像の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev-e-web-assets",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "assets"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/e-web-assets.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e-web-mail",
+      "from": "web",
+      "to": "mail",
+      "relation": "configuration",
+      "slot": "MAIL_API",
+      "attributes": {
+        "purpose": "メールの送信"
+      },
+      "evidence": [
+        {
+          "id": "ev-e-web-mail",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "mail"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/e-web-mail.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e-webdev-dbdev",
+      "from": "web-dev",
+      "to": "db-dev",
+      "relation": "configuration",
+      "slot": "DATABASE_URL",
+      "attributes": {
+        "purpose": "注文の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev-e-webdev-dbdev",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db-dev"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/e-webdev-dbdev.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": []
+}

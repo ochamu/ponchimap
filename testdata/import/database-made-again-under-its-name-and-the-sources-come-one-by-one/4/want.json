@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [],
+  "removed": [],
+  "mapping": {
+    "findings/env.json#db": "@2/findings/probe.json#db"
+  }
+}

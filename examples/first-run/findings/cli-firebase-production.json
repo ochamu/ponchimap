@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "cli-firebase-production-20261116-091200",
+    "source": "cli-firebase-production",
+    "route": "cli",
+    "operation": "firebase hosting:sites:list --project example-memo-project",
+    "target": {"provider": "firebase", "project_id": "example-memo-project", "environment": "production"},
+    "checked_at": "2026-11-16T09:12:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "web", "kind": "resource", "provider": "firebase", "service": "firebase.hosting",
+      "identity": {"project_id": "example-memo-project", "logical_name": "memo-web"},
+      "attributes": {"service_name": "Firebase Hosting", "category": "hosting"},
+      "evidence": [{
+        "id": "web-deployed", "kind": "deployed",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "project", "id": "example-memo-project"}}
+        ],
+        "ref": {"type": "query", "path": "firebase hosting:sites:list --project example-memo-project"},
+        "checked_at": "2026-11-16T09:12:00Z"
+      }]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "web-checked",
+      "scope": {
+        "provider": "firebase", "project_id": "example-memo-project", "environment": "production",
+        "service": "firebase.hosting", "target_ids": ["web"], "filter": {"fields": ["existence"]}
+      },
+      "status": "complete",
+      "reason": "Hosting のサイトの一覧に memo-web がある",
+      "checked_at": "2026-11-16T09:12:00Z"
+    }
+  ]
+}

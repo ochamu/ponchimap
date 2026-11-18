@@ -1,0 +1,1 @@
+M1: the candidates of a read that is older than the newest complete read of its source take no part. An old findings file left in the folder makes no node, and is no error.

@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-doc-2",
+    "source": "docs-architecture",
+    "route": "document",
+    "operation": "read docs/architecture.md",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T12:00:00Z",
+    "complete": false
+  },
+  "nodes": [
+    {
+      "id": "database",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "s2",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "region",
+              "value": "weur"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/architecture.md",
+            "start_line": 40,
+            "end_line": 44
+          },
+          "checked_at": "2026-11-16T12:00:00Z",
+          "valid_time": "2027-01-01T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

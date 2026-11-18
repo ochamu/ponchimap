@@ -1,0 +1,2 @@
+error	2:22	schema.duplicate_item	/hidden/2	-	index 0
+error	9:9	schema.duplicate_item	/groups/0/members/2	g-a	index 0

@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/a.json#api"
+    }
+  ],
+  "removed": [
+    "@1/findings/a.json#api"
+  ]
+}

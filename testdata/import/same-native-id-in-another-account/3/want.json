@@ -1,0 +1,55 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@3/findings/b.json#api",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-b",
+          "native_id": "api"
+        },
+        "evidence": [
+          {
+            "id": "@3/findings/b.json#w1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "account-b/wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T11:00:00Z",
+            "acquisition_id": "aq-b-1"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [
+    "@3/findings/b.json#api"
+  ],
+  "view": [
+    {
+      "code": "view.unknown_reference",
+      "target_id": "@1/findings/a.json#api"
+    }
+  ]
+}

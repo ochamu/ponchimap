@@ -1,0 +1,12 @@
+{
+  "status": "error",
+  "model": "unchanged",
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "import.no_evidence",
+      "path": "findings/scan.json",
+      "pointer": "/nodes/1"
+    }
+  ]
+}

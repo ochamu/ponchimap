@@ -1,0 +1,5 @@
+21:12	model.duplicate_id	/nodes/2/id	a	-
+24:12	model.duplicate_id	/edges/0/id	b	-
+32:17	model.duplicate_id	/edges/1/evidence/0/id	x	-
+42:12	model.duplicate_id	/coverage/0/id	e	-
+44:12	model.duplicate_id	/coverage/2/id	cv	-

@@ -1,0 +1,1 @@
+N5: three nodes of the model are the same by N2 and N3, and import does not merge them. A candidate goes to the node with its own key (c2, c3), and one with a key that no node has goes to the node that N2 joined it to (c1), not to the first node of the model. Running the step again changes nothing.

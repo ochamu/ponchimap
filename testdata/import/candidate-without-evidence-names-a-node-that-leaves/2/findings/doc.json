@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-doc-1",
+    "source": "docs-architecture",
+    "route": "document",
+    "operation": "read docs/architecture.md",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T11:30:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "d",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "acct-1",
+        "native_id": "db-2"
+      },
+      "evidence": []
+    }
+  ]
+}

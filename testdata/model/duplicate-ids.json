@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "service",
+      "provider": "p",
+      "service": "s",
+      "evidence": [
+        {
+          "id": "x",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    },
+    {"id": "b", "kind": "service", "provider": "p", "service": "s", "evidence": []},
+    {"id": "a", "kind": "service", "provider": "p", "service": "s", "evidence": []}
+  ],
+  "edges": [
+    {"id": "b", "from": "a", "to": "b", "relation": "implementation", "evidence": []},
+    {
+      "id": "e",
+      "from": "a",
+      "to": "b",
+      "relation": "implementation",
+      "evidence": [
+        {
+          "id": "x",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {"id": "e", "scope": {}, "status": "complete", "checked_at": "2026-11-13T00:00:00Z"},
+    {"id": "cv", "scope": {}, "status": "complete", "checked_at": "2026-11-13T00:00:00Z"},
+    {"id": "cv", "scope": {}, "status": "partial", "checked_at": "2026-11-13T00:00:00Z"}
+  ]
+}

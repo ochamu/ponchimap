@@ -1,0 +1,1 @@
+The text of a producer's diagnostic stays in the input. import points at it, and the status is partial.

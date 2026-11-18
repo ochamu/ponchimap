@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-b",
+    "source": "probe-b",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:10:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "api",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "account-b",
+        "native_id": "edge-api"
+      },
+      "evidence": [
+        {
+          "id": "e-api",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe-b.json"
+          },
+          "checked_at": "2026-11-16T09:10:00Z"
+        }
+      ]
+    }
+  ]
+}

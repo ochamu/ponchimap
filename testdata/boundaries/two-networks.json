@@ -1,0 +1,108 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "prod"
+  },
+  "nodes": [
+    {
+      "id": "api",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.ecs",
+      "attributes": {
+        "role": "受付"
+      },
+      "evidence": [
+        {
+          "id": "ev-api",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "111122223333"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0aaa1111bbbb2222c"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/api.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "gateway",
+      "kind": "resource",
+      "provider": "aws",
+      "service": "aws.transit",
+      "attributes": {
+        "role": "ネットワークをつなぐ"
+      },
+      "evidence": [
+        {
+          "id": "ev-gateway",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "111122223333"
+              }
+            },
+            {
+              "key": "region",
+              "value": "ap-northeast-1"
+            },
+            {
+              "key": "scope.network",
+              "value": "vpc-0aaa1111bbbb2222c"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/gateway.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev-gateway-2",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "scope.network",
+              "value": "vpc-0ddd3333eeee4444f"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/gateway-2.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

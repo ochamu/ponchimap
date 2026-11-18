@@ -1,0 +1,2 @@
+error	model	10:15	schema.enum	/nodes/0/kind	n001	allowed values
+error	model	14:9	schema.required	/nodes/0/evidence/0/checked_at	ev001	"checked_at"

@@ -1,0 +1,3 @@
+warning	view	-	view.boundary_label_shared	/boundaries	n001	same label
+warning	view	-	view.boundary_label_shared	/boundaries	n002	same label
+warning	view	3:5	view.split	/groups/0	g-app	drawn once in each

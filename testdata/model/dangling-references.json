@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev",
+    "scope": [{"provider": "p", "target_ids": ["a", "gone-scope"]}]
+  },
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "service",
+      "provider": "p",
+      "service": "s",
+      "evidence": [
+        {
+          "id": "ev-a",
+          "kind": "declared",
+          "supports": [{"key": "connection.target", "value": "gone-node-target"}],
+          "ref": {"type": "file", "path": "wrangler.toml"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {"id": "e1", "from": "gone-from", "to": "a", "relation": "implementation", "evidence": []},
+    {
+      "id": "e2",
+      "from": "a",
+      "to": "gone-to",
+      "relation": "configuration",
+      "evidence": [
+        {
+          "id": "ev-e2",
+          "kind": "declared",
+          "supports": [
+            {"key": "connection.target", "value": "e1"},
+            {"key": "vendor.target", "value": "gone-unknown-key"}
+          ],
+          "ref": {"type": "file", "path": "wrangler.toml"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv",
+      "scope": {"provider": "p", "target_ids": ["a", "e1", "ev-a", "gone-coverage"]},
+      "status": "complete",
+      "checked_at": "2026-11-13T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-scan-1",
+    "source": "repository-scan",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:00:00Z",
+    "complete": true
+  },
+  "nodes": []
+}

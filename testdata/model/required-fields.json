@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": "."},
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "resource",
+      "service": "s",
+      "evidence": [
+        {
+          "id": "ev-no-time",
+          "kind": "declared",
+          "supports": [{"key": "existence", "value": true}],
+          "ref": {"type": "file", "path": "wrangler.toml"}
+        },
+        {
+          "id": "ev-no-ref",
+          "kind": "declared",
+          "supports": [{"key": "existence"}],
+          "checked_at": "2026-11-13T00:00:00Z"
+        },
+        {
+          "id": "ev-no-path",
+          "kind": "declared",
+          "supports": [],
+          "ref": {"type": "file", "end_line": 4},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {"id": "e", "from": "a", "relation": "configuration"}
+  ],
+  "coverage": [
+    {"id": "cv", "status": "complete"}
+  ]
+}

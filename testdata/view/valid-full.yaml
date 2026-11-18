@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/view.schema.json
+schema_version: "0.1"
+view: overview
+title: "注文アプリの構成"
+labels:
+  n101: "入口"
+  e101: "呼び出し"
+boundaries:
+  - member: n101
+    level: owner
+    label: "配信アカウント"
+groups:
+  - id: g-app
+    kind: logical
+    label: "アプリ"
+    members: [n101, n102]
+aggregates:
+  - id: agg-store
+    label: "保存先"
+    role: "注文を保存する"
+    members: [n103]
+hidden: [e103]
+layout:
+  engine: elk
+  direction: down
+  seed: 7

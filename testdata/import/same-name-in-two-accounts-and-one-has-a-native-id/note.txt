@@ -1,0 +1,1 @@
+A worker of one name in two accounts. The extraction of the east account states the name and the owner. The extraction of the west account states the name and the native ID, and the read of the west account adds the owner (N2). The east description does not join the west node, whose owner is another (N3), so there are two nodes, and taking the same files in again changes no ID.

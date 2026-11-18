@@ -1,0 +1,14 @@
+schema_version: "0.1"
+statements:
+  - target_id: "@1/findings/scan.json#db"
+    supports:
+      - key: role
+        value: 利用者の設定情報を保存する
+    source: 利用者の説明
+    checked_at: "2026-11-16T10:00:00Z"
+  - target_id: n-nothing
+    supports:
+      - key: role
+        value: 使われていない
+    source: 利用者の説明
+    checked_at: "2026-11-16T10:00:00Z"

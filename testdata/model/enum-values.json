@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "Resource",
+      "provider": "p",
+      "service": "s",
+      "evidence": [
+        {
+          "id": "ev-a",
+          "kind": "guess",
+          "supports": [
+            {"key": "existence", "value": true},
+            {"key": "scope.owner", "value": {"kind": "vpc", "id": "example-vpc"}}
+          ],
+          "ref": {"type": "config", "path": "wrangler.toml"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    },
+    {"id": "b", "kind": "service", "provider": "p", "service": "s", "evidence": []}
+  ],
+  "edges": [
+    {"id": "e", "from": "a", "to": "b", "relation": "calls", "evidence": []}
+  ],
+  "coverage": [
+    {"id": "cv", "scope": {}, "status": "done", "checked_at": "2026-11-13T00:00:00Z"}
+  ]
+}

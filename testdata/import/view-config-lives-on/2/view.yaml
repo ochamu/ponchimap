@@ -1,0 +1,10 @@
+schema_version: "0.1"
+view: overview
+labels:
+  "@1/findings/scan.json#worker": "入口"
+groups:
+  - id: g-app
+    kind: logical
+    label: "アプリ"
+    members: ["@1/findings/scan.json#worker", "@1/findings/scan.json#db"]
+hidden: ["@1/findings/scan.json#binding"]

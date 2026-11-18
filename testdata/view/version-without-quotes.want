@@ -1,0 +1,2 @@
+error	1:17	schema.type	/schema_version	-	a string
+error	2:8	schema.type	/title	-	a string

@@ -1,0 +1,190 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "w",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-a"
+      },
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "ev-w",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "a",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "ev-a",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "ev-b",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "db-declared",
+      "from": "w",
+      "to": "a",
+      "relation": "configuration",
+      "attributes": {
+        "purpose": "接続設定"
+      },
+      "evidence": [
+        {
+          "id": "d1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "a"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB"
+    },
+    {
+      "id": "db-deployed",
+      "from": "w",
+      "to": "b",
+      "relation": "configuration",
+      "attributes": {
+        "purpose": "接続設定"
+      },
+      "evidence": [
+        {
+          "id": "p1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "b"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv-old",
+      "scope": {
+        "provider": "cloudflare",
+        "target_ids": [
+          "w"
+        ],
+        "filter": {
+          "slot": "DB",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "denied",
+      "checked_at": "2026-11-12T09:00:00Z",
+      "reason": "権限がない",
+      "acquisition_id": "aq-old"
+    },
+    {
+      "id": "cv-db",
+      "scope": {
+        "provider": "cloudflare",
+        "target_ids": [
+          "w"
+        ],
+        "filter": {
+          "slot": "DB",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "checked_at": "2026-11-13T09:00:00Z"
+    }
+  ]
+}

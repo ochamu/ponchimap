@@ -1,0 +1,7 @@
+schema_version: "0.1"
+boundaries:
+  - member: n001
+    label: "ウェブ"
+  - member: n002
+    level: region
+    label: "東京"

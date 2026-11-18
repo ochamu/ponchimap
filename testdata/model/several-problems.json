@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "worker",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "enviroment": "dev",
+      "evidence": [
+        {
+          "id": "ev-worker",
+          "kind": "declared",
+          "supports": [{"key": "existence", "value": true}],
+          "ref": {"type": "file", "path": "wrangler.toml"},
+          "checked_at": "2026-11-13"
+        }
+      ]
+    },
+    {
+      "id": "Database",
+      "kind": "database",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "evidence": []
+    },
+    {
+      "id": "worker",
+      "kind": "service",
+      "provider": "resend",
+      "service": "resend",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "binding",
+      "from": "worker",
+      "to": "database",
+      "relation": "configuration",
+      "evidence": [
+        {
+          "id": "ev-binding",
+          "kind": "declared",
+          "supports": [
+            {"key": "connection.configured", "value": true},
+            {"key": "connection.target", "value": "cache"}
+          ],
+          "ref": {"type": "file", "path": "wrangler.toml"},
+          "valid_time": "2026-11-12/2026-11-13"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv",
+      "scope": {"provider": "cloudflare", "target_ids": ["worker", "queue"]},
+      "status": "complete",
+      "checked_at": "2026-11-13T00:00:00Z"
+    }
+  ]
+}

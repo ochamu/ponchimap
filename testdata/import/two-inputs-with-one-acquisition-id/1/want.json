@@ -1,0 +1,12 @@
+{
+  "status": "error",
+  "model": "unchanged",
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "import.duplicate_acquisition",
+      "path": "findings/b.json",
+      "pointer": "/acquisition/id"
+    }
+  ]
+}

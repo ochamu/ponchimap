@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1",
+  "acquisitions": [
+    {
+      "id": "aq-scan-0",
+      "source": "repository-scan",
+      "route": "repository",
+      "operation": "scan",
+      "target": {
+        "repository": ".",
+        "environment": "dev"
+      },
+      "checked_at": "2026-11-16T08:00:00Z",
+      "complete": true,
+      "input": "findings/scan.json",
+      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "reported": 0
+    }
+  ]
+}

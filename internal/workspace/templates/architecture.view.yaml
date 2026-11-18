@@ -1,0 +1,44 @@
+# The view config of ponchimap: how the figure shows the model.
+# It changes the figure only. A fact about the infrastructure goes into a
+# findings file, with its source.
+# "ponchimap init" wrote this file and never writes over it.
+# "ponchimap lint" checks it.
+schema_version: "0.1"
+view: overview
+
+# The title of the figure.
+# title: "Orders app"
+
+# Display names by the ID of a node or an edge in .ponchimap/model.json.
+# A display name renames; it is not evidence.
+# labels:
+#   n-xxxxxxxx: "Orders API"
+
+# Display names of real boundaries, each named through a node in it.
+# boundaries:
+#   - member: n-xxxxxxxx
+#     level: owner          # owner (an account or a project), region, or network (such as a VPC)
+#     label: "Delivery account"
+
+# Logical groups, each drawn around its members.
+# groups:
+#   - id: backend
+#     label: "Backend"
+#     members: [n-xxxxxxxx, n-yyyyyyyy]
+
+# Aggregates, each drawn as one node in place of its members.
+# aggregates:
+#   - id: mail
+#     label: "Mail"
+#     members: [n-zzzzzzzz, n-wwwwwwww]
+
+# Nodes and edges left out of the figure. The model keeps them.
+# hidden: [n-vvvvvvvv]
+
+# Where things are drawn. It never changes what is drawn.
+# The direction is the way things are laid out. With elk, right tends to give a
+# landscape figure and down a portrait one; with tala it depends on the model.
+layout:
+  engine: tala      # tala or elk
+  direction: right  # right or down
+  seed: 1           # tala only; "ponchimap render --reroll" draws with a new seed and prints it

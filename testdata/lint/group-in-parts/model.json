@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "scope.owner", "value": {"kind": "team", "id": "team-web"}}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n002",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.store",
+      "evidence": [
+        {
+          "id": "ev002",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "scope.owner", "value": {"kind": "team", "id": "team-data"}}
+          ],
+          "ref": {"type": "file", "path": "src/store.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-2",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T12:00:00Z",
+    "complete": false
+  },
+  "nodes": [
+    {
+      "id": "d",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": []
+    }
+  ],
+  "edges": [],
+  "coverage": [
+    {
+      "id": "cd",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "target_ids": [
+          "d"
+        ]
+      },
+      "status": "denied",
+      "reason": "権限がなく、存在を確認できなかった",
+      "checked_at": "2026-11-16T12:00:00Z"
+    }
+  ]
+}

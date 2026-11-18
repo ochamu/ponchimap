@@ -1,0 +1,1 @@
+N2: a description without an owner joins the one node of the same environment that knows the owner. The identity gains the account.

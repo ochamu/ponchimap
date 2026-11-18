@@ -1,0 +1,66 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": [
+    {
+      "id": "cv-complete",
+      "scope": {"provider": "example", "service": "example.api"},
+      "status": "complete",
+      "checked_at": "2026-11-13T00:00:00Z"
+    },
+    {
+      "id": "cv-partial",
+      "scope": {"provider": "example", "service": "example.store"},
+      "status": "partial",
+      "checked_at": "2026-11-13T00:00:00Z"
+    },
+    {
+      "id": "cv-denied",
+      "scope": {"provider": "example", "service": "example.mail"},
+      "status": "denied",
+      "checked_at": "2026-11-13T00:00:00Z"
+    },
+    {
+      "id": "cv-unsupported",
+      "scope": {"provider": "example", "service": "example.queue"},
+      "status": "unsupported",
+      "checked_at": "2026-11-13T00:00:00Z"
+    },
+    {
+      "id": "cv-not-attempted",
+      "scope": {"provider": "example", "service": "example.auth"},
+      "status": "not_attempted",
+      "checked_at": "2026-11-13T00:00:00Z"
+    },
+    {
+      "id": "cv-failed",
+      "scope": {"provider": "example", "service": "example.cache"},
+      "status": "failed",
+      "reason": "照会が時間切れになった",
+      "checked_at": "2026-11-13T00:00:00Z"
+    }
+  ]
+}

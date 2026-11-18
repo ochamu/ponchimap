@@ -1,0 +1,109 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-1",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:01:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "w",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-worker"
+      },
+      "evidence": [
+        {
+          "id": "pw1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-01"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "pd1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "region",
+              "value": "apac"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": [
+    {
+      "id": "cw",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "target_ids": [
+          "w"
+        ]
+      },
+      "status": "complete",
+      "checked_at": "2026-11-16T09:01:00Z"
+    },
+    {
+      "id": "cd",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "target_ids": [
+          "d"
+        ]
+      },
+      "status": "complete",
+      "checked_at": "2026-11-16T09:01:00Z"
+    }
+  ]
+}

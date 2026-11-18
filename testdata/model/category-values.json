@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {"id": "a", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"category": "lambda"}, "evidence": []},
+    {"id": "b", "kind": "service", "provider": "acme", "service": "acme.box", "attributes": {"category": "generic"}, "evidence": []},
+    {"id": "c", "kind": "service", "provider": "aws", "service": "aws.s3", "attributes": {"category": "storage"}, "evidence": []}
+  ],
+  "edges": [],
+  "coverage": []
+}

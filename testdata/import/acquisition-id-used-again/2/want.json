@@ -1,0 +1,12 @@
+{
+  "status": "error",
+  "model": "unchanged",
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "import.acquisition_changed",
+      "path": "findings/scan.json",
+      "pointer": "/acquisition/id"
+    }
+  ]
+}

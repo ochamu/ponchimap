@@ -1,0 +1,16 @@
+3:13	schema.type	/target	-	-
+5:5	schema.type	/nodes/0	-	-
+7:13	schema.type	/nodes/1/id	-	-
+9:19	schema.type	/nodes/1/provider	-	-
+11:19	schema.type	/nodes/1/identity	-	-
+12:30	schema.type	/nodes/1/attributes/role	-	-
+12:43	schema.type	/nodes/1/attributes/region	-	-
+17:23	schema.type	/nodes/1/evidence/0/supports	ev-b	-
+18:18	schema.type	/nodes/1/evidence/0/ref	ev-b	-
+19:25	schema.type	/nodes/1/evidence/0/checked_at	ev-b	-
+25:69	schema.range	/nodes/1/evidence/1/ref/start_line	ev-c	-
+25:84	schema.type	/nodes/1/evidence/1/ref/end_line	ev-c	-
+32:69	schema.type	/nodes/1/evidence/2/ref/start_line	ev-d	-
+38:12	schema.type	/edges	-	-
+40:42	schema.type	/coverage/0/scope/target_ids	cv	-
+40:68	schema.type	/coverage/0/scope/filter/fields	cv	-

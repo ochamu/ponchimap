@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "service",
+      "provider": "p",
+      "service": "s",
+      "evidence": {
+        "0": {"id": "provider-id-in-evidence", "y": 1, "y": 2}
+      }
+    }
+  ],
+  "edges": {
+    "0": {"id": "provider-id-in-edges", "z": 1, "z": 2}
+  },
+  "coverage": []
+}

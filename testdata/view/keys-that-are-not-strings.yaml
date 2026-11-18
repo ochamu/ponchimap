@@ -1,0 +1,11 @@
+schema_version: "0.1"
+labels:
+  n101: "a"
+  true: "b"
+  null: "c"
+  404: "d"
+1: "x"
+? [n102, n103]
+: "y"
+layout:
+  seed: 2.5

@@ -1,0 +1,121 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-1",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:01:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "w",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-worker"
+      },
+      "evidence": [
+        {
+          "id": "pw1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "database-b"
+      },
+      "evidence": [
+        {
+          "id": "pb1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "bound",
+      "from": "w",
+      "to": "b",
+      "relation": "configuration",
+      "slot": "DB",
+      "evidence": [
+        {
+          "id": "pe1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "b"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T09:01:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cs",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "target_ids": [
+          "w"
+        ],
+        "filter": {
+          "slot": "DB",
+          "fields": [
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "checked_at": "2026-11-16T09:01:00Z"
+    }
+  ]
+}

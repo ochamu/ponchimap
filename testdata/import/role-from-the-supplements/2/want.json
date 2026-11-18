@@ -1,0 +1,167 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#worker",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-worker"
+        },
+        "attributes": {
+          "role": "顧客向けのAPI"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/code.json#c0",
+            "kind": "code",
+            "supports": [
+              {
+                "key": "role",
+                "value": "API処理"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "src/worker.ts",
+              "start_line": 8,
+              "end_line": 32
+            },
+            "checked_at": "2026-11-16T09:20:00Z",
+            "acquisition_id": "aq-code-1"
+          },
+          {
+            "id": "@2/supplements.yaml#0",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "role",
+                "value": "顧客向けのAPI"
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "supplements.yaml",
+              "start_line": 3,
+              "end_line": 8
+            },
+            "checked_at": "2026-11-16T10:00:00Z",
+            "acquisition_id": "@2/supplements.yaml"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#mail",
+        "kind": "service",
+        "provider": "resend",
+        "service": "resend",
+        "environment": "dev",
+        "attributes": {
+          "role": "メール送信"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#h1",
+            "kind": "hint",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "package.json",
+              "start_line": 18,
+              "end_line": 18
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/code.json#c1",
+            "kind": "code",
+            "supports": [
+              {
+                "key": "call.implemented",
+                "value": true
+              },
+              {
+                "key": "role",
+                "value": "メール送信"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "src/mail/send.ts",
+              "start_line": 5,
+              "end_line": 22
+            },
+            "checked_at": "2026-11-16T09:20:00Z",
+            "acquisition_id": "aq-code-1"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/code.json#send",
+        "from": "@1/findings/scan.json#worker",
+        "to": "@1/findings/scan.json#mail",
+        "relation": "implementation",
+        "attributes": {
+          "purpose": "登録確認メールの送信"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/code.json#c2",
+            "kind": "code",
+            "supports": [
+              {
+                "key": "call.implemented",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "src/mail/send.ts",
+              "start_line": 5,
+              "end_line": 22
+            },
+            "checked_at": "2026-11-16T09:20:00Z",
+            "acquisition_id": "aq-code-1"
+          }
+        ]
+      }
+    ],
+    "coverage": []
+  },
+  "diagnostics": []
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "x.custom", "value": true}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

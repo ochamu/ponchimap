@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e001",
+      "from": "n001",
+      "to": "n999",
+      "relation": "implementation",
+      "evidence": [
+        {
+          "id": "ev002",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": []
+}

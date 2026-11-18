@@ -1,0 +1,69 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "edges": [
+    {
+      "id": "e001",
+      "from": "n001",
+      "to": "n002",
+      "relation": "implementation",
+      "evidence": [
+        {
+          "id": "ev003",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "x.custom", "value": "c"}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "existance", "value": true},
+            {"key": "x.custom", "value": "a"}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n002",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.store",
+      "evidence": [
+        {
+          "id": "ev002",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true},
+            {"key": "x.custom", "value": "b"},
+            {"key": "scope.network", "value": "vpc-main"},
+            {"key": "region", "value": "tokyo"}
+          ],
+          "ref": {"type": "file", "path": "src/store.ts"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": []
+}

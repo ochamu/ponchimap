@@ -1,0 +1,1 @@
+A model is made from the target, and the same input again changes nothing.

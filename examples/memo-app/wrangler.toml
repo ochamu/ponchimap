@@ -1,0 +1,25 @@
+name = "memo-api"
+main = "worker/src/index.ts"
+compatibility_date = "2026-10-01"
+account_id = "1111aaaa2222bbbb3333cccc4444dddd"
+
+[vars]
+APP_ORIGIN = "https://memo-app-dev-example.web.app"
+MAIL_FROM = "memo-dev@example.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "memo-db-dev"
+database_id = "00000000-0000-4000-8000-00000000d001"
+
+[env.production]
+routes = [{ pattern = "api.memo.example.com", custom_domain = true }]
+
+[env.production.vars]
+APP_ORIGIN = "https://memo.example.com"
+MAIL_FROM = "memo@example.com"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "memo-db"
+database_id = "00000000-0000-4000-8000-00000000d002"

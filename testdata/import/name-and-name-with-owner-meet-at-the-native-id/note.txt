@@ -1,0 +1,1 @@
+Three descriptions of one database: by its name alone, by its name and its owner, and by its native ID with owner and name. N3 settles the description that writes more of the owner first, and the next one counts the nodes as that left them. So the name alone finds one node, not two, and all three are one node without a warning.

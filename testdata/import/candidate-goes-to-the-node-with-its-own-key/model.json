@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T08:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n002",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "ev002",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "role",
+              "value": "保存"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/a.md",
+            "start_line": 1,
+            "end_line": 2
+          },
+          "checked_at": "2026-11-16T08:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

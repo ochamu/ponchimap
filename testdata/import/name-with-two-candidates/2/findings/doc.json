@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-doc-1",
+    "source": "docs-architecture",
+    "route": "document",
+    "operation": "read docs/architecture.md",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:30:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "logical_name": "db"
+      },
+      "evidence": [
+        {
+          "id": "s1",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "role",
+              "value": "注文を保存する"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/architecture.md",
+            "start_line": 3,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T09:30:00Z"
+        }
+      ]
+    }
+  ]
+}

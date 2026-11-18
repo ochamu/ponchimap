@@ -1,0 +1,1 @@
+M2 looks at one element at a time. The unfinished read states the same slot with another target, and import cannot tell a target that changed from a target that the read did not reach. So the older deployed item on the edge to the first target stays, next to the edge to the new target, until a complete read of the source comes.

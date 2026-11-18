@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1",
+  "target": ".",
+  "nodes": [
+    "a",
+    {
+      "id": 7,
+      "kind": "service",
+      "provider": ["p"],
+      "service": "s",
+      "identity": [],
+      "attributes": {"role": 3, "region": false},
+      "evidence": [
+        {
+          "id": "ev-b",
+          "kind": "code",
+          "supports": {"key": "call.implemented", "value": true},
+          "ref": "src/a.ts",
+          "checked_at": 20261113
+        },
+        {
+          "id": "ev-c",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts", "start_line": 0, "end_line": 2.5},
+          "checked_at": "2026-11-13T00:00:00Z"
+        },
+        {
+          "id": "ev-d",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts", "start_line": "3"},
+          "checked_at": "2026-11-13T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": {},
+  "coverage": [
+    {"id": "cv", "scope": {"target_ids": "a", "filter": {"fields": "existence"}}, "status": "complete", "checked_at": "2026-11-13T00:00:00Z"}
+  ]
+}

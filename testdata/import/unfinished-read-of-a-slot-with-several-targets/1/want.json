@@ -1,0 +1,240 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/probe.json#q",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.queues",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "order-events"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pq",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#w-billing",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-billing"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pw-billing",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#w-mailer",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-mailer"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pw-mailer",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#w-search",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-search"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pw-search",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/probe.json#c-billing",
+        "from": "@1/findings/probe.json#q",
+        "to": "@1/findings/probe.json#w-billing",
+        "relation": "configuration",
+        "slot": "consumers",
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pe-billing",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/probe.json#w-billing"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#c-mailer",
+        "from": "@1/findings/probe.json#q",
+        "to": "@1/findings/probe.json#w-mailer",
+        "relation": "configuration",
+        "slot": "consumers",
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pe-mailer",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/probe.json#w-mailer"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#c-search",
+        "from": "@1/findings/probe.json#q",
+        "to": "@1/findings/probe.json#w-search",
+        "relation": "configuration",
+        "slot": "consumers",
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pe-search",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/probe.json#w-search"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-probe-1"
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "id": "@1/findings/probe.json#cq",
+        "scope": {
+          "provider": "cloudflare",
+          "account_id": "example-account-01",
+          "service": "cloudflare.queues"
+        },
+        "status": "complete",
+        "checked_at": "2026-11-16T09:01:00Z",
+        "acquisition_id": "aq-probe-1"
+      }
+    ]
+  },
+  "diagnostics": [],
+  "added": [
+    "@1/findings/probe.json#q",
+    "@1/findings/probe.json#w-billing",
+    "@1/findings/probe.json#w-mailer",
+    "@1/findings/probe.json#w-search",
+    "@1/findings/probe.json#c-billing",
+    "@1/findings/probe.json#c-mailer",
+    "@1/findings/probe.json#c-search"
+  ]
+}

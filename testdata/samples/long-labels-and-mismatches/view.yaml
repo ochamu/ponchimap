@@ -1,0 +1,30 @@
+schema_version: "0.1"
+view: overview
+title: "注文受付と配送管理の未照合・不一致・補足表示"
+labels:
+  n301: "注文受付と購入手続き（Order Processing API）"
+  n302: "注文履歴の保管先（Order History Database A）"
+  n303: "配送履歴の保管先（Delivery History Database B）"
+  n304: "領収書の画像保管先（Receipt Attachment Storage）"
+  n305: "配送状況の更新処理（Delivery Update Processor）"
+  n306: "注文確認メール（Transactional Mail Service）"
+  n307: "回答案の作成候補（Support Reply Assistant）"
+  n308: "注文受付の社内通知（Order Acceptance Notification API）"
+  n309: "配送状況の保管先（Delivery Status Store）"
+boundaries:
+  - member: n301
+    level: owner
+    label: "注文受付アカウント"
+  - member: n305
+    level: owner
+    label: "配送管理プロジェクト"
+  - member: n309
+    level: region
+    label: "東京リージョン"
+groups: []
+aggregates: []
+hidden: []
+layout:
+  engine: tala
+  direction: right
+  seed: 1

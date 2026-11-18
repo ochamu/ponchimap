@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "memo-app-dev-example",
+    "production": "memo-app-prod-example"
+  }
+}

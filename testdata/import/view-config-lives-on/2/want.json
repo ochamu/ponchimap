@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [
+    "@2/findings/scan.json#queue"
+  ],
+  "mapping": {
+    "findings/scan.json#worker": "@1/findings/scan.json#worker",
+    "findings/scan.json#db": "@1/findings/scan.json#db",
+    "findings/scan.json#binding": "@1/findings/scan.json#binding",
+    "findings/probe.json#w": "@1/findings/scan.json#worker",
+    "findings/probe.json#d": "@1/findings/scan.json#db"
+  },
+  "view": []
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-doc-1",
+    "source": "docs-architecture",
+    "route": "document",
+    "operation": "read docs/architecture.md",
+    "target": {
+      "repository": "."
+    },
+    "checked_at": "2026-11-16T09:30:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "dev",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "account-dev",
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "s-dev",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "開発の注文データを保存する"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/architecture.md",
+            "start_line": 8,
+            "end_line": 9
+          },
+          "checked_at": "2026-11-16T09:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": "prod",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "account-prod",
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "s-prod",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "本番の注文データを保存する"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/architecture.md",
+            "start_line": 12,
+            "end_line": 13
+          },
+          "checked_at": "2026-11-16T09:30:00Z"
+        }
+      ]
+    }
+  ]
+}

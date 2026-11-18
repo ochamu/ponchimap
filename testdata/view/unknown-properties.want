@@ -1,0 +1,4 @@
+error	2:1	schema.unknown_property	/lables	-	-
+error	7:5	schema.unknown_property	/boundaries/0/name	-	-
+error	12:5	schema.unknown_property	/groups/0/color	g-a	-
+error	17:5	schema.unknown_property	/aggregates/0/icon	agg-a	-

@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-b-1",
+    "source": "workers-account-b",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T11:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "api",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "account-b",
+        "native_id": "api"
+      },
+      "evidence": [
+        {
+          "id": "w1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "account-b/wrangler.toml",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T11:00:00Z"
+        }
+      ]
+    }
+  ]
+}

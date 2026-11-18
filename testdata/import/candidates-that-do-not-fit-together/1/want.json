@@ -1,0 +1,36 @@
+{
+  "status": "error",
+  "model": "unchanged",
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "import.duplicate_id",
+      "path": "findings/scan.json",
+      "pointer": "/nodes/2/id"
+    },
+    {
+      "severity": "error",
+      "code": "import.unknown_reference",
+      "path": "findings/scan.json",
+      "pointer": "/edges/0/to"
+    },
+    {
+      "severity": "error",
+      "code": "import.unknown_reference",
+      "path": "findings/scan.json",
+      "pointer": "/edges/0/evidence/0/supports/1/value"
+    },
+    {
+      "severity": "error",
+      "code": "import.unknown_reference",
+      "path": "findings/scan.json",
+      "pointer": "/coverage/0/scope/target_ids/1"
+    },
+    {
+      "severity": "error",
+      "code": "import.unknown_reference",
+      "path": "findings/scan.json",
+      "pointer": "/diagnostics/0/target_ids/0"
+    }
+  ]
+}

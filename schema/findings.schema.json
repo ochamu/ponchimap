@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Findings",
+  "description": "What one acquisition found: candidates for nodes and edges with their evidence, how far the acquisition got, and what it could not do. import takes the candidates into the configuration model. The shapes of nodes, edges, evidence, and coverage are those of model.schema.json, which stands beside this file. Version 0.1.",
+  "type": "object",
+  "required": ["schema_version", "acquisition"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "Lets an editor bind this file to the schema. The tool does not read it.",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "The version of this contract, written as a string: \"0.1\". A tool reads only the versions it supports.",
+      "type": "string",
+      "const": "0.1"
+    },
+    "acquisition": {
+      "description": "The one read that this file reports.",
+      "$ref": "#/$defs/acquisition"
+    },
+    "nodes": {
+      "description": "The candidate nodes. Leaving the list out says the same as an empty list.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "description": "The candidate edges. Leaving the list out says the same as an empty list.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "coverage": {
+      "description": "How far the acquisition got in each scope. Leaving the list out records nothing.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/coverage" }
+    },
+    "diagnostics": {
+      "description": "What the producer of this file wants the user to know: what is missing, what is not supported, why something failed.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/diagnostic" }
+    }
+  },
+  "$defs": {
+    "acquisition": {
+      "description": "One read of one source: what was asked, how, and when.",
+      "type": "object",
+      "required": ["id", "source", "route", "operation", "target", "checked_at", "complete"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of this read, new for every read. import writes it on the evidence and the coverage it takes from this file. A file with the same ID must have the same content.",
+          "$ref": "model.schema.json#/$defs/id"
+        },
+        "source": {
+          "description": "A lasting name for what was asked and of whom, such as repository-scan. Asking the same again carries the same source, and the newer answer replaces the older one in the model.",
+          "$ref": "model.schema.json#/$defs/id"
+        },
+        "route": {
+          "description": "repository: extraction from the repository. cli: a command-line tool. mcp: an MCP connection. document: reading documents.",
+          "enum": ["repository", "cli", "mcp", "document"]
+        },
+        "operation": {
+          "description": "What was done or which material was read, in words that hold no secret, such as scan or wrangler d1 list.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "target": {
+          "description": "What the acquisition read.",
+          "$ref": "#/$defs/target"
+        },
+        "checked_at": {
+          "description": "When the read finished.",
+          "$ref": "model.schema.json#/$defs/instant"
+        },
+        "complete": {
+          "description": "true when this file states everything that the source says now: import then drops what an older read of the same source gave and this file does not repeat. false when part of the source could not be read: import then keeps the older evidence that this file does not repeat.",
+          "type": "boolean"
+        }
+      }
+    },
+    "target": {
+      "description": "What the acquisition read: the keys that a scope of the model defines, and the repository. It names no element. Other keys are refused: import stores the target as it is written.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "description": "The repository that was read: a path or a URL.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "provider": {
+          "description": "The provider key, such as cloudflare.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "account_id": {
+          "description": "The account at the provider.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "project_id": {
+          "description": "The project at the provider.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "environment": {
+          "description": "The environment that was read. Candidates of this file without an environment belong to it.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "service": {
+          "description": "The service key that was read, such as cloudflare.d1.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "filter": {
+          "description": "Narrows the target to some items.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fields": {
+              "description": "The support keys that were read.",
+              "type": "array",
+              "items": {
+                "$ref": "model.schema.json#/$defs/name"
+              }
+            },
+            "slot": {
+              "description": "The setting that was read, such as a binding name.",
+              "$ref": "model.schema.json#/$defs/name"
+            }
+          }
+        },
+        "target_ids": {
+          "description": "The target of an acquisition names no element. Write the provider, account, project, environment, or service; name elements in the target_ids of a coverage record.",
+          "not": {}
+        }
+      }
+    },
+    "node": {
+      "description": "A candidate node. Its id is a name inside this file: import finds the node of the model that the identity describes, or adds a node, and gives the ID of the model. A candidate without evidence only names a node that the model already has.",
+      "$ref": "model.schema.json#/$defs/node",
+      "properties": {
+        "identity": { "$ref": "#/$defs/identity" },
+        "evidence": {
+          "items": { "$ref": "#/$defs/evidence" }
+        }
+      },
+      "if": {
+        "properties": {
+          "kind": { "const": "resource" }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["identity"],
+        "properties": {
+          "identity": {
+            "description": "A resource needs an identity that tells it apart: native_id, or logical_name when the identifier at the provider is not known.",
+            "anyOf": [
+              {
+                "required": ["native_id"],
+                "properties": {
+                  "native_id": {
+                    "description": "A resource is told apart by native_id, or by logical_name when the identifier at the provider is not known. Write one of the two."
+                  }
+                }
+              },
+              {
+                "required": ["logical_name"],
+                "properties": {
+                  "logical_name": {
+                    "description": "A resource is told apart by native_id, or by logical_name when the identifier at the provider is not known. Write one of the two."
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "identity": {
+      "description": "What identifies the node at its provider. import reads the four keys below to tell whether two descriptions are the same node, and keeps every other key.",
+      "properties": {
+        "native_id": {
+          "description": "The identifier the provider gives the resource, written as a string. Put an identifier that is only digits in quotes.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "logical_name": {
+          "description": "The name the configuration gives the resource, for when the identifier at the provider is not known.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "account_id": {
+          "description": "The account that owns the resource, written as a string. Leave it out when it is not known.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "project_id": {
+          "description": "The project that owns the resource, written as a string. Leave it out when it is not known.",
+          "$ref": "model.schema.json#/$defs/name"
+        }
+      }
+    },
+    "edge": {
+      "description": "A candidate edge. Its id is a name inside this file, and from and to name candidate nodes of this file. A candidate without evidence only names an edge that the model already has.",
+      "$ref": "model.schema.json#/$defs/edge",
+      "properties": {
+        "evidence": {
+          "items": { "$ref": "#/$defs/evidence" }
+        }
+      }
+    },
+    "evidence": {
+      "description": "One evidence item of a candidate. A connection.target names a candidate node of this file.",
+      "properties": {
+        "acquisition_id": {
+          "description": "Evidence in a findings file carries no acquisition_id: import writes acquisition.id on it.",
+          "not": {}
+        }
+      }
+    },
+    "coverage": {
+      "description": "How far the acquisition got in one scope. The target_ids of the scope name candidates of this file. checked_at is when the scope was read.",
+      "$ref": "model.schema.json#/$defs/coverage",
+      "properties": {
+        "acquisition_id": {
+          "description": "Coverage in a findings file carries no acquisition_id: import writes acquisition.id on it.",
+          "not": {}
+        }
+      }
+    },
+    "diagnostic": {
+      "description": "One thing the producer wants the user to know. import points at it and does not repeat its text.",
+      "type": "object",
+      "required": ["message"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "description": "A short name for the kind of problem, chosen by the producer.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "message": {
+          "description": "What is missing, not supported, or failed, in words that hold no secret.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "target_ids": {
+          "description": "The candidates of this file that the message is about.",
+          "type": "array",
+          "items": { "$ref": "model.schema.json#/$defs/id" }
+        }
+      }
+    }
+  }
+}

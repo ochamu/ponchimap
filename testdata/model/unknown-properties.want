@@ -1,0 +1,8 @@
+3:55	schema.unknown_property	/target/branch	-	-
+4:3	schema.unknown_property	/groups	-	-
+11:7	schema.unknown_property	/nodes/0/label	a	-
+18:67	schema.unknown_property	/nodes/0/evidence/0/supports/0/confidence	ev-a	-
+19:55	schema.unknown_property	/nodes/0/evidence/0/ref/column	ev-a	-
+21:11	schema.unknown_property	/nodes/0/evidence/0/source	ev-a	-
+28:71	schema.unknown_property	/edges/0/label	e	-
+36:7	schema.unknown_property	/coverage/0/note	cv	-

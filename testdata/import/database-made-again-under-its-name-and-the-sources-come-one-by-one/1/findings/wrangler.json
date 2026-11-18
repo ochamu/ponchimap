@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-wrangler-1",
+    "source": "wrangler-scan",
+    "route": "repository",
+    "operation": "read wrangler.toml",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:20:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "logical_name": "orders",
+        "native_id": "6f1c2a3b-0000-4000-8000-00000000d1de"
+      },
+      "evidence": [
+        {
+          "id": "d1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T09:20:00Z"
+        }
+      ]
+    }
+  ]
+}

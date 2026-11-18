@@ -1,0 +1,12 @@
+schema_version: "0.1"
+hidden: &gone [e103]
+groups:
+  - id: g-a
+    label: !!str A
+    members: *gone
+  - <<: {id: g-b}
+    label: "B"
+    members: [n102]
+layout: !layout {seed: 1}
+title: 5
+view: ! overview

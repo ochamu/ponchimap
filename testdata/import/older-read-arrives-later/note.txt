@@ -1,0 +1,1 @@
+M1 does not depend on the order of the runs: a read older than the newest complete read of its source gives nothing, and no warning is raised.

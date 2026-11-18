@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-hand-20261116",
+    "source": "hand-written-notes",
+    "route": "repository",
+    "operation": "read firebase.json, wrangler.toml, and web/src/api.ts by hand",
+    "target": {"repository": ".", "environment": "production"},
+    "checked_at": "2026-11-16T09:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "web", "kind": "resource", "provider": "firebase", "service": "firebase.hosting",
+      "identity": {"project_id": "example-memo-project", "logical_name": "memo-web"},
+      "attributes": {"role": "画面の配信", "service_name": "Firebase Hosting", "category": "hosting"},
+      "evidence": [{
+        "id": "web-declared", "kind": "declared",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "project", "id": "example-memo-project"}}
+        ],
+        "ref": {"type": "file", "path": "firebase.json", "start_line": 2, "end_line": 6},
+        "checked_at": "2026-11-16T09:00:00Z"
+      }]
+    },
+    {
+      "id": "api", "kind": "resource", "provider": "cloudflare", "service": "cloudflare.workers",
+      "identity": {"account_id": "example-memo-account", "logical_name": "memo-api"},
+      "attributes": {"role": "メモのAPI", "service_name": "Cloudflare Workers", "category": "compute"},
+      "evidence": [{
+        "id": "api-declared", "kind": "declared",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "account", "id": "example-memo-account"}}
+        ],
+        "ref": {"type": "file", "path": "wrangler.toml", "start_line": 1, "end_line": 4},
+        "checked_at": "2026-11-16T09:00:00Z"
+      }]
+    },
+    {
+      "id": "db", "kind": "resource", "provider": "cloudflare", "service": "cloudflare.d1",
+      "identity": {"account_id": "example-memo-account", "logical_name": "memo-db"},
+      "attributes": {"role": "メモの保存", "service_name": "Cloudflare D1", "category": "database"},
+      "evidence": [{
+        "id": "db-declared", "kind": "declared",
+        "supports": [
+          {"key": "existence", "value": true},
+          {"key": "scope.owner", "value": {"kind": "account", "id": "example-memo-account"}}
+        ],
+        "ref": {"type": "file", "path": "wrangler.toml", "start_line": 6, "end_line": 9},
+        "checked_at": "2026-11-16T09:00:00Z"
+      }]
+    }
+  ],
+  "edges": [
+    {
+      "id": "web-calls-api", "from": "web", "to": "api", "relation": "implementation",
+      "attributes": {"purpose": "メモの読み書き"},
+      "evidence": [{
+        "id": "web-calls-api-code", "kind": "code",
+        "supports": [{"key": "call.implemented", "value": true}],
+        "ref": {"type": "file", "path": "web/src/api.ts", "start_line": 12, "end_line": 20},
+        "checked_at": "2026-11-16T09:00:00Z"
+      }]
+    },
+    {
+      "id": "api-binds-db", "from": "api", "to": "db", "relation": "configuration", "slot": "DB",
+      "attributes": {"purpose": "DBの接続設定"},
+      "evidence": [{
+        "id": "api-binds-db-declared", "kind": "declared",
+        "supports": [{"key": "connection.configured", "value": true}, {"key": "connection.target", "value": "db"}],
+        "ref": {"type": "file", "path": "wrangler.toml", "start_line": 6, "end_line": 9},
+        "checked_at": "2026-11-16T09:00:00Z"
+      }]
+    }
+  ]
+}

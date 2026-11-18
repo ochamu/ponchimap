@@ -1,0 +1,1 @@
+The same three reads taken in as second, third, first. The oldest read comes last and gives nothing, since the two newer reads state its keys between them. same-as says the result is that of the other order.

@@ -1,0 +1,93 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "logical_name": "orders",
+          "native_id": "example-database-id"
+        },
+        "attributes": {
+          "role": "注文を保存する"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/terraform.json#t1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "infra/main.tf",
+              "start_line": 3,
+              "end_line": 9
+            },
+            "checked_at": "2026-11-16T09:10:00Z",
+            "acquisition_id": "aq-tf-1"
+          },
+          {
+            "id": "@1/findings/doc.json#s1",
+            "kind": "stated",
+            "supports": [
+              {
+                "key": "role",
+                "value": "注文を保存する"
+              }
+            ],
+            "ref": {
+              "type": "document",
+              "path": "docs/architecture.md",
+              "start_line": 3,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:05:00Z",
+            "acquisition_id": "aq-doc-1"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [
+    "@1/findings/scan.json#db"
+  ],
+  "mapping": {
+    "findings/terraform.json#db": "@1/findings/scan.json#db",
+    "findings/doc.json#db": "@1/findings/scan.json#db"
+  }
+}

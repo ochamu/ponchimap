@@ -1,0 +1,2 @@
+# The command, when "go build ./cmd/ponchimap" is run here.
+/ponchimap

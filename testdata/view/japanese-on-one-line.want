@@ -1,0 +1,2 @@
+error	1:63	schema.unknown_property	/labels/N102	-	name of the property
+error	1:95	schema.type	/layout/seed	-	an integer

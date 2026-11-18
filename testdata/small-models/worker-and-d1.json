@@ -1,0 +1,63 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "dev",
+      "identity": {"logical_name": "api"},
+      "attributes": {},
+      "evidence": [{
+        "id": "ev001",
+        "kind": "declared",
+        "supports": [{"key": "existence", "value": true}],
+        "ref": {"type": "file", "path": "wrangler.toml", "start_line": 1, "end_line": 4},
+        "checked_at": "2026-11-13T00:00:00Z"
+      }]
+    },
+    {
+      "id": "n002",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {"logical_name": "database"},
+      "attributes": {},
+      "evidence": [{
+        "id": "ev002",
+        "kind": "declared",
+        "supports": [{"key": "existence", "value": true}],
+        "ref": {"type": "file", "path": "wrangler.toml", "start_line": 5, "end_line": 8},
+        "checked_at": "2026-11-13T00:00:00Z"
+      }]
+    }
+  ],
+  "edges": [{
+    "id": "e001",
+    "from": "n001",
+    "to": "n002",
+    "relation": "configuration",
+    "slot": "DB",
+    "attributes": {"purpose": "DB接続設定"},
+    "evidence": [{
+      "id": "ev003",
+      "kind": "declared",
+      "supports": [
+        {"key": "connection.configured", "value": true},
+        {"key": "connection.target", "value": "n002"}
+      ],
+      "ref": {"type": "file", "path": "wrangler.toml", "start_line": 5, "end_line": 8},
+      "checked_at": "2026-11-13T00:00:00Z"
+    }]
+  }],
+  "coverage": [{
+    "id": "cv001",
+    "scope": {"provider": "cloudflare", "environment": "dev", "target_ids": ["n001", "n002"]},
+    "status": "not_attempted",
+    "reason": "この例では実環境照会を実施していない",
+    "checked_at": "2026-11-13T00:00:00Z"
+  }]
+}

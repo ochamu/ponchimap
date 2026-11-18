@@ -1,0 +1,1121 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "prod"
+  },
+  "nodes": [
+    {
+      "id": "n301",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-order-account",
+        "native_id": "example-order-worker"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "日本語と英語の注文を受け付け、在庫確認と購入手続きをまとめる（Order Processing API）",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev301",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            },
+            {
+              "key": "role",
+              "value": "日本語と英語の注文を受け付け、在庫確認と購入手続きをまとめる（Order Processing API）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 1,
+            "end_line": 8
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev302",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/worker.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n302",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-order-account",
+        "native_id": "example-order-db-a"
+      },
+      "attributes": {
+        "category": "database",
+        "role": "注文内容と支払結果を保管し、過去の購入履歴を検索する（Order History Database A）",
+        "service_name": "Cloudflare D1"
+      },
+      "evidence": [
+        {
+          "id": "ev303",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            },
+            {
+              "key": "role",
+              "value": "注文内容と支払結果を保管し、過去の購入履歴を検索する（Order History Database A）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 10,
+            "end_line": 16
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev304",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/n302.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n303",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-order-account",
+        "native_id": "example-order-db-b"
+      },
+      "attributes": {
+        "category": "database",
+        "role": "配送状況と変更履歴を保管し、問い合わせ時に履歴を検索する（Delivery History Database B）",
+        "service_name": "Cloudflare D1"
+      },
+      "evidence": [
+        {
+          "id": "ev305",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            },
+            {
+              "key": "role",
+              "value": "配送状況と変更履歴を保管し、問い合わせ時に履歴を検索する（Delivery History Database B）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 18,
+            "end_line": 24
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev306",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/n303.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n304",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.r2",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-order-account",
+        "native_id": "example-receipt-store"
+      },
+      "attributes": {
+        "category": "storage",
+        "role": "利用者が添付した領収書の画像を保管する（Receipt Attachment Storage）",
+        "service_name": "Cloudflare R2"
+      },
+      "evidence": [
+        {
+          "id": "ev307",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-order-account"
+              }
+            },
+            {
+              "key": "role",
+              "value": "利用者が添付した領収書の画像を保管する（Receipt Attachment Storage）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 26,
+            "end_line": 31
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n305",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.functions",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-delivery-project",
+        "native_id": "example-delivery-function"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "配送状況の変更を受け取り、利用者向けのお知らせを準備する（Delivery Update Processor）",
+        "service_name": "Cloud Functions for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev308",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-delivery-project"
+              }
+            },
+            {
+              "key": "region",
+              "value": "us-central1"
+            },
+            {
+              "key": "role",
+              "value": "配送状況の変更を受け取り、利用者向けのお知らせを準備する（Delivery Update Processor）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "infra/delivery.tf",
+            "start_line": 1,
+            "end_line": 15
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev309",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-delivery-project"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/delivery-function.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n306",
+      "kind": "service",
+      "provider": "resend",
+      "service": "resend",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "mail",
+        "role": "注文完了メールを日本語と英語で送信する（Transactional Mail Service）",
+        "service_name": "Resend"
+      },
+      "evidence": [
+        {
+          "id": "ev310",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文完了メールを日本語と英語で送信する（Transactional Mail Service）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/mail/send.ts",
+            "start_line": 8,
+            "end_line": 44
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n307",
+      "kind": "service",
+      "provider": "openai",
+      "service": "openai.api",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "api",
+        "role": "問い合わせの回答案を作る候補（Support Reply Assistant）",
+        "service_name": "OpenAI API"
+      },
+      "evidence": [
+        {
+          "id": "ev311",
+          "kind": "hint",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "問い合わせの回答案を作る候補（Support Reply Assistant）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "package.json",
+            "start_line": 22,
+            "end_line": 22
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n308",
+      "kind": "service",
+      "provider": "example",
+      "service": "example.notifications",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "role": "注文番号と受付結果を社内の担当者へ通知する（Order Acceptance Notification API）"
+      },
+      "evidence": [
+        {
+          "id": "ev312",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文番号と受付結果を社内の担当者へ通知する（Order Acceptance Notification API）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/notices/acceptance.ts",
+            "start_line": 5,
+            "end_line": 31
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n309",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.firestore",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-delivery-project",
+        "native_id": "example-delivery-firestore"
+      },
+      "attributes": {
+        "category": "database",
+        "region": "asia-northeast1",
+        "role": "配送の変更履歴を保存し、利用者が画面で確認できるようにする（Delivery Status Store）",
+        "service_name": "Cloud Firestore"
+      },
+      "evidence": [
+        {
+          "id": "ev313",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-delivery-project"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            },
+            {
+              "key": "role",
+              "value": "配送の変更履歴を保存し、利用者が画面で確認できるようにする（Delivery Status Store）"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "infra/delivery.tf",
+            "start_line": 18,
+            "end_line": 29
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev314",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-delivery-project"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/firestore.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e301",
+      "from": "n301",
+      "to": "n302",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文内容を保存する主接続先の設定（Primary Order Database）"
+      },
+      "evidence": [
+        {
+          "id": "ev315",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n302"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 10,
+            "end_line": 16
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB_PRIMARY"
+    },
+    {
+      "id": "e302",
+      "from": "n301",
+      "to": "n303",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文内容を保存する主接続先の設定（Primary Order Database）"
+      },
+      "evidence": [
+        {
+          "id": "ev316",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n303"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/primary-binding.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB_PRIMARY"
+    },
+    {
+      "id": "e303",
+      "from": "n301",
+      "to": "n302",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "過去の注文を検索する接続設定（Archive Reader A）"
+      },
+      "evidence": [
+        {
+          "id": "ev317",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n302"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 34,
+            "end_line": 40
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev318",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n302"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/db_archive_a.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB_ARCHIVE_A"
+    },
+    {
+      "id": "e304",
+      "from": "n301",
+      "to": "n303",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "配送状況を検索する接続設定（Archive Reader B）"
+      },
+      "evidence": [
+        {
+          "id": "ev319",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n303"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 42,
+            "end_line": 48
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev320",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n303"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/long-labels-and-mismatches/db_archive_b.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB_ARCHIVE_B"
+    },
+    {
+      "id": "e305",
+      "from": "n301",
+      "to": "n304",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "利用者が添付した領収書を保管する接続設定（Receipt Storage）"
+      },
+      "evidence": [
+        {
+          "id": "ev321",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n304"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 26,
+            "end_line": 31
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "RECEIPTS"
+    },
+    {
+      "id": "e306",
+      "from": "n301",
+      "to": "n306",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文完了メールを日本語と英語で送信する（Order Confirmation Mail）"
+      },
+      "evidence": [
+        {
+          "id": "ev322",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/mail/send.ts",
+            "start_line": 8,
+            "end_line": 44
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e307",
+      "from": "n301",
+      "to": "n307",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "問い合わせの回答案を作る候補（Support Reply Assistant）"
+      },
+      "evidence": [
+        {
+          "id": "ev323",
+          "kind": "hint",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "package.json",
+            "start_line": 22,
+            "end_line": 22
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e308",
+      "from": "n305",
+      "to": "n309",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文の配送状況を画面へ通知するという運用説明（Delivery Status Update）"
+      },
+      "evidence": [
+        {
+          "id": "ev324",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/delivery-operations.md",
+            "start_line": 12,
+            "end_line": 18
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e309",
+      "from": "n301",
+      "to": "n306",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文確認メールの送信要求（Order Confirmation Request）"
+      },
+      "evidence": [
+        {
+          "id": "ev325",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "log",
+            "path": "findings/long-labels-and-mismatches/mail-traffic.json"
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T08:00:00Z/2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e310",
+      "from": "n301",
+      "to": "n308",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文番号と受付結果を通知する（Order Acceptance Notice）"
+      },
+      "evidence": [
+        {
+          "id": "ev326",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "src/notices/acceptance.ts",
+            "start_line": 5,
+            "end_line": 31
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e311",
+      "from": "n305",
+      "to": "n302",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "配送状況を更新するため注文履歴を読み出す（Delivery History Lookup）"
+      },
+      "evidence": [
+        {
+          "id": "ev327",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "functions/delivery/history.ts",
+            "start_line": 9,
+            "end_line": 36
+          },
+          "checked_at": "2026-11-13T09:05:00Z",
+          "valid_time": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv301",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "target_ids": [
+          "n301"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner"
+          ]
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "complete",
+      "reason": "対象Workerの存在と所属だけを取得完了",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv302",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "prod",
+        "target_ids": [
+          "n302",
+          "n303"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner"
+          ]
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "complete",
+      "reason": "対象データベース2件の存在と所属だけを取得完了",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv303",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "target_ids": [
+          "n301"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "DB_PRIMARY"
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "complete",
+      "reason": "DB_PRIMARYの単一接続先だけを対象時点で取得完了。実環境の接続先はn303",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv304",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "target_ids": [
+          "n301"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "DB_ARCHIVE_A"
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "complete",
+      "reason": "DB_ARCHIVE_Aの単一接続先だけを対象時点で取得完了。実環境の接続先はn302",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv305",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "target_ids": [
+          "n301"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "DB_ARCHIVE_B"
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "complete",
+      "reason": "DB_ARCHIVE_Bの単一接続先だけを対象時点で取得完了。実環境の接続先はn303",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv306",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.r2",
+        "environment": "prod",
+        "target_ids": [
+          "n304"
+        ],
+        "filter": {
+          "fields": [
+            "existence"
+          ]
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "denied",
+      "reason": "領収書保管先の照会権限がなく、存在は未照合",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv307",
+      "scope": {
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "target_ids": [
+          "n301"
+        ],
+        "filter": {
+          "fields": [
+            "connection.target"
+          ],
+          "slot": "RECEIPTS"
+        },
+        "account_id": "example-order-account"
+      },
+      "status": "not_attempted",
+      "reason": "領収書保管先の接続設定は実環境と照合していない",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv308",
+      "scope": {
+        "provider": "firebase",
+        "service": "firebase.functions",
+        "environment": "prod",
+        "target_ids": [
+          "n305"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        },
+        "project_id": "example-delivery-project"
+      },
+      "status": "complete",
+      "reason": "対象関数の存在・所属・リージョンだけを取得完了。宣言と同じ対象時点で比較した",
+      "checked_at": "2026-11-13T09:05:00Z"
+    },
+    {
+      "id": "cv309",
+      "scope": {
+        "provider": "firebase",
+        "service": "firebase.firestore",
+        "environment": "prod",
+        "target_ids": [
+          "n309"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        },
+        "project_id": "example-delivery-project"
+      },
+      "status": "complete",
+      "reason": "対象データベースの存在・所属・リージョンだけを取得完了",
+      "checked_at": "2026-11-13T09:05:00Z"
+    }
+  ]
+}

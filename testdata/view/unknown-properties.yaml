@@ -1,0 +1,17 @@
+schema_version: "0.1"
+lables:
+  n101: "x"
+boundaries:
+  - member: n101
+    label: "a"
+    name: "b"
+groups:
+  - id: g-a
+    label: "A"
+    members: [n101]
+    color: blue
+aggregates:
+  - id: agg-a
+    label: "B"
+    members: [n102]
+    icon: db

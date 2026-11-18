@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-scan-1",
+    "source": "repository-scan",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "c2",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "native_id": "db-0"
+      },
+      "evidence": [
+        {
+          "id": "d2",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 20,
+            "end_line": 23
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "acct-1",
+        "native_id": "db-0"
+      },
+      "evidence": [
+        {
+          "id": "d3",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 30,
+            "end_line": 33
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    }
+  ]
+}

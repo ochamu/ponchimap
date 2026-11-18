@@ -1,0 +1,122 @@
+{
+  "nodes": {
+    "n301": {
+      "frame": "solid",
+      "marks": [
+        "mismatch"
+      ]
+    },
+    "n302": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n303": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n304": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n305": {
+      "frame": "solid",
+      "marks": [
+        "mismatch"
+      ]
+    },
+    "n306": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n307": {
+      "frame": "dashed",
+      "marks": []
+    },
+    "n308": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n309": {
+      "frame": "solid",
+      "marks": []
+    }
+  },
+  "edges": {
+    "e301": {
+      "line": "solid",
+      "label": "注文内容を保存する主接続先の設定（Primary Order Database）（不一致）"
+    },
+    "e302": {
+      "line": "solid",
+      "label": "注文内容を保存する主接続先の設定（Primary Order Database）（不一致）"
+    },
+    "e303": {
+      "line": "solid",
+      "label": "過去の注文を検索する接続設定（Archive Reader A）"
+    },
+    "e304": {
+      "line": "solid",
+      "label": "配送状況を検索する接続設定（Archive Reader B）"
+    },
+    "e305": {
+      "line": "solid",
+      "label": "利用者が添付した領収書を保管する接続設定（Receipt Storage）（未照合）"
+    },
+    "e306": {
+      "line": "solid",
+      "label": "注文完了メールを日本語と英語で送信する（Order Confirmation Mail）"
+    },
+    "e307": {
+      "line": "dashed",
+      "label": "問い合わせの回答案を作る候補（Support Reply Assistant）（手がかり）"
+    },
+    "e308": {
+      "line": "dashed",
+      "label": "注文の配送状況を画面へ通知するという運用説明（Delivery Status Update）（説明・未照合）"
+    },
+    "e309": {
+      "line": "solid",
+      "label": "注文確認メールの送信要求（Order Confirmation Request）（観測）"
+    },
+    "e310": {
+      "line": "solid",
+      "label": "注文番号と受付結果を通知する（Order Acceptance Notice）"
+    },
+    "e311": {
+      "line": "solid",
+      "label": "配送状況を更新するため注文履歴を読み出す（Delivery History Lookup）"
+    }
+  },
+  "boundaries": [
+    {
+      "label": "注文受付アカウント",
+      "members": [
+        "n301",
+        "n302",
+        "n303",
+        "n304"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "配送管理プロジェクト",
+      "members": [
+        "n305",
+        "n309"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "東京リージョン",
+      "members": [
+        "n309"
+      ],
+      "parent_label": "配送管理プロジェクト"
+    }
+  ],
+  "logical_groups": [],
+  "aggregates": [],
+  "hidden": []
+}

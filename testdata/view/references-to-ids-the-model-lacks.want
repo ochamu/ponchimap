@@ -1,0 +1,10 @@
+warning	5:3	view.unknown_reference	/labels/n999	n999	no node or edge
+warning	6:3	view.unknown_reference	/labels/e999	e999	no node or edge
+warning	8:10	view.unknown_reference	/hidden/0	n998	no node or edge
+warning	10:13	view.unknown_reference	/boundaries/0/member	n997	no node of
+warning	17:21	view.unknown_reference	/groups/0/members/1	n996	no node of
+warning	18:5	view.no_members	/groups/1	g-b	group
+warning	20:15	view.unknown_reference	/groups/1/members/0	n995	no node of
+warning	20:21	view.unknown_reference	/groups/1/members/1	n994	no node of
+warning	22:5	view.no_members	/aggregates/0	agg-a	aggregate
+warning	24:15	view.unknown_reference	/aggregates/0/members/0	e102	no node of

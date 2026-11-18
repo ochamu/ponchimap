@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-tf-2",
+    "source": "tf-scan",
+    "route": "repository",
+    "operation": "read infra/main.tf",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T15:10:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "logical_name": "orders",
+        "account_id": "example-account-01"
+      },
+      "evidence": [
+        {
+          "id": "d1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "infra/main.tf",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T15:10:00Z"
+        }
+      ]
+    }
+  ]
+}

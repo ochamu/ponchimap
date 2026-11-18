@@ -1,0 +1,70 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#worker",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "example-worker"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T11:00:00Z",
+            "acquisition_id": "aq-scan-2"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/scan.json#db"
+    },
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/scan.json#binding"
+    },
+    {
+      "severity": "warning",
+      "code": "import.unknown_target",
+      "path": "supplements.yaml",
+      "pointer": "/statements/0/target_id",
+      "target_id": "@1/findings/scan.json#db"
+    }
+  ],
+  "removed": [
+    "@1/findings/scan.json#db",
+    "@1/findings/scan.json#binding"
+  ]
+}

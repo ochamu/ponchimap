@@ -1,0 +1,64 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#api",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-a",
+          "native_id": "edge-api"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#e-api",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@2/findings/probe-a.json#e-api",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-a.json"
+            },
+            "checked_at": "2026-11-16T09:05:00Z",
+            "acquisition_id": "aq-probe-a"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [],
+  "removed": []
+}

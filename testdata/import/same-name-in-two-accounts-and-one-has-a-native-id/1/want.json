@@ -1,0 +1,101 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan-east.json#east",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-east",
+          "logical_name": "edge-api"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan-east.json#e-east",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "configs/east/wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-east"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan-west.json#west",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-west",
+          "logical_name": "edge-api",
+          "native_id": "edge-api"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan-west.json#e-west",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "configs/west/wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:01:00Z",
+            "acquisition_id": "aq-scan-west"
+          },
+          {
+            "id": "@1/findings/probe-west.json#e-west",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-west.json"
+            },
+            "checked_at": "2026-11-16T09:02:00Z",
+            "acquisition_id": "aq-probe-west"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [
+    "@1/findings/scan-east.json#east",
+    "@1/findings/scan-west.json#west"
+  ],
+  "mapping": {
+    "findings/probe-west.json#west": "@1/findings/scan-west.json#west"
+  }
+}

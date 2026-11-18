@@ -1,0 +1,3 @@
+error	model	30:19	model.no_evidence	/nodes/1/evidence	n002	no evidence
+error	model	37:19	model.no_evidence	/nodes/2/evidence	n003	no evidence
+error	model	46:19	model.no_evidence	/edges/0/evidence	e001	no evidence

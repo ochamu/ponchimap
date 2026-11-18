@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.ambiguous_identity",
+      "path": "findings/doc.json",
+      "pointer": "/nodes/0"
+    }
+  ],
+  "added": [
+    "@2/findings/doc.json#db"
+  ]
+}

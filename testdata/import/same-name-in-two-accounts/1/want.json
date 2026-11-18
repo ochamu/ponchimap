@@ -1,0 +1,95 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#a",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-a",
+          "logical_name": "app-db"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#d-a",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              },
+              {
+                "key": "scope.owner",
+                "value": {
+                  "kind": "account",
+                  "id": "account-a"
+                }
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "accounts/a/main.tf",
+              "start_line": 3,
+              "end_line": 6
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#b",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "account-b",
+          "logical_name": "app-db"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#d-b",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              },
+              {
+                "key": "scope.owner",
+                "value": {
+                  "kind": "account",
+                  "id": "account-b"
+                }
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "accounts/b/main.tf",
+              "start_line": 3,
+              "end_line": 6
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [
+    "@1/findings/scan.json#a",
+    "@1/findings/scan.json#b"
+  ]
+}

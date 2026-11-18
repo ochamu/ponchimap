@@ -1,0 +1,2395 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "prod"
+  },
+  "nodes": [
+    {
+      "id": "n401",
+      "kind": "service",
+      "provider": "client",
+      "service": "client.browser",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "client",
+        "role": "画面を開いて注文する",
+        "service_name": "利用者のブラウザ"
+      },
+      "evidence": [
+        {
+          "id": "ev401",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "画面を開いて注文する"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-401.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n402",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.dns",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-402"
+      },
+      "attributes": {
+        "category": "network",
+        "role": "公開サイトの名前を案内する",
+        "service_name": "Cloudflare DNS"
+      },
+      "evidence": [
+        {
+          "id": "ev402",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "公開サイトの名前を案内する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n402.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n403",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.pages",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-403"
+      },
+      "attributes": {
+        "category": "hosting",
+        "role": "注文画面を配信する",
+        "service_name": "Cloudflare Pages"
+      },
+      "evidence": [
+        {
+          "id": "ev403",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文画面を配信する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n403.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n404",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-404"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "注文を受け付ける",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev404",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文を受け付ける"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n404.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n405",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-405"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "届いた作業を順番に処理する",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev405",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "届いた作業を順番に処理する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/n405.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n406",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-406"
+      },
+      "attributes": {
+        "category": "database",
+        "role": "注文と支払いの記録を保存する",
+        "service_name": "Cloudflare D1"
+      },
+      "evidence": [
+        {
+          "id": "ev406",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文と支払いの記録を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n406.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n407",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-407"
+      },
+      "attributes": {
+        "category": "database",
+        "role": "操作の記録を保存する",
+        "service_name": "Cloudflare D1"
+      },
+      "evidence": [
+        {
+          "id": "ev407",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "操作の記録を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/n407.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n408",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.r2",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-408"
+      },
+      "attributes": {
+        "category": "storage",
+        "role": "注文に添付した画像を保存する",
+        "service_name": "Cloudflare R2"
+      },
+      "evidence": [
+        {
+          "id": "ev408",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文に添付した画像を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n408.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n409",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.queues",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-409"
+      },
+      "attributes": {
+        "category": "queue",
+        "role": "後で実行する作業を受け付ける",
+        "service_name": "Cloudflare Queues"
+      },
+      "evidence": [
+        {
+          "id": "ev409",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "後で実行する作業を受け付ける"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n409.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n410",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-410"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "利用者への通知をまとめる",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev410",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "利用者への通知をまとめる"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n410.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n411",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.kv",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-411"
+      },
+      "attributes": {
+        "category": "keyvalue",
+        "role": "ログイン中の状態を保存する",
+        "service_name": "Cloudflare KV"
+      },
+      "evidence": [
+        {
+          "id": "ev411",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "ログイン中の状態を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n411.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n412",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.kv",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-412"
+      },
+      "attributes": {
+        "category": "keyvalue",
+        "role": "画面の表示結果を一時保存する",
+        "service_name": "Cloudflare KV"
+      },
+      "evidence": [
+        {
+          "id": "ev412",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "画面の表示結果を一時保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/n412.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n413",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.kv",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-413"
+      },
+      "attributes": {
+        "category": "keyvalue",
+        "role": "画面の設定を保存する",
+        "service_name": "Cloudflare KV"
+      },
+      "evidence": [
+        {
+          "id": "ev413",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "画面の設定を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/n413.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n414",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.auth",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04",
+        "native_id": "example-native-414"
+      },
+      "attributes": {
+        "category": "auth",
+        "role": "ログインした利用者を確かめる",
+        "service_name": "Firebase Authentication"
+      },
+      "evidence": [
+        {
+          "id": "ev414",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "ログインした利用者を確かめる"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n414.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n415",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.firestore",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04",
+        "native_id": "example-native-415"
+      },
+      "attributes": {
+        "category": "database",
+        "region": "asia-northeast1",
+        "role": "利用者のプロフィールを保存する",
+        "service_name": "Cloud Firestore"
+      },
+      "evidence": [
+        {
+          "id": "ev415",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "利用者のプロフィールを保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n415.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n416",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.functions",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04",
+        "native_id": "example-native-416"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "asia-northeast1",
+        "role": "プロフィールの変更を処理する",
+        "service_name": "Cloud Functions for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev416",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "プロフィールの変更を処理する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n416.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n417",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.storage",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04",
+        "native_id": "example-native-417"
+      },
+      "attributes": {
+        "category": "storage",
+        "region": "asia-northeast1",
+        "role": "プロフィールの画像を保存する",
+        "service_name": "Cloud Storage for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev417",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "プロフィールの画像を保存する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n417.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n418",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.messaging",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04",
+        "native_id": "example-native-418"
+      },
+      "attributes": {
+        "category": "message",
+        "role": "利用者の端末へ通知を届ける",
+        "service_name": "Firebase Cloud Messaging"
+      },
+      "evidence": [
+        {
+          "id": "ev418",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "利用者の端末へ通知を届ける"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n418.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n419",
+      "kind": "service",
+      "provider": "resend",
+      "service": "resend",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "mail",
+        "role": "注文確認メールを送る",
+        "service_name": "Resend"
+      },
+      "evidence": [
+        {
+          "id": "ev419",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文確認メールを送る"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-419.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n420",
+      "kind": "service",
+      "provider": "stripe",
+      "service": "stripe",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "payment",
+        "role": "代金の支払いを受け付ける",
+        "service_name": "Stripe"
+      },
+      "evidence": [
+        {
+          "id": "ev420",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "代金の支払いを受け付ける"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-420.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n421",
+      "kind": "service",
+      "provider": "sentry",
+      "service": "sentry",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "monitor",
+        "role": "処理で起きたエラーを記録する",
+        "service_name": "Sentry"
+      },
+      "evidence": [
+        {
+          "id": "ev421",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "処理で起きたエラーを記録する"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-421.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n422",
+      "kind": "service",
+      "provider": "openai",
+      "service": "openai.api",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "api",
+        "role": "注文内容から説明文を作る",
+        "service_name": "OpenAI API"
+      },
+      "evidence": [
+        {
+          "id": "ev422",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "注文内容から説明文を作る"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-422.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n423",
+      "kind": "resource",
+      "provider": "github",
+      "service": "github.actions",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04-ci",
+        "native_id": "example-native-423"
+      },
+      "attributes": {
+        "category": "pipeline",
+        "role": "公開するプログラムを検査する",
+        "service_name": "GitHub Actions"
+      },
+      "evidence": [
+        {
+          "id": "ev423",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "公開するプログラムを検査する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04-ci"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n423.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n424",
+      "kind": "resource",
+      "provider": "vercel",
+      "service": "vercel",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-project-04-admin",
+        "native_id": "example-native-424"
+      },
+      "attributes": {
+        "category": "hosting",
+        "role": "担当者向けの管理画面を配信する",
+        "service_name": "Vercel"
+      },
+      "evidence": [
+        {
+          "id": "ev424",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "担当者向けの管理画面を配信する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-project-04-admin"
+              }
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/n424.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n425",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-account-04",
+        "native_id": "example-native-425"
+      },
+      "attributes": {
+        "category": "compute",
+        "role": "運用担当者からの確認に応答する",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev425",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "運用担当者からの確認に応答する"
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-account-04"
+              }
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/n425.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n426",
+      "kind": "service",
+      "provider": "supabase",
+      "service": "supabase.postgres",
+      "environment": "prod",
+      "identity": {},
+      "attributes": {
+        "category": "database",
+        "role": "売上の集計結果を照会する",
+        "service_name": "Supabase Postgres"
+      },
+      "evidence": [
+        {
+          "id": "ev460",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "売上の集計結果を照会する"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/src/service-426.ts"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e401",
+      "from": "n401",
+      "to": "n402",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "サイト名の問い合わせ"
+      },
+      "evidence": [
+        {
+          "id": "ev426",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/observed/e401.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e402",
+      "from": "n401",
+      "to": "n403",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文画面の取得"
+      },
+      "evidence": [
+        {
+          "id": "ev427",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/observed/e402.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e403",
+      "from": "n403",
+      "to": "n404",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文の送信"
+      },
+      "evidence": [
+        {
+          "id": "ev428",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e403.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e404",
+      "from": "n404",
+      "to": "n406",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文DBの接続設定"
+      },
+      "evidence": [
+        {
+          "id": "ev429",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n406"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/e404.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "ORDERS_DB"
+    },
+    {
+      "id": "e405",
+      "from": "n404",
+      "to": "n406",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev430",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e405.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e406",
+      "from": "n404",
+      "to": "n407",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "操作記録DBの接続設定"
+      },
+      "evidence": [
+        {
+          "id": "ev431",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n407"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/e406.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "AUDIT_DB"
+    },
+    {
+      "id": "e407",
+      "from": "n404",
+      "to": "n408",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "添付画像の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev432",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e407.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e408",
+      "from": "n404",
+      "to": "n409",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "後続作業の送信先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev433",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n409"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/e408.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "JOB_QUEUE"
+    },
+    {
+      "id": "e409",
+      "from": "n409",
+      "to": "n405",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "作業の受け取り先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev434",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n405"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/e409.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "CONSUMER"
+    },
+    {
+      "id": "e410",
+      "from": "n405",
+      "to": "n407",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "処理結果の記録"
+      },
+      "evidence": [
+        {
+          "id": "ev435",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e410.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e411",
+      "from": "n405",
+      "to": "n408",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "添付画像の読み取り"
+      },
+      "evidence": [
+        {
+          "id": "ev436",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e411.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e412",
+      "from": "n405",
+      "to": "n410",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "通知内容の送信"
+      },
+      "evidence": [
+        {
+          "id": "ev437",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e412.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e413",
+      "from": "n410",
+      "to": "n419",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文確認メールの送信"
+      },
+      "evidence": [
+        {
+          "id": "ev438",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e413.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e414",
+      "from": "n404",
+      "to": "n411",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "状態の保存先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev439",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n411"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/e414.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "SESSION_KV"
+    },
+    {
+      "id": "e415",
+      "from": "n404",
+      "to": "n412",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "状態の保存先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev440",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n412"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/e415.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "PAGE_KV"
+    },
+    {
+      "id": "e416",
+      "from": "n404",
+      "to": "n413",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "状態の保存先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev441",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n413"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/declared/e416.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "SETTINGS_KV"
+    },
+    {
+      "id": "e417",
+      "from": "n401",
+      "to": "n414",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "ログインの要求"
+      },
+      "evidence": [
+        {
+          "id": "ev442",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e417.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e418",
+      "from": "n404",
+      "to": "n414",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "ログイン情報の検証"
+      },
+      "evidence": [
+        {
+          "id": "ev443",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e418.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e419",
+      "from": "n404",
+      "to": "n415",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "プロフィールの読み取り"
+      },
+      "evidence": [
+        {
+          "id": "ev444",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e419.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e420",
+      "from": "n415",
+      "to": "n416",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "変更通知の送信先設定"
+      },
+      "evidence": [
+        {
+          "id": "ev445",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n416"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/deployed/e420.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ],
+      "slot": "PROFILE_TRIGGER"
+    },
+    {
+      "id": "e421",
+      "from": "n416",
+      "to": "n417",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "プロフィール画像の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev446",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e421.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e422",
+      "from": "n416",
+      "to": "n418",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "変更完了通知の送信"
+      },
+      "evidence": [
+        {
+          "id": "ev447",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e422.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e423",
+      "from": "n404",
+      "to": "n420",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "支払い手続きの開始"
+      },
+      "evidence": [
+        {
+          "id": "ev448",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/observed/e423.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e424",
+      "from": "n420",
+      "to": "n404",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "支払い結果の通知"
+      },
+      "evidence": [
+        {
+          "id": "ev449",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/observed/e424.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e425",
+      "from": "n404",
+      "to": "n421",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文処理のエラー報告"
+      },
+      "evidence": [
+        {
+          "id": "ev450",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e425.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e426",
+      "from": "n405",
+      "to": "n421",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "作業処理のエラー報告"
+      },
+      "evidence": [
+        {
+          "id": "ev451",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e426.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e427",
+      "from": "n404",
+      "to": "n422",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "注文説明文の作成要求"
+      },
+      "evidence": [
+        {
+          "id": "ev452",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e427.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e428",
+      "from": "n423",
+      "to": "n403",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "画面の公開要求"
+      },
+      "evidence": [
+        {
+          "id": "ev453",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e428.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e429",
+      "from": "n423",
+      "to": "n404",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "APIの公開要求"
+      },
+      "evidence": [
+        {
+          "id": "ev454",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e429.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e430",
+      "from": "n424",
+      "to": "n404",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "担当者による注文の確認"
+      },
+      "evidence": [
+        {
+          "id": "ev455",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e430.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e431",
+      "from": "n425",
+      "to": "n404",
+      "relation": "observation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "運用担当者による応答確認"
+      },
+      "evidence": [
+        {
+          "id": "ev456",
+          "kind": "observed",
+          "supports": [
+            {
+              "key": "traffic.observed",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixtures/order-service/observed/e431.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e432",
+      "from": "n410",
+      "to": "n418",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "端末への通知要求"
+      },
+      "evidence": [
+        {
+          "id": "ev457",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e432.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e433",
+      "from": "n403",
+      "to": "n411",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "ログイン状態の読み取り"
+      },
+      "evidence": [
+        {
+          "id": "ev458",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e433.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e434",
+      "from": "n403",
+      "to": "n412",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "表示結果の読み取り"
+      },
+      "evidence": [
+        {
+          "id": "ev459",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e434.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e435",
+      "from": "n404",
+      "to": "n426",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "売上集計の問い合わせ"
+      },
+      "evidence": [
+        {
+          "id": "ev461",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixtures/order-service/code/e435.json"
+          },
+          "checked_at": "2026-11-13T10:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv401",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n402",
+          "n403",
+          "n404",
+          "n406",
+          "n408",
+          "n409",
+          "n410",
+          "n411",
+          "n425"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "role"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "記載したリソースの存在と所属、役割を確認した固定の取得結果",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv402",
+      "scope": {
+        "provider": "firebase",
+        "environment": "prod",
+        "target_ids": [
+          "n414",
+          "n415",
+          "n416",
+          "n417",
+          "n418"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "role"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "記載したサービスの存在と所属、役割を確認した固定の取得結果",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv403",
+      "scope": {
+        "provider": "firebase",
+        "environment": "prod",
+        "target_ids": [
+          "n415",
+          "n416",
+          "n417"
+        ],
+        "filter": {
+          "fields": [
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "記載した三つのリソースの配置リージョンを確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv404",
+      "scope": {
+        "provider": "github",
+        "environment": "prod",
+        "target_ids": [
+          "n423"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "role"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "検査用ワークフローの存在と所属、役割を確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv405",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n405",
+          "n407",
+          "n412",
+          "n413"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner"
+          ]
+        }
+      },
+      "status": "not_attempted",
+      "reason": "宣言を取り込んだが、記載したリソースの実環境照会は未実施",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv406",
+      "scope": {
+        "provider": "vercel",
+        "environment": "prod",
+        "target_ids": [
+          "n424"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner"
+          ]
+        }
+      },
+      "status": "not_attempted",
+      "reason": "管理画面の設定宣言だけを取り込んだ",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv407",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "ORDERS_DB"
+        }
+      },
+      "status": "complete",
+      "reason": "注文DBの接続設定を確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv408",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "JOB_QUEUE"
+        }
+      },
+      "status": "complete",
+      "reason": "作業キューの接続設定を確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv409",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "SESSION_KV"
+        }
+      },
+      "status": "complete",
+      "reason": "ログイン状態の保存先設定を確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv410",
+      "scope": {
+        "provider": "firebase",
+        "environment": "prod",
+        "target_ids": [
+          "n415"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "PROFILE_TRIGGER"
+        }
+      },
+      "status": "complete",
+      "reason": "プロフィール変更通知の送信先を確認",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv411",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "AUDIT_DB"
+        }
+      },
+      "status": "not_attempted",
+      "reason": "操作記録DBの接続設定は宣言のみで実環境は未照会",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv412",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n409"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "CONSUMER"
+        }
+      },
+      "status": "not_attempted",
+      "reason": "作業の受け取り先は宣言のみで実環境は未照会",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv413",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "PAGE_KV"
+        }
+      },
+      "status": "not_attempted",
+      "reason": "表示結果の保存先は宣言のみで実環境は未照会",
+      "checked_at": "2026-11-13T10:00:00Z"
+    },
+    {
+      "id": "cv414",
+      "scope": {
+        "provider": "cloudflare",
+        "environment": "prod",
+        "target_ids": [
+          "n404"
+        ],
+        "filter": {
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ],
+          "slot": "SETTINGS_KV"
+        }
+      },
+      "status": "not_attempted",
+      "reason": "画面設定の保存先は宣言のみで実環境は未照会",
+      "checked_at": "2026-11-13T10:00:00Z"
+    }
+  ]
+}

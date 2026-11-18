@@ -1,0 +1,1 @@
+The same queue with its three consumers declared in the repository. After the read that stopped after the first page, the two edges that it did not reach still hold the deployed evidence of the complete read, so the view derivation keeps them confirmed (marks).

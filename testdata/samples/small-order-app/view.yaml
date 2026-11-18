@@ -1,0 +1,25 @@
+schema_version: "0.1"
+view: overview
+title: "小規模な注文アプリ"
+labels:
+  n101: "注文API"
+  n102: "利用者DB"
+  n103: "注文処理"
+  n104: "認証"
+  n105: "注文DB"
+  n106: "メール送信"
+  n107: "エラー通知の候補"
+boundaries:
+  - member: n101
+    level: owner
+    label: "配信アカウント"
+  - member: n103
+    level: owner
+    label: "アプリプロジェクト"
+groups: []
+aggregates: []
+hidden: []
+layout:
+  engine: tala
+  direction: right
+  seed: 1

@@ -1,0 +1,1 @@
+N4: two nodes carry the name, so the name-only description joins neither and becomes a node of its own.

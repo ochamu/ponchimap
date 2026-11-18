@@ -1,0 +1,2 @@
+error	model	16:19	schema.enum	/nodes/0/evidence/0/kind	ev001	allowed values
+error	view	4:11	schema.enum	/layout/engine	-	allowed values

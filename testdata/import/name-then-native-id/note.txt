@@ -1,0 +1,1 @@
+N3: the node made from a name keeps its ID when a later read knows the native ID, and the name-only description of the next scan still finds it.

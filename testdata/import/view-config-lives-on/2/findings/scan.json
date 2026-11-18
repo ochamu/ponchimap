@@ -1,0 +1,139 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-scan-2",
+    "source": "repository-scan",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T15:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "worker",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-worker"
+      },
+      "evidence": [
+        {
+          "id": "w1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 2,
+            "end_line": 6
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "d1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 9,
+            "end_line": 12
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "queue",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.queues",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-queue"
+      },
+      "evidence": [
+        {
+          "id": "q1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 16,
+            "end_line": 18
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "binding",
+      "from": "worker",
+      "to": "db",
+      "relation": "configuration",
+      "slot": "DB",
+      "attributes": {
+        "purpose": "DB接続設定"
+      },
+      "evidence": [
+        {
+          "id": "b1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 9,
+            "end_line": 12
+          },
+          "checked_at": "2026-11-16T15:00:00Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+error	2:8	schema.type	/groups	-	key without a value
+error	4:8	schema.type	/labels/n101	-	key without a value
+error	5:16	schema.type	/layout/seed	-	key without a value

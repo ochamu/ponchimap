@@ -1,0 +1,7 @@
+schema_version: "0.1"
+title: &t
+  ! 5
+layout:
+  seed: &s # 注釈
+    ! 5
+view: &v overview

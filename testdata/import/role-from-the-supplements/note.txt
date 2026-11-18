@@ -1,0 +1,1 @@
+A3: the code says one role and the user states another. The role that the supplements state is written, and no warning is raised.

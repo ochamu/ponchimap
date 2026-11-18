@@ -1,0 +1,1 @@
+name-follows-its-environment-to-another-database, with the folder given: the file of the extraction is the one that was taken in, and the read of prod is new. A file that is given is read again, so the name in prod is settled in this run: it goes to the other database at once, and no mismatch appears in between.

@@ -1,0 +1,1 @@
+A3 reads the statements without a valid_time, as A1 does: what the user states about a later date is kept as evidence and does not become the role of today.

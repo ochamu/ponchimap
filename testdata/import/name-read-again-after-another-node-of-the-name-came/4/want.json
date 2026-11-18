@@ -1,0 +1,100 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/env.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "logical_name": "orders",
+          "account_id": "example-account-01"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/env.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": ".env.example",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T15:00:00Z",
+            "acquisition_id": "aq-env-2"
+          },
+          {
+            "id": "@2/findings/terraform.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "infra/main.tf",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:10:00Z",
+            "acquisition_id": "aq-tf-1"
+          }
+        ]
+      },
+      {
+        "id": "@3/findings/wrangler.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "logical_name": "orders",
+          "native_id": "6f1c2a3b-0000-4000-8000-00000000d1de"
+        },
+        "evidence": [
+          {
+            "id": "@3/findings/wrangler.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T09:20:00Z",
+            "acquisition_id": "aq-wrangler-1"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [],
+  "added": [],
+  "removed": [],
+  "mapping": {
+    "findings/env.json#db": "@1/findings/env.json#db"
+  }
+}

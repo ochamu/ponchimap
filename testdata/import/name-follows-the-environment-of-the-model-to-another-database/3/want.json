@@ -1,0 +1,28 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/scan.json#b-dev"
+    }
+  ],
+  "added": [],
+  "removed": [
+    "@1/findings/scan.json#b-dev"
+  ],
+  "mapping": {
+    "findings/scan.json#db-dev": "@2/findings/probe-dev.json#db",
+    "findings/scan.json#db-prod": "@1/findings/scan.json#db-dev"
+  },
+  "marks": {
+    "@1/findings/scan.json#w-dev": [],
+    "@1/findings/scan.json#w-prod": [],
+    "@1/findings/scan.json#db-dev": [],
+    "@1/findings/scan.json#b-prod": [],
+    "@2/findings/probe-dev.json#db": [],
+    "@2/findings/probe-dev.json#b": []
+  }
+}

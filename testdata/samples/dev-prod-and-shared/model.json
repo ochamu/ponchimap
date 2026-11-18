@@ -1,0 +1,1296 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n201",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-dev-prod-and-shared-account",
+        "native_id": "example-dev-prod-and-shared-worker-dev"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "global",
+        "role": "開発APIの入口",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev201",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-dev-prod-and-shared-account"
+              }
+            },
+            {
+              "key": "region",
+              "value": "global"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n201-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev202",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "開発APIの入口"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/src/worker.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n202",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "environment": "prod",
+      "identity": {
+        "account_id": "example-dev-prod-and-shared-account",
+        "native_id": "example-dev-prod-and-shared-worker-prod"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "global",
+        "role": "本番APIの入口",
+        "service_name": "Cloudflare Workers"
+      },
+      "evidence": [
+        {
+          "id": "ev203",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-dev-prod-and-shared-account"
+              }
+            },
+            {
+              "key": "region",
+              "value": "global"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n202-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev204",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "本番APIの入口"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/src/worker.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n203",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.kv",
+      "environment": "shared",
+      "identity": {
+        "account_id": "example-dev-prod-and-shared-account",
+        "native_id": "example-dev-prod-and-shared-kv-shared"
+      },
+      "attributes": {
+        "category": "keyvalue",
+        "region": "global",
+        "role": "環境共通の辞書",
+        "service_name": "Cloudflare KV"
+      },
+      "evidence": [
+        {
+          "id": "ev205",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-dev-prod-and-shared-account"
+              }
+            },
+            {
+              "key": "region",
+              "value": "global"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/wrangler.dev.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev206",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-dev-prod-and-shared-account"
+              }
+            },
+            {
+              "key": "region",
+              "value": "global"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/wrangler.prod.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev207",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "account",
+                "id": "example-dev-prod-and-shared-account"
+              }
+            },
+            {
+              "key": "region",
+              "value": "global"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n203-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev208",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "環境共通の辞書"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/src/dictionary.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n204",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.functions",
+      "environment": "dev",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-dev",
+        "native_id": "example-dev-prod-and-shared-functions-dev"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "asia-northeast1",
+        "role": "開発データの処理",
+        "service_name": "Cloud Functions for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev209",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-dev"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n204-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev210",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "開発データの処理"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/api.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n205",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.firestore",
+      "environment": "dev",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-dev",
+        "native_id": "example-dev-prod-and-shared-firestore-dev"
+      },
+      "attributes": {
+        "category": "database",
+        "region": "asia-northeast1",
+        "role": "開発データの保存",
+        "service_name": "Cloud Firestore"
+      },
+      "evidence": [
+        {
+          "id": "ev211",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-dev"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n205-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev212",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "開発データの保存"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/database.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n206",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.functions",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-prod",
+        "native_id": "example-dev-prod-and-shared-functions-prod"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "asia-northeast1",
+        "role": "本番データの処理",
+        "service_name": "Cloud Functions for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev213",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-prod"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n206-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev214",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "本番データの処理"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/api.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n207",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.firestore",
+      "environment": "prod",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-prod",
+        "native_id": "example-dev-prod-and-shared-firestore-prod"
+      },
+      "attributes": {
+        "category": "database",
+        "region": "asia-northeast1",
+        "role": "本番データの保存",
+        "service_name": "Cloud Firestore"
+      },
+      "evidence": [
+        {
+          "id": "ev215",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-prod"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n207-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev216",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "本番データの保存"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/database.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n208",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.storage",
+      "environment": "shared",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-shared",
+        "native_id": "example-dev-prod-and-shared-storage-shared"
+      },
+      "attributes": {
+        "category": "storage",
+        "region": "asia-northeast1",
+        "role": "環境共通の画像保存",
+        "service_name": "Cloud Storage for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev217",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-shared"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n208-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev218",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "環境共通の画像保存"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/images.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n209",
+      "kind": "resource",
+      "provider": "firebase",
+      "service": "firebase.functions",
+      "environment": "shared",
+      "identity": {
+        "project_id": "example-dev-prod-and-shared-project-shared",
+        "native_id": "example-dev-prod-and-shared-functions-image"
+      },
+      "attributes": {
+        "category": "compute",
+        "region": "us-central1",
+        "role": "画像の変換",
+        "service_name": "Cloud Functions for Firebase"
+      },
+      "evidence": [
+        {
+          "id": "ev219",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "example-dev-prod-and-shared-project-shared"
+              }
+            },
+            {
+              "key": "region",
+              "value": "us-central1"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/n209-resource.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "ev220",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "role",
+              "value": "画像の変換"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/transform.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "n210",
+      "kind": "service",
+      "provider": "resend",
+      "service": "resend",
+      "environment": "shared",
+      "identity": {},
+      "attributes": {
+        "category": "mail",
+        "role": "画像処理完了メールの送信",
+        "service_name": "Resend"
+      },
+      "evidence": [
+        {
+          "id": "ev221",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "画像処理完了メールの送信"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/mail.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e201",
+      "from": "n201",
+      "to": "n203",
+      "relation": "configuration",
+      "environment": "dev",
+      "attributes": {
+        "purpose": "開発環境の共通辞書設定"
+      },
+      "evidence": [
+        {
+          "id": "ev222",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n203"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/dev-dictionary-binding.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DICTIONARY"
+    },
+    {
+      "id": "e202",
+      "from": "n202",
+      "to": "n203",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "本番環境の共通辞書設定"
+      },
+      "evidence": [
+        {
+          "id": "ev223",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n203"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/prod-dictionary-binding.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DICTIONARY"
+    },
+    {
+      "id": "e203",
+      "from": "n201",
+      "to": "n204",
+      "relation": "implementation",
+      "environment": "dev",
+      "attributes": {
+        "purpose": "開発APIの呼び出し"
+      },
+      "evidence": [
+        {
+          "id": "ev224",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/src/worker.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e204",
+      "from": "n202",
+      "to": "n206",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "本番APIの呼び出し"
+      },
+      "evidence": [
+        {
+          "id": "ev225",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/src/worker.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e205",
+      "from": "n204",
+      "to": "n205",
+      "relation": "configuration",
+      "environment": "dev",
+      "attributes": {
+        "purpose": "開発DBの接続設定"
+      },
+      "evidence": [
+        {
+          "id": "ev226",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n205"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/dev-database-setting.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "FIRESTORE"
+    },
+    {
+      "id": "e206",
+      "from": "n206",
+      "to": "n207",
+      "relation": "configuration",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "本番DBの接続設定"
+      },
+      "evidence": [
+        {
+          "id": "ev227",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n207"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/prod-database-setting.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "FIRESTORE"
+    },
+    {
+      "id": "e207",
+      "from": "n204",
+      "to": "n205",
+      "relation": "implementation",
+      "environment": "dev",
+      "attributes": {
+        "purpose": "開発データの保存"
+      },
+      "evidence": [
+        {
+          "id": "ev228",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/database.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e208",
+      "from": "n206",
+      "to": "n207",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "本番データの保存"
+      },
+      "evidence": [
+        {
+          "id": "ev229",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/database.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e209",
+      "from": "n204",
+      "to": "n208",
+      "relation": "implementation",
+      "environment": "dev",
+      "attributes": {
+        "purpose": "開発画像の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev230",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/images.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e210",
+      "from": "n206",
+      "to": "n208",
+      "relation": "implementation",
+      "environment": "prod",
+      "attributes": {
+        "purpose": "本番画像の保存"
+      },
+      "evidence": [
+        {
+          "id": "ev231",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/images.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "e211",
+      "from": "n208",
+      "to": "n209",
+      "relation": "configuration",
+      "environment": "shared",
+      "attributes": {
+        "purpose": "画像変換の起動設定"
+      },
+      "evidence": [
+        {
+          "id": "ev232",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "n209"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/dev-prod-and-shared/findings/image-trigger-setting.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "IMAGE_FINALIZED"
+    },
+    {
+      "id": "e212",
+      "from": "n209",
+      "to": "n210",
+      "relation": "implementation",
+      "environment": "shared",
+      "attributes": {
+        "purpose": "画像処理完了メールの送信"
+      },
+      "evidence": [
+        {
+          "id": "ev233",
+          "kind": "code",
+          "supports": [
+            {
+              "key": "call.implemented",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "fixture-sources/dev-prod-and-shared/functions/mail.ts"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv201",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-dev-prod-and-shared-account",
+        "environment": "dev",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n201"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv202",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-dev-prod-and-shared-account",
+        "environment": "prod",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n202"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv203",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-dev-prod-and-shared-account",
+        "environment": "shared",
+        "service": "cloudflare.kv",
+        "target_ids": [
+          "n203"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv204",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-dev",
+        "environment": "dev",
+        "service": "firebase.functions",
+        "target_ids": [
+          "n204"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv205",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-dev",
+        "environment": "dev",
+        "service": "firebase.firestore",
+        "target_ids": [
+          "n205"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv206",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-prod",
+        "environment": "prod",
+        "service": "firebase.functions",
+        "target_ids": [
+          "n206"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv207",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-prod",
+        "environment": "prod",
+        "service": "firebase.firestore",
+        "target_ids": [
+          "n207"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv208",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-shared",
+        "environment": "shared",
+        "service": "firebase.storage",
+        "target_ids": [
+          "n208"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv209",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-shared",
+        "environment": "shared",
+        "service": "firebase.functions",
+        "target_ids": [
+          "n209"
+        ],
+        "filter": {
+          "fields": [
+            "existence",
+            "scope.owner",
+            "region"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した単一リソースの存在・所属・地域のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv210",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-dev-prod-and-shared-account",
+        "environment": "dev",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n201"
+        ],
+        "filter": {
+          "slot": "DICTIONARY",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した接続設定項目のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv211",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-dev-prod-and-shared-account",
+        "environment": "prod",
+        "service": "cloudflare.workers",
+        "target_ids": [
+          "n202"
+        ],
+        "filter": {
+          "slot": "DICTIONARY",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した接続設定項目のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv212",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-dev",
+        "environment": "dev",
+        "service": "firebase.functions",
+        "target_ids": [
+          "n204"
+        ],
+        "filter": {
+          "slot": "FIRESTORE",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した接続設定項目のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv213",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-prod",
+        "environment": "prod",
+        "service": "firebase.functions",
+        "target_ids": [
+          "n206"
+        ],
+        "filter": {
+          "slot": "FIRESTORE",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した接続設定項目のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "cv214",
+      "scope": {
+        "provider": "firebase",
+        "project_id": "example-dev-prod-and-shared-project-shared",
+        "environment": "shared",
+        "service": "firebase.storage",
+        "target_ids": [
+          "n208"
+        ],
+        "filter": {
+          "slot": "IMAGE_FINALIZED",
+          "fields": [
+            "connection.configured",
+            "connection.target"
+          ]
+        }
+      },
+      "status": "complete",
+      "reason": "指定した接続設定項目のみ取得完了",
+      "checked_at": "2026-11-13T09:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+5:111	schema.format	/nodes/0/attributes/service_name	a	-
+6:111	schema.format	/nodes/1/attributes/service_name	b	-
+7:111	schema.format	/nodes/2/attributes/service_name	c	-
+8:111	schema.format	/nodes/3/attributes/service_name	d	-
+9:111	schema.format	/nodes/4/attributes/service_name	e	-
+10:111	schema.format	/nodes/5/attributes/service_name	f	-
+11:111	schema.type	/nodes/6/attributes/service_name	g	-
+12:111	schema.format	/nodes/7/attributes/service_name	k	-
+13:111	schema.format	/nodes/8/attributes/service_name	l	-
+14:111	schema.format	/nodes/9/attributes/service_name	m	-
+15:111	schema.format	/nodes/10/attributes/service_name	n	-
+16:111	schema.format	/nodes/11/attributes/service_name	o	-

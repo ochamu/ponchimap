@@ -1,0 +1,8 @@
+error	3:5	schema.required	/boundaries/0/label	-	"label"
+error	3:5	schema.required	/boundaries/0/member	-	"member"
+error	5:5	schema.required	/groups/0/id	-	"id"
+error	5:5	schema.required	/groups/0/label	-	"label"
+error	5:5	schema.required	/groups/0/members	-	"members"
+error	6:5	schema.required	/groups/1/label	g-b	"label"
+error	6:5	schema.required	/groups/1/members	g-b	"members"
+error	8:5	schema.required	/aggregates/0/label	agg-a	"label"

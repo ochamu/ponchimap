@@ -1,0 +1,12 @@
+3:13	schema.required	/target/environment	-	"environment"
+5:5	schema.required	/nodes/0/provider	a	"provider"
+10:9	schema.required	/nodes/0/evidence/0/checked_at	ev-no-time	"checked_at"
+16:9	schema.required	/nodes/0/evidence/1/ref	ev-no-ref	"ref"
+19:24	schema.required	/nodes/0/evidence/1/supports/0/value	ev-no-ref	"value"
+25:23	schema.range	/nodes/0/evidence/2/supports	ev-no-path	-
+26:18	schema.required	/nodes/0/evidence/2/ref/path	ev-no-path	"path"
+26:18	schema.required	/nodes/0/evidence/2/ref/start_line	ev-no-path	"start_line"
+33:5	schema.required	/edges/0/evidence	e	"evidence"
+33:5	schema.required	/edges/0/to	e	"to"
+36:5	schema.required	/coverage/0/checked_at	cv	"checked_at"
+36:5	schema.required	/coverage/0/scope	cv	"scope"

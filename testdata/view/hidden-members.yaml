@@ -1,0 +1,10 @@
+schema_version: "0.1"
+hidden: [n102, e101]
+groups:
+  - id: g-a
+    label: "A"
+    members: [n101, n102]
+aggregates:
+  - id: a-a
+    label: "集約"
+    members: [n102, n103]

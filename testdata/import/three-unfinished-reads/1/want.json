@@ -1,0 +1,12 @@
+{
+  "status": "partial",
+  "model": "any",
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.incomplete_acquisition",
+      "path": "findings/probe.json",
+      "pointer": "/acquisition/complete"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+schema_version: "0.1"
+groups:
+  - id: g-first
+    label: A
+    members: [n101]
+    123: x
+groups:
+  - id: g-second
+    label: B
+    members: [n102]
+    456: y

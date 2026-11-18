@@ -1,0 +1,179 @@
+{
+  "nodes": {
+    "n201": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n202": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n203": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n204": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n205": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n206": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n207": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n208": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n209": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n210": {
+      "frame": "solid",
+      "marks": []
+    }
+  },
+  "edges": {
+    "e201": {
+      "line": "solid",
+      "label": "開発環境の共通辞書設定"
+    },
+    "e202": {
+      "line": "solid",
+      "label": "本番環境の共通辞書設定"
+    },
+    "e203": {
+      "line": "solid",
+      "label": "開発APIの呼び出し"
+    },
+    "e204": {
+      "line": "solid",
+      "label": "本番APIの呼び出し"
+    },
+    "e205": {
+      "line": "solid",
+      "label": "開発DBの接続設定"
+    },
+    "e206": {
+      "line": "solid",
+      "label": "本番DBの接続設定"
+    },
+    "e207": {
+      "line": "solid",
+      "label": "開発データの保存"
+    },
+    "e208": {
+      "line": "solid",
+      "label": "本番データの保存"
+    },
+    "e209": {
+      "line": "solid",
+      "label": "開発画像の保存"
+    },
+    "e210": {
+      "line": "solid",
+      "label": "本番画像の保存"
+    },
+    "e211": {
+      "line": "solid",
+      "label": "画像変換の起動設定"
+    },
+    "e212": {
+      "line": "solid",
+      "label": "画像処理完了メールの送信"
+    }
+  },
+  "boundaries": [
+    {
+      "label": "配信アカウント",
+      "members": [
+        "n201",
+        "n202",
+        "n203"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "グローバル",
+      "members": [
+        "n201",
+        "n202",
+        "n203"
+      ],
+      "parent_label": "配信アカウント"
+    },
+    {
+      "label": "開発プロジェクト",
+      "members": [
+        "n204",
+        "n205"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "東京（開発）",
+      "members": [
+        "n204",
+        "n205"
+      ],
+      "parent_label": "開発プロジェクト"
+    },
+    {
+      "label": "本番プロジェクト",
+      "members": [
+        "n206",
+        "n207"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "東京（本番）",
+      "members": [
+        "n206",
+        "n207"
+      ],
+      "parent_label": "本番プロジェクト"
+    },
+    {
+      "label": "共有プロジェクト",
+      "members": [
+        "n208",
+        "n209"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "東京（共有）",
+      "members": [
+        "n208"
+      ],
+      "parent_label": "共有プロジェクト"
+    },
+    {
+      "label": "米国中部",
+      "members": [
+        "n209"
+      ],
+      "parent_label": "共有プロジェクト"
+    }
+  ],
+  "logical_groups": [
+    {
+      "id": "g-dev",
+      "members": [
+        "n204",
+        "n205"
+      ]
+    }
+  ],
+  "aggregates": [],
+  "hidden": []
+}

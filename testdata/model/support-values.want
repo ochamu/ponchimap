@@ -1,0 +1,11 @@
+15:43	schema.type	/nodes/0/evidence/0/supports/0/value	ev-a	-
+16:38	schema.range	/nodes/0/evidence/0/supports/1/value	ev-a	-
+17:40	schema.type	/nodes/0/evidence/0/supports/2/value	ev-a	-
+18:45	schema.required	/nodes/0/evidence/0/supports/3/value/id	ev-a	"id"
+19:45	schema.type	/nodes/0/evidence/0/supports/4/value	ev-a	-
+20:42	schema.type	/nodes/0/evidence/0/supports/5/value	ev-a	-
+41:55	schema.type	/edges/0/evidence/0/supports/0/value	ev-e	-
+42:51	schema.format	/edges/0/evidence/0/supports/1/value	ev-e	-
+43:50	schema.type	/edges/0/evidence/0/supports/2/value	ev-e	-
+44:50	schema.type	/edges/0/evidence/0/supports/3/value	ev-e	-
+45:52	schema.type	/edges/0/evidence/0/supports/4/value	ev-e	-

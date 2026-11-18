@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "View config",
+  "description": "How the configuration model is shown in one figure: display names, groups, aggregates, hidden elements, and the layout. It adds no facts: a label here is not evidence. Version 0.1.",
+  "type": "object",
+  "required": ["schema_version"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "Lets an editor bind this file to the schema. The tool keeps it and does not read it.",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "The version of this contract, written in quotes: \"0.1\". Without the quotes YAML reads a number. A tool reads only the versions it supports.",
+      "type": "string",
+      "const": "0.1"
+    },
+    "view": {
+      "description": "The kind of figure. This version draws the overview.",
+      "type": "string",
+      "enum": ["overview"],
+      "default": "overview"
+    },
+    "title": {
+      "description": "The title of the figure, a string. Put it in quotes when it reads as a number, true, false, or null, or when it holds a number sign after a space, which starts a comment otherwise.",
+      "type": "string"
+    },
+    "labels": {
+      "description": "Display names by ID. Each name here is the ID of a node or an edge of the model, in the ID form: lowercase letters, digits, and hyphens, starting with a letter. Each value is the role line of the node or the label of the relation. A label renames and is not evidence.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*$": { "$ref": "#/$defs/label" }
+      },
+      "additionalProperties": false
+    },
+    "boundaries": {
+      "description": "Display names of real boundaries. A boundary is named through a node that sits in it.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/boundaryAlias" }
+    },
+    "groups": {
+      "description": "Logical groups, each drawn around its members. A group explains the figure and is not a real boundary.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/group" }
+    },
+    "aggregates": {
+      "description": "Aggregates, each drawn as one node in place of its members.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/aggregate" }
+    },
+    "hidden": {
+      "description": "The IDs of the nodes and edges left out of the figure, each listed once. The model keeps them and their evidence.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/elementId" },
+      "uniqueItems": true
+    },
+    "layout": {
+      "description": "Where things are drawn. It never changes what is drawn.",
+      "$ref": "#/$defs/layout"
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "A name in the ID form: lowercase letters, digits, and hyphens, starting with a letter. Put a name in quotes when it reads as true, false, or null.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "nodeId": {
+      "description": "The ID of a node of the model.",
+      "$ref": "#/$defs/id"
+    },
+    "elementId": {
+      "description": "The ID of a node or an edge of the model.",
+      "$ref": "#/$defs/id"
+    },
+    "label": {
+      "description": "A string shown in the figure, of one character or more. Put it in quotes when it reads as a number, true, false, or null, or when it holds a number sign after a space, which starts a comment otherwise.",
+      "type": "string",
+      "minLength": 1
+    },
+    "members": {
+      "description": "The IDs of the member nodes, one or more, each listed once.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/nodeId" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "boundaryAlias": {
+      "description": "The display name of one real boundary: member names a node in it, and label is the name.",
+      "type": "object",
+      "required": ["member", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "member": {
+          "description": "A node that sits in the boundary.",
+          "$ref": "#/$defs/nodeId"
+        },
+        "level": {
+          "description": "Which boundary around the member is named: the one of its owner, such as an account or a project, the one of its region, or the one of its network, such as a VPC.",
+          "type": "string",
+          "enum": ["owner", "region", "network"],
+          "default": "owner"
+        },
+        "label": {
+          "description": "The display name of the boundary.",
+          "$ref": "#/$defs/label"
+        }
+      }
+    },
+    "group": {
+      "description": "A logical group: an ID, a label, and the member nodes.",
+      "type": "object",
+      "required": ["id", "label", "members"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the group. No other group or aggregate, and no node or edge of the model, has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "description": "The view config can add logical groups only. Real boundaries come from the evidence in the model.",
+          "type": "string",
+          "enum": ["logical"],
+          "default": "logical"
+        },
+        "label": {
+          "description": "The name shown on the group.",
+          "$ref": "#/$defs/label"
+        },
+        "members": { "$ref": "#/$defs/members" }
+      }
+    },
+    "aggregate": {
+      "description": "An aggregate: an ID, a label, and the member nodes it stands for.",
+      "type": "object",
+      "required": ["id", "label", "members"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the aggregate. No other group or aggregate, and no node or edge of the model, has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "description": "The title of the aggregate node.",
+          "$ref": "#/$defs/label"
+        },
+        "role": {
+          "description": "The role line of the aggregate node, a string. Without it the node says how many members it stands for. Put it in quotes when it holds a number sign after a space, which starts a comment otherwise.",
+          "type": "string"
+        },
+        "members": { "$ref": "#/$defs/members" }
+      }
+    },
+    "layout": {
+      "description": "Where things are drawn: the layout engine, the direction, and the seed.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engine": {
+          "description": "The layout engine. tala lays the figure out by a seed; elk has no seed.",
+          "type": "string",
+          "enum": ["tala", "elk"],
+          "default": "tala"
+        },
+        "direction": {
+          "description": "The direction in which things are laid out. With elk, right tends to give a landscape figure and down a portrait one; with tala it depends on the model.",
+          "type": "string",
+          "enum": ["right", "down"],
+          "default": "right"
+        },
+        "seed": {
+          "description": "Picks one of the layouts that tala can give for the same input: a whole number from 1 to 2147483647. The same model, view config, and seed give the same figure. elk ignores it.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "default": 1
+        }
+      }
+    }
+  }
+}

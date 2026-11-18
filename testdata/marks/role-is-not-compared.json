@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "x",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "p",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "d",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "role",
+              "value": "保存"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "q",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "role",
+              "value": "配信"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

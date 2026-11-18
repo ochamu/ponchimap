@@ -1,0 +1,1 @@
+N5: the first node of the model has the native ID without an owner, the second has it with the owner. N2 makes them the same, and import does not merge them. The candidate has the key of the second node and goes to it.

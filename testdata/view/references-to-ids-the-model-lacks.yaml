@@ -1,0 +1,24 @@
+schema_version: "0.1"
+title: "モデルから消えたIDを指す表示設定"
+labels:
+  n101: "入口"
+  n999: "消えたノード"
+  e999: "消えた関係"
+  e101: "呼び出し"
+hidden: [n998, e103]
+boundaries:
+  - member: n997
+    label: "消えた境界"
+  - member: n101
+    label: "配信アカウント"
+groups:
+  - id: g-a
+    label: "残るグループ"
+    members: [n101, n996]
+  - id: g-b
+    label: "消えるグループ"
+    members: [n995, n994]
+aggregates:
+  - id: agg-a
+    label: "まとめ"
+    members: [e102]

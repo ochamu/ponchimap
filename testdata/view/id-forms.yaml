@@ -1,0 +1,12 @@
+schema_version: "0.1"
+labels:
+  N101: "大文字のID"
+  n101: ""
+hidden: [E101, e 102]
+boundaries:
+  - member: "n101!"
+    label: "x"
+groups:
+  - id: G_1
+    label: "x"
+    members: [n-101, 9n]

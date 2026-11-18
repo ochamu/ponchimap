@@ -1,0 +1,1 @@
+An acquisition ID names one read: the same ID with another content is refused.

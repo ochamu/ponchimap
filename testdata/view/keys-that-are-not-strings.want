@@ -1,0 +1,6 @@
+error	4:3	input.non_string_key	/labels	-	-
+error	5:3	input.non_string_key	/labels	-	-
+error	6:3	input.non_string_key	/labels	-	-
+error	7:1	input.non_string_key	-	-	-
+error	8:3	input.non_string_key	-	-	-
+error	11:9	schema.type	/layout/seed	-	an integer

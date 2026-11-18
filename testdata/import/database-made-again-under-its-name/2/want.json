@@ -1,0 +1,112 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@2/findings/probe.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "6f1c2a3b-0000-4000-8000-00000000d2de",
+          "logical_name": "orders"
+        },
+        "evidence": [
+          {
+            "id": "@2/findings/probe.json#pd",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T15:30:00Z",
+            "acquisition_id": "aq-probe-2"
+          },
+          {
+            "id": "@2/findings/wrangler.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.toml",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T15:20:00Z",
+            "acquisition_id": "aq-wrangler-2"
+          },
+          {
+            "id": "@2/findings/env.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": ".env.example",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T15:00:00Z",
+            "acquisition_id": "aq-env-2"
+          },
+          {
+            "id": "@2/findings/terraform.json#d1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "infra/main.tf",
+              "start_line": 1,
+              "end_line": 4
+            },
+            "checked_at": "2026-11-16T15:10:00Z",
+            "acquisition_id": "aq-tf-2"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "coverage": []
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/probe.json#db"
+    }
+  ],
+  "added": [
+    "@2/findings/probe.json#db"
+  ],
+  "removed": [
+    "@1/findings/probe.json#db"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [
+    "@1/findings/probe.json#db"
+  ]
+}

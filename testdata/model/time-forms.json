@@ -1,0 +1,101 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "service",
+      "provider": "p",
+      "service": "s",
+      "evidence": [
+        {
+          "id": "no-zone",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00"
+        },
+        {
+          "id": "date-only-period",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2025-01-01/2025-06-30"
+        },
+        {
+          "id": "reversed-period",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2026-11-13T10:00:00Z/2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "no-such-day",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-02-30T09:00:00Z"
+        },
+        {
+          "id": "good-forms",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00.25-08:00",
+          "valid_time": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "three-parts",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2026-11-13T09:00:00Z/2026-11-13T10:00:00Z/2026-11-13T11:00:00Z"
+        },
+        {
+          "id": "one-digit-hour",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T9:00:00Z"
+        },
+        {
+          "id": "offset-of-a-day",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00+24:00"
+        },
+        {
+          "id": "offset-form",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T18:00:00+09:00"
+        },
+        {
+          "id": "ends-a-nanosecond-early",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2026-11-13T09:00:00.000000002Z/2026-11-13T09:00:00.000000001Z"
+        },
+        {
+          "id": "ten-digits-of-a-second",
+          "kind": "code",
+          "supports": [{"key": "call.implemented", "value": true}],
+          "ref": {"type": "file", "path": "src/a.ts"},
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2026-11-13T09:00:00.0000000002Z/2026-11-13T09:00:00.0000000003Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": [
+    {"id": "cv", "scope": {}, "status": "complete", "checked_at": "13 Nov 2026 09:00 JST"}
+  ]
+}

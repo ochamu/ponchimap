@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "model": "any",
+  "diagnostics": [],
+  "added": [
+    "@2/findings/probe.json#db"
+  ],
+  "removed": []
+}

@@ -1,0 +1,10 @@
+10:7	schema.unknown_property	/nodes/0/enviroment	worker	-
+17:25	schema.format	/nodes/0/evidence/0/checked_at	ev-worker	-
+22:13	schema.format	/nodes/1/id	-	-
+23:15	schema.enum	/nodes/1/kind	-	-
+29:13	model.duplicate_id	/nodes/2/id	worker	-
+40:13	model.unknown_reference	/edges/0/to	binding	-
+43:9	schema.required	/edges/0/evidence/0/checked_at	ev-binding	"checked_at"
+48:51	model.unknown_reference	/edges/0/evidence/0/supports/1/value	ev-binding	-
+51:25	schema.format	/edges/0/evidence/0/valid_time	ev-binding	-
+59:68	model.unknown_reference	/coverage/0/scope/target_ids/1	cv	-

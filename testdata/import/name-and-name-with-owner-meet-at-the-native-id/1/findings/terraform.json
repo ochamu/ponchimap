@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-tf-1",
+    "source": "terraform",
+    "route": "repository",
+    "operation": "read infra/main.tf",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:10:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "t1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "infra/main.tf",
+            "start_line": 3,
+            "end_line": 9
+          },
+          "checked_at": "2026-11-16T09:10:00Z"
+        }
+      ]
+    }
+  ]
+}

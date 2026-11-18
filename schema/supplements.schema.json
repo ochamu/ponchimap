@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Supplements",
+  "description": "Facts that the user adds about nodes and edges of the configuration model. import reads each statement as evidence of the kind stated. The shape of supports is that of model.schema.json, which stands beside this file. Version 0.1.",
+  "type": "object",
+  "required": ["schema_version"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "Lets an editor bind this file to the schema. The tool does not read it.",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "The version of this contract, written as a string: \"0.1\". A tool reads only the versions it supports.",
+      "type": "string",
+      "const": "0.1"
+    },
+    "statements": {
+      "description": "The statements. import replaces what an earlier version of this file gave with what the file says now, so a statement that is taken out leaves the model.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/statement" }
+    }
+  },
+  "$defs": {
+    "statement": {
+      "description": "One statement about one node or edge of the model.",
+      "type": "object",
+      "required": ["target_id", "supports", "source", "checked_at"],
+      "additionalProperties": false,
+      "properties": {
+        "target_id": {
+          "description": "The node or the edge of the model that the statement is about, named by its ID. A statement about an ID that the model lacks is left out with a warning.",
+          "$ref": "model.schema.json#/$defs/elementId"
+        },
+        "supports": {
+          "description": "What the statement says, as keys and values. A connection.target names a node of the model by its ID.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "model.schema.json#/$defs/support" }
+        },
+        "source": {
+          "description": "Who says it or where it is written, such as the user or the name of a document.",
+          "$ref": "model.schema.json#/$defs/name"
+        },
+        "checked_at": {
+          "description": "When the statement was made or confirmed.",
+          "$ref": "model.schema.json#/$defs/instant"
+        },
+        "valid_time": {
+          "description": "When the fact held, if the statement is about the past or the future.",
+          "$ref": "model.schema.json#/$defs/validTime"
+        }
+      }
+    }
+  }
+}

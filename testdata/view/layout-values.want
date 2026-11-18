@@ -1,0 +1,4 @@
+error	3:11	schema.enum	/layout/engine	-	tala
+error	4:14	schema.enum	/layout/direction	-	right
+error	5:9	schema.type	/layout/seed	-	an integer
+error	6:3	schema.unknown_property	/layout/spacing	-	-

@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {"id": "n001", "kind": "service", "provider": "acme", "service": "acme.mail",
+     "attributes": {"service_name": "Acme Mail", "category": "mail"},
+     "evidence": [{"id": "ev001", "kind": "code", "supports": [{"key": "call.implemented", "value": true}], "ref": {"type": "file", "path": "src/a.ts"}, "checked_at": "2026-11-13T00:00:00Z"}]},
+    {"id": "n002", "kind": "service", "provider": "acme", "service": "acme.mail",
+     "attributes": {"service_name": "Acme Mailer", "category": "mail"},
+     "evidence": [{"id": "ev002", "kind": "code", "supports": [{"key": "call.implemented", "value": true}], "ref": {"type": "file", "path": "src/b.ts"}, "checked_at": "2026-11-13T00:00:00Z"}]},
+    {"id": "n003", "kind": "service", "provider": "acme", "service": "acme.mail",
+     "evidence": [{"id": "ev003", "kind": "code", "supports": [{"key": "call.implemented", "value": true}], "ref": {"type": "file", "path": "src/c.ts"}, "checked_at": "2026-11-13T00:00:00Z"}]},
+    {"id": "n004", "kind": "service", "provider": "acme", "service": "acme.mail",
+     "attributes": {"service_name": "Acme Mail", "category": "mail"},
+     "evidence": [{"id": "ev004", "kind": "code", "supports": [{"key": "call.implemented", "value": true}], "ref": {"type": "file", "path": "src/d.ts"}, "checked_at": "2026-11-13T00:00:00Z"}]},
+    {"id": "n005", "kind": "service", "provider": "other", "service": "other.api",
+     "attributes": {"service_name": "Other API", "category": "api"},
+     "evidence": [{"id": "ev005", "kind": "code", "supports": [{"key": "call.implemented", "value": true}], "ref": {"type": "file", "path": "src/e.ts"}, "checked_at": "2026-11-13T00:00:00Z"}]}
+  ],
+  "edges": [],
+  "coverage": []
+}

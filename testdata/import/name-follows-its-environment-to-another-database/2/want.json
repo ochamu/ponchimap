@@ -1,0 +1,369 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/scan.json#w-dev",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-api-dev"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w-dev-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.dev.toml",
+              "start_line": 1,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/probe-dev.json#pw",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-dev.json"
+            },
+            "checked_at": "2026-11-16T09:05:00Z",
+            "acquisition_id": "aq-probe-dev-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#w-prod",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "prod",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-api-prod"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#w-prod-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.prod.toml",
+              "start_line": 1,
+              "end_line": 5
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/probe-prod.json#pw",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-prod.json"
+            },
+            "checked_at": "2026-11-16T12:00:00Z",
+            "acquisition_id": "aq-probe-prod-2"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#db-dev",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "6f1c2a3b-0000-4000-8000-00000000d1de",
+          "logical_name": "orders"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#db-dev-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.dev.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/scan.json#db-prod-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.prod.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/probe-dev.json#pd",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-dev.json"
+            },
+            "checked_at": "2026-11-16T09:05:00Z",
+            "acquisition_id": "aq-probe-dev-1"
+          }
+        ]
+      },
+      {
+        "id": "@2/findings/probe-prod.json#db",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "environment": "prod",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "6f1c2a3b-0000-4000-8000-00000000d2de",
+          "logical_name": "orders"
+        },
+        "evidence": [
+          {
+            "id": "@2/findings/probe-prod.json#pd",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-prod.json"
+            },
+            "checked_at": "2026-11-16T12:00:00Z",
+            "acquisition_id": "aq-probe-prod-2"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/scan.json#b-dev",
+        "from": "@1/findings/scan.json#w-dev",
+        "to": "@1/findings/scan.json#db-dev",
+        "relation": "configuration",
+        "slot": "DB",
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#b-dev-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/scan.json#db-dev"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.dev.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          },
+          {
+            "id": "@1/findings/probe-dev.json#pb",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/scan.json#db-dev"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-dev.json"
+            },
+            "checked_at": "2026-11-16T09:05:00Z",
+            "acquisition_id": "aq-probe-dev-1"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/scan.json#b-prod",
+        "from": "@1/findings/scan.json#w-prod",
+        "to": "@1/findings/scan.json#db-dev",
+        "relation": "configuration",
+        "slot": "DB",
+        "environment": "prod",
+        "evidence": [
+          {
+            "id": "@1/findings/scan.json#b-prod-1",
+            "kind": "declared",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/scan.json#db-dev"
+              }
+            ],
+            "ref": {
+              "type": "file",
+              "path": "wrangler.prod.toml",
+              "start_line": 7,
+              "end_line": 10
+            },
+            "checked_at": "2026-11-16T09:00:00Z",
+            "acquisition_id": "aq-scan-1"
+          }
+        ]
+      },
+      {
+        "id": "@2/findings/probe-prod.json#b",
+        "from": "@1/findings/scan.json#w-prod",
+        "to": "@2/findings/probe-prod.json#db",
+        "relation": "configuration",
+        "slot": "DB",
+        "environment": "prod",
+        "evidence": [
+          {
+            "id": "@2/findings/probe-prod.json#pb",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@2/findings/probe-prod.json#db"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe-prod.json"
+            },
+            "checked_at": "2026-11-16T12:00:00Z",
+            "acquisition_id": "aq-probe-prod-2"
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "id": "@1/findings/probe-dev.json#c1",
+        "scope": {
+          "provider": "cloudflare",
+          "account_id": "example-account-01",
+          "environment": "dev",
+          "target_ids": [
+            "@1/findings/scan.json#w-dev",
+            "@1/findings/scan.json#db-dev"
+          ]
+        },
+        "status": "complete",
+        "checked_at": "2026-11-16T09:05:00Z",
+        "acquisition_id": "aq-probe-dev-1"
+      },
+      {
+        "id": "@2/findings/probe-prod.json#c1",
+        "scope": {
+          "provider": "cloudflare",
+          "account_id": "example-account-01",
+          "environment": "prod",
+          "target_ids": [
+            "@1/findings/scan.json#w-prod",
+            "@2/findings/probe-prod.json#db"
+          ]
+        },
+        "status": "complete",
+        "checked_at": "2026-11-16T12:00:00Z",
+        "acquisition_id": "aq-probe-prod-2"
+      }
+    ]
+  },
+  "diagnostics": [],
+  "added": [
+    "@2/findings/probe-prod.json#db",
+    "@2/findings/probe-prod.json#b"
+  ],
+  "removed": [],
+  "marks": {
+    "@1/findings/scan.json#w-dev": [],
+    "@1/findings/scan.json#w-prod": [
+      "mismatch"
+    ],
+    "@1/findings/scan.json#db-dev": [],
+    "@1/findings/scan.json#b-dev": [],
+    "@1/findings/scan.json#b-prod": [
+      "mismatch"
+    ],
+    "@2/findings/probe-prod.json#db": [],
+    "@2/findings/probe-prod.json#b": [
+      "mismatch"
+    ]
+  }
+}

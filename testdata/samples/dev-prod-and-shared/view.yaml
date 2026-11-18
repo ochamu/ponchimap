@@ -1,0 +1,53 @@
+schema_version: "0.1"
+view: overview
+title: "開発・本番と共有リソース"
+labels:
+  n201: "開発用の入口"
+  n202: "本番用の入口"
+  n203: "共通辞書"
+  n204: "開発API"
+  n205: "開発DB"
+  n206: "本番API"
+  n207: "本番DB"
+  n208: "共有画像"
+  n209: "画像変換"
+  n210: "完了メール"
+boundaries:
+  - member: n201
+    level: owner
+    label: "配信アカウント"
+  - member: n201
+    level: region
+    label: "グローバル"
+  - member: n204
+    level: owner
+    label: "開発プロジェクト"
+  - member: n204
+    level: region
+    label: "東京（開発）"
+  - member: n206
+    level: owner
+    label: "本番プロジェクト"
+  - member: n206
+    level: region
+    label: "東京（本番）"
+  - member: n208
+    level: owner
+    label: "共有プロジェクト"
+  - member: n208
+    level: region
+    label: "東京（共有）"
+  - member: n209
+    level: region
+    label: "米国中部"
+groups:
+  - id: g-dev
+    kind: logical
+    label: "開発バックエンド"
+    members: [n204, n205]
+aggregates: []
+hidden: []
+layout:
+  engine: tala
+  direction: right
+  seed: 1

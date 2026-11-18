@@ -1,0 +1,147 @@
+{
+  "status": "ok",
+  "model": {
+    "schema_version": "0.1",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "nodes": [
+      {
+        "id": "@1/findings/probe.json#q",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.queues",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "order-events"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pq",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T14:00:00Z",
+            "acquisition_id": "aq-probe-3"
+          }
+        ]
+      },
+      {
+        "id": "@1/findings/probe.json#w-billing",
+        "kind": "resource",
+        "provider": "cloudflare",
+        "service": "cloudflare.workers",
+        "environment": "dev",
+        "identity": {
+          "account_id": "example-account-01",
+          "native_id": "shop-billing"
+        },
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pw-billing",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "existence",
+                "value": true
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T14:00:00Z",
+            "acquisition_id": "aq-probe-3"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "@1/findings/probe.json#c-billing",
+        "from": "@1/findings/probe.json#q",
+        "to": "@1/findings/probe.json#w-billing",
+        "relation": "configuration",
+        "slot": "consumers",
+        "evidence": [
+          {
+            "id": "@1/findings/probe.json#pe-billing",
+            "kind": "deployed",
+            "supports": [
+              {
+                "key": "connection.configured",
+                "value": true
+              },
+              {
+                "key": "connection.target",
+                "value": "@1/findings/probe.json#w-billing"
+              }
+            ],
+            "ref": {
+              "type": "query",
+              "path": "findings/probe.json"
+            },
+            "checked_at": "2026-11-16T14:00:00Z",
+            "acquisition_id": "aq-probe-3"
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "id": "@3/findings/probe.json#cq",
+        "scope": {
+          "provider": "cloudflare",
+          "account_id": "example-account-01",
+          "service": "cloudflare.queues"
+        },
+        "status": "complete",
+        "checked_at": "2026-11-16T14:00:00Z",
+        "acquisition_id": "aq-probe-3"
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/probe.json#w-mailer"
+    },
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/probe.json#w-search"
+    },
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/probe.json#c-mailer"
+    },
+    {
+      "severity": "warning",
+      "code": "import.removed",
+      "path": "model.json",
+      "target_id": "@1/findings/probe.json#c-search"
+    }
+  ],
+  "added": [],
+  "removed": [
+    "@1/findings/probe.json#w-mailer",
+    "@1/findings/probe.json#w-search",
+    "@1/findings/probe.json#c-mailer",
+    "@1/findings/probe.json#c-search"
+  ]
+}

@@ -1,0 +1,32 @@
+schema_version: "0.1"
+view: overview
+title: "注文受付サービスの全体構成"
+labels: {}
+boundaries:
+  - member: n402
+    level: owner
+    label: "配信アカウント"
+  - member: n414
+    level: owner
+    label: "利用者情報プロジェクト"
+  - member: n415
+    level: region
+    label: "東京リージョン"
+  - member: n423
+    level: owner
+    label: "開発アカウント"
+  - member: n424
+    level: owner
+    label: "管理画面プロジェクト"
+groups: []
+aggregates:
+  - id: agg-kv
+    label: "状態を保存するKV"
+    role: "ログイン状態、表示結果、画面設定を保存する"
+    members: [n411, n412, n413]
+# 運用担当者の確認用Workerは概要図の対象から外し、元のモデルと期待値には残す。
+hidden: [n425]
+layout:
+  engine: tala
+  direction: right
+  seed: 1

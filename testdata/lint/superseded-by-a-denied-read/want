@@ -1,0 +1,2 @@
+warning	model	8:5	unverified.superseded	/nodes/0	x	did not finish, so the earlier confirmation is not counted (existence)
+warning	model	64:17	coverage.denied	/coverage/0/status	cv-denied	permission

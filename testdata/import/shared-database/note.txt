@@ -1,0 +1,1 @@
+The workers of dev and prod use one database. The same owner and native ID are one node whatever the environment (N1). The node has no environment of its own, and each edge keeps its own.

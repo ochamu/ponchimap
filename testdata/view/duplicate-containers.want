@@ -1,0 +1,3 @@
+error	6:5	input.non_string_key	/groups/0	-	-
+error	7:1	input.duplicate_key	/groups	-	-
+error	11:5	input.non_string_key	/groups/0	g-second	-

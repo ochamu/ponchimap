@@ -1,0 +1,1 @@
+R3: the newer scan no longer states the service, but an edge of another source still names it, so the node keeps the evidence it had and a warning says so.

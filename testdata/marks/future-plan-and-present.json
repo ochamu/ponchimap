@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "x",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "p",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "d",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "region",
+              "value": "tokyo"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        },
+        {
+          "id": "s",
+          "kind": "stated",
+          "supports": [
+            {
+              "key": "region",
+              "value": "osaka"
+            }
+          ],
+          "ref": {
+            "type": "document",
+            "path": "docs/design.md"
+          },
+          "checked_at": "2026-11-13T09:00:00Z",
+          "valid_time": "2027-04-01T00:00:00Z/2028-04-01T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

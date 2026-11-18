@@ -1,0 +1,538 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Configuration model",
+  "description": "The configuration model of one application: its nodes, the relations between them, the evidence behind each, and how far the investigation got. Diagrams and reports are derived from it. Version 0.1.",
+  "type": "object",
+  "required": ["schema_version", "target", "nodes", "edges", "coverage"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "Lets an editor bind this file to the schema. The tool keeps it and does not read it.",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "The version of this contract, written as a string: \"0.1\". A tool reads only the versions it supports.",
+      "type": "string",
+      "const": "0.1"
+    },
+    "target": { "description": "What the model is about.", "$ref": "#/$defs/target" },
+    "nodes": {
+      "description": "The managed resources and the services in general.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "description": "The relations between nodes.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "coverage": {
+      "description": "How far the investigation of each scope got. An empty list records nothing: it does not say that everything was read.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/coverage" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "A name in the ID form: lowercase letters, digits, and hyphens, starting with a letter.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "nodeId": {
+      "description": "The ID of a node of this model.",
+      "$ref": "#/$defs/id"
+    },
+    "elementId": {
+      "description": "The ID of a node or an edge of this model.",
+      "$ref": "#/$defs/id"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "instant": {
+      "description": "A moment in RFC 3339 form, written with an upper-case T, a time zone, and at most nine digits after the decimal point of the seconds. The time zone is Z or an offset such as +09:00. For example 2026-11-13T09:00:00Z or 2026-11-13T18:00:00+09:00.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,9})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])$",
+      "format": "date-time"
+    },
+    "validTime": {
+      "description": "When the fact held: one moment, or a period written as start/end with two moments, the start not after the end. A moment has the form of checked_at, such as 2026-11-13T09:00:00Z or 2026-11-13T18:00:00+09:00.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,9})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])(?:/[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,9})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9]))?$",
+      "format": "date-time-or-period"
+    },
+    "line": {
+      "description": "A line number, counted from 1.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "target": {
+      "description": "What the model is about.",
+      "type": "object",
+      "required": ["repository", "environment"],
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "description": "The repository the investigation started from: a path or a URL.",
+          "$ref": "#/$defs/name"
+        },
+        "environment": {
+          "description": "The environment the model describes. An edge without an environment belongs to this one.",
+          "$ref": "#/$defs/name"
+        },
+        "scope": {
+          "description": "The parts of the real environment the investigation was asked to cover. A coverage record says how far each was reached.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/scope" }
+        }
+      }
+    },
+    "scope": {
+      "description": "A part of the real environment: what an investigation covers, or what a coverage record is about. Keys this version does not define are kept.",
+      "type": "object",
+      "properties": {
+        "provider": {
+          "description": "The provider key, such as cloudflare.",
+          "$ref": "#/$defs/name"
+        },
+        "account_id": {
+          "description": "The account at the provider.",
+          "$ref": "#/$defs/name"
+        },
+        "project_id": {
+          "description": "The project at the provider.",
+          "$ref": "#/$defs/name"
+        },
+        "environment": {
+          "description": "The environment the scope is limited to.",
+          "$ref": "#/$defs/name"
+        },
+        "service": {
+          "description": "The service key the scope is limited to, such as cloudflare.d1.",
+          "$ref": "#/$defs/name"
+        },
+        "target_ids": {
+          "description": "The nodes and edges of this model the scope is limited to.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/elementId" }
+        },
+        "filter": {
+          "description": "Narrows the scope to some items. Keys this version does not define are kept.",
+          "type": "object",
+          "properties": {
+            "fields": {
+              "description": "The support keys the record covers.",
+              "type": "array",
+              "items": { "$ref": "#/$defs/name" }
+            },
+            "slot": {
+              "description": "The setting the scope is limited to, such as a binding name.",
+              "$ref": "#/$defs/name"
+            }
+          }
+        }
+      }
+    },
+    "node": {
+      "description": "A managed resource, or a service in general.",
+      "type": "object",
+      "required": ["id", "kind", "provider", "service", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the node. No other node, edge, evidence, or coverage record of the model has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "description": "resource: a concrete resource the user manages. service: an external service in general, with no managed resource identified.",
+          "enum": ["resource", "service"]
+        },
+        "provider": {
+          "description": "The provider key, such as cloudflare.",
+          "$ref": "#/$defs/name"
+        },
+        "service": {
+          "description": "The service key, such as cloudflare.workers.",
+          "$ref": "#/$defs/name"
+        },
+        "environment": {
+          "description": "The environment the node belongs to. A shared resource is one node, not one per environment.",
+          "$ref": "#/$defs/name"
+        },
+        "identity": {
+          "description": "What identifies the node at its provider, such as account_id, project_id, native_id, logical_name. Any key is kept. A number keeps its digits.",
+          "type": "object"
+        },
+        "attributes": {
+          "description": "Attributes no evidence disputes. Keys this version does not define are kept.",
+          "type": "object",
+          "properties": {
+            "role": {
+              "description": "What the node does for the application, in plain words.",
+              "type": "string"
+            },
+            "region": {
+              "description": "The region the node is in, when no evidence disputes it.",
+              "type": "string"
+            },
+            "category": {
+              "description": "The kind of service the node is. It picks the icon of the card, which is the generic icon without it.",
+              "enum": ["api", "auth", "client", "compute", "database", "hosting", "keyvalue", "mail", "message", "monitor", "network", "payment", "pipeline", "queue", "storage"]
+            },
+            "service_name": {
+              "description": "The name of the service, such as AWS Lambda. It is the title of the card, which is the service key without it. It is one line, and not only spaces.",
+              "type": "string",
+              "pattern": "^[^\\x00-\\x1f\\x7f-\\x9f\u2028\u2029]*[^\\x00-\\x20\\x7f-\\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000][^\\x00-\\x1f\\x7f-\\x9f\u2028\u2029]*$"
+            }
+          }
+        },
+        "evidence": {
+          "description": "The sources that speak for the node.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence" }
+        }
+      }
+    },
+    "edge": {
+      "description": "A relation from one node to another.",
+      "type": "object",
+      "required": ["id", "from", "to", "relation", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the edge. No other node, edge, evidence, or coverage record of the model has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "from": {
+          "description": "The node the relation starts from.",
+          "$ref": "#/$defs/nodeId"
+        },
+        "to": {
+          "description": "The node the relation points at.",
+          "$ref": "#/$defs/nodeId"
+        },
+        "relation": {
+          "description": "configuration: a connection in settings. implementation: a call in code. observation: traffic that was observed. dependency: one needs the other to start or deploy.",
+          "enum": ["configuration", "implementation", "observation", "dependency"]
+        },
+        "slot": {
+          "description": "The name of the setting that holds the connection, such as a binding name.",
+          "$ref": "#/$defs/name"
+        },
+        "environment": {
+          "description": "The environment of the relation, when it differs from target.environment.",
+          "$ref": "#/$defs/name"
+        },
+        "attributes": {
+          "description": "Attributes no evidence disputes. Keys this version does not define are kept.",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "description": "What the relation is for, in plain words.",
+              "type": "string"
+            }
+          }
+        },
+        "evidence": {
+          "description": "The sources that speak for the relation.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence" }
+        }
+      }
+    },
+    "evidence": {
+      "description": "One source, what it supports, and when it was checked.",
+      "type": "object",
+      "required": ["id", "kind", "supports", "ref", "checked_at"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the evidence. No other node, edge, evidence, or coverage record of the model has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "description": "declared: stated in settings. deployed: confirmed in the real environment. code: a concrete use in code. observed: seen in traffic or logs. stated: said by a document or a person. hint: a clue such as an SDK or a variable name.",
+          "enum": ["declared", "deployed", "code", "observed", "stated", "hint"]
+        },
+        "supports": {
+          "description": "What the source supports, as keys and values.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/support" }
+        },
+        "ref": { "description": "Where the source is.", "$ref": "#/$defs/ref" },
+        "checked_at": {
+          "description": "When the source was read or queried.",
+          "$ref": "#/$defs/instant"
+        },
+        "valid_time": {
+          "description": "When the fact held, if that differs from when it was checked: needed for observations and for old documents.",
+          "$ref": "#/$defs/validTime"
+        },
+        "acquisition_id": {
+          "description": "The acquisition record this evidence came from. Several evidence items and coverage records may name the same one.",
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "ref": {
+      "description": "Where the source is.",
+      "type": "object",
+      "required": ["type", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "file: a file of the repository. document: a document, in the repository or elsewhere. query: the record of a query to the real environment. log: the record of observed traffic or logs.",
+          "enum": ["file", "document", "query", "log"]
+        },
+        "path": {
+          "description": "The path of the file, document, or record. A document outside the repository is named by its URL.",
+          "$ref": "#/$defs/name"
+        },
+        "start_line": {
+          "description": "The first line of the place in the source.",
+          "$ref": "#/$defs/line"
+        },
+        "end_line": {
+          "description": "The last line of the place in the source. It needs start_line.",
+          "$ref": "#/$defs/line"
+        }
+      },
+      "dependentRequired": {
+        "end_line": ["start_line"]
+      }
+    },
+    "support": {
+      "description": "One key the source supports, and the value it gives. The keys listed under allOf have a defined meaning and value. An item with any other key is kept, and is never used as backing.",
+      "type": "object",
+      "required": ["key", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "description": "What the source supports, such as existence or connection.target.",
+          "$ref": "#/$defs/name"
+        },
+        "value": { "description": "The value the source gives for the key." }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "existence" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "Whether the node exists: true says it does, false that a search for it found nothing. Read it with the kind of the evidence, since a declaration is not a confirmation.",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "role" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "What the node does for the application, in plain words.",
+                "$ref": "#/$defs/name"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "connection.configured" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "Whether the connection is set, for an edge whose relation is configuration.",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "connection.target" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "The node that the configured connection points at, named by its ID.",
+                "$ref": "#/$defs/nodeId"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "call.implemented" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "Whether code makes the call: the caller, the target, and the processing can be told from it.",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "traffic.observed" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "Whether traffic was observed, in the time that valid_time gives.",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "region" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": { "description": "The region the node is in.", "$ref": "#/$defs/name" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "scope.owner" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "The account, project, organization, or team the node belongs to.",
+                "$ref": "#/$defs/owner"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "scope.network" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "The identifier, at the provider, of the one network the node is in, such as a VPC. It is not an ID of this model. A figure draws the network around the node only when the evidence of the node also states one region.",
+                "$ref": "#/$defs/name"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "exposure" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "How far the node can be reached, such as public or private.",
+                "$ref": "#/$defs/name"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "key": { "const": "lifecycle.requires" }
+            },
+            "required": ["key"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "description": "Whether the source needs the target to start or to deploy, for an edge whose relation is dependency.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "owner": {
+      "description": "The boundary a node belongs to: its kind and its identifier at the provider.",
+      "type": "object",
+      "required": ["kind", "id"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "description": "What kind of boundary the owner is.",
+          "enum": ["account", "project", "organization", "team"]
+        },
+        "id": {
+          "description": "The identifier of the owner at the provider. It is not an ID of this model.",
+          "$ref": "#/$defs/name"
+        }
+      }
+    },
+    "coverage": {
+      "description": "How far the investigation of one scope got.",
+      "type": "object",
+      "required": ["id", "scope", "status", "checked_at"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The ID of the coverage record. No other node, edge, evidence, or coverage record of the model has the same ID.",
+          "$ref": "#/$defs/id"
+        },
+        "scope": { "description": "What the record is about.", "$ref": "#/$defs/scope" },
+        "status": {
+          "description": "complete: everything needed in the scope was read. partial: part is missing. denied: no permission. unsupported: the tool cannot read it. not_attempted: not tried. failed: the read did not finish.",
+          "enum": ["complete", "partial", "denied", "unsupported", "not_attempted", "failed"]
+        },
+        "reason": {
+          "description": "Why the status is what it is, in plain words.",
+          "type": "string"
+        },
+        "checked_at": {
+          "description": "When the scope was investigated.",
+          "$ref": "#/$defs/instant"
+        },
+        "acquisition_id": {
+          "description": "The acquisition record this coverage came from. Several evidence items and coverage records may name the same one.",
+          "$ref": "#/$defs/id"
+        }
+      }
+    }
+  }
+}

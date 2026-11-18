@@ -1,0 +1,7 @@
+error	2:8	input.number_form	/title	-	plain decimal
+error	4:9	input.number_form	/labels/n101	-	plain decimal
+error	5:9	input.number_form	/labels/n102	-	plain decimal
+error	6:9	input.number_form	/labels/n103	-	plain decimal
+error	7:9	input.number_form	/labels/e101	-	plain decimal
+error	8:9	input.number_limit	/labels/e102	-	400
+error	10:9	input.number_form	/layout/seed	-	plain decimal

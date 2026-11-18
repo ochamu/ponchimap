@@ -1,0 +1,93 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "prod"
+  },
+  "nodes": [
+    {
+      "id": "tokyo",
+      "kind": "resource",
+      "provider": "gcp",
+      "service": "gcp.run",
+      "attributes": {
+        "role": "東京の受付"
+      },
+      "evidence": [
+        {
+          "id": "ev-tokyo",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "shop-prod-1234"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast1"
+            },
+            {
+              "key": "scope.network",
+              "value": "shared-network-01"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/tokyo.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "osaka",
+      "kind": "resource",
+      "provider": "gcp",
+      "service": "gcp.run",
+      "attributes": {
+        "role": "大阪の受付"
+      },
+      "evidence": [
+        {
+          "id": "ev-osaka",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "scope.owner",
+              "value": {
+                "kind": "project",
+                "id": "shop-prod-1234"
+              }
+            },
+            {
+              "key": "region",
+              "value": "asia-northeast2"
+            },
+            {
+              "key": "scope.network",
+              "value": "shared-network-01"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "fixture-sources/boundaries/osaka.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

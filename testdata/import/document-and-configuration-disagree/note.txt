@@ -1,0 +1,1 @@
+A document and the configuration state different regions. Both items stay with their source, value, and time. attributes.region is left out (A1), and the value that the candidate carries in its attributes is not used either; the view derivation marks the mismatch.

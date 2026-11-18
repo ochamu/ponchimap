@@ -1,0 +1,94 @@
+{
+  "nodes": {
+    "n101": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n102": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n103": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n104": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n105": {
+      "frame": "solid",
+      "marks": [
+        "unverified"
+      ]
+    },
+    "n106": {
+      "frame": "solid",
+      "marks": []
+    },
+    "n107": {
+      "frame": "dashed",
+      "marks": []
+    }
+  },
+  "edges": {
+    "e101": {
+      "line": "solid",
+      "label": "利用者DBの接続設定（未照合）"
+    },
+    "e102": {
+      "line": "solid",
+      "label": "利用者情報の保存"
+    },
+    "e103": {
+      "line": "solid",
+      "label": "注文処理の呼び出し"
+    },
+    "e104": {
+      "line": "solid",
+      "label": "ログイン情報の確認"
+    },
+    "e105": {
+      "line": "solid",
+      "label": "注文DBの接続設定（未照合）"
+    },
+    "e106": {
+      "line": "solid",
+      "label": "注文情報の保存"
+    },
+    "e107": {
+      "line": "solid",
+      "label": "注文確認メールの送信"
+    },
+    "e108": {
+      "line": "dashed",
+      "label": "エラー通知の候補（手がかり）"
+    }
+  },
+  "boundaries": [
+    {
+      "label": "配信アカウント",
+      "members": [
+        "n101",
+        "n102"
+      ],
+      "parent_label": ""
+    },
+    {
+      "label": "アプリプロジェクト",
+      "members": [
+        "n103",
+        "n104",
+        "n105"
+      ],
+      "parent_label": ""
+    }
+  ],
+  "logical_groups": [],
+  "aggregates": [],
+  "hidden": []
+}

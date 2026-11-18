@@ -1,0 +1,1 @@
+The newer complete probe replaces the older one, so the old and the new region never stand side by side. The worker's evidence and the coverage records say the same and keep their IDs.

@@ -1,0 +1,1 @@
+A candidate ID used twice, and references that name no candidate of the file or name an edge where a node is wanted.

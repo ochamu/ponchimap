@@ -1,0 +1,3 @@
+error	3:9	view.duplicate_id	/groups/0/id	n101	node or an edge
+error	7:9	view.duplicate_id	/aggregates/0/id	e101	node or an edge
+warning	9:21	view.unknown_reference	/aggregates/0/members/1	n999	no node of

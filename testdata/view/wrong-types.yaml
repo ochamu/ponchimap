@@ -1,0 +1,15 @@
+schema_version: "0.1"
+view: 1
+title: 2026
+labels:
+  n101: 404
+  n102: true
+  n103:
+  e101: [a]
+boundaries: {}
+groups:
+  - id: g-a
+    label: "A"
+    members: n101
+hidden: e101
+layout: []

@@ -1,0 +1,1 @@
+{schema_version: "0.1", title: "構成図", labels: {n101: "注文の入口", N102: "利用者のDB"}, layout: {seed: 2.5}}

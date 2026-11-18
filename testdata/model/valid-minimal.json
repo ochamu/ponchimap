@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [],
+  "edges": [],
+  "coverage": []
+}

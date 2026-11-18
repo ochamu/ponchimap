@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-a",
+    "source": "probe",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T10:00:00Z",
+    "complete": false
+  },
+  "nodes": [
+    {
+      "id": "d",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "a1",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            },
+            {
+              "key": "region",
+              "value": "apac"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe.json"
+          },
+          "checked_at": "2026-11-16T10:00:00Z"
+        }
+      ]
+    }
+  ]
+}

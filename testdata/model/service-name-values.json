@@ -1,0 +1,23 @@
+{
+  "schema_version": "0.1",
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {"id": "a", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": ""}, "evidence": []},
+    {"id": "b", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": " "}, "evidence": []},
+    {"id": "c", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "\u3000"}, "evidence": []},
+    {"id": "d", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "\u00a0"}, "evidence": []},
+    {"id": "e", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "AWS\nLambda"}, "evidence": []},
+    {"id": "f", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "Tab\tName"}, "evidence": []},
+    {"id": "g", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": 7}, "evidence": []},
+    {"id": "k", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "\u2003"}, "evidence": []},
+    {"id": "l", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "\u1680"}, "evidence": []},
+    {"id": "m", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "AWS\u2028Lambda"}, "evidence": []},
+    {"id": "n", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "\u0085"}, "evidence": []},
+    {"id": "o", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "AWS\u2029Lambda"}, "evidence": []},
+    {"id": "h", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "AWS Lambda"}, "evidence": []},
+    {"id": "i", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": "Cloudflare\u3000D1"}, "evidence": []},
+    {"id": "j", "kind": "service", "provider": "aws", "service": "aws.lambda", "attributes": {"service_name": " AWS Lambda "}, "evidence": []}
+  ],
+  "edges": [],
+  "coverage": []
+}

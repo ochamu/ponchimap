@@ -1,0 +1,2 @@
+error	6:9	view.duplicate_id	/groups/1/id	g-a	/groups/0/id
+error	10:9	view.duplicate_id	/aggregates/0/id	g-a	/groups/0/id

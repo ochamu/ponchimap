@@ -1,0 +1,1 @@
+M2 compares items of the same valid_time: what a document says about a later date does not restate what it says about now, and attributes.region still follows the items without a valid_time (A1).

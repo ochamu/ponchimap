@@ -1,0 +1,1 @@
+After a second investigation with new acquisition IDs, shifted lines, and a new node, every label, group member, and hidden entry of the view config still names its element.

@@ -1,0 +1,7 @@
+error	3:3	schema.unknown_property	/labels/N101	-	name of the property
+error	4:9	schema.range	/labels/n101	-	empty
+error	5:10	schema.format	/hidden/0	-	form
+error	5:16	schema.format	/hidden/1	-	form
+error	7:13	schema.format	/boundaries/0/member	-	form
+error	10:9	schema.format	/groups/0/id	-	form
+error	12:22	schema.format	/groups/0/members/1	-	form

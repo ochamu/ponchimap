@@ -1,0 +1,1 @@
+R5: a candidate without evidence may only name a node that the model already has.

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/model.schema.json",
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev",
+    "scope": [
+      {"provider": "gcp", "project_id": "example-project", "folder": "example-folder"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "vm",
+      "kind": "resource",
+      "provider": "gcp",
+      "service": "gcp.compute",
+      "identity": {"native_id": 12345678901234567890, "labels": {"tier": "web"}},
+      "attributes": {"role": "Web server", "machine_type": "e2-small"},
+      "evidence": [
+        {
+          "id": "ev-vm",
+          "kind": "deployed",
+          "supports": [
+            {"key": "existence", "value": true},
+            {"key": "vendor.uptime_days", "value": {"days": 12, "exact": false}}
+          ],
+          "ref": {"type": "file", "path": "infra/main.tf", "start_line": 1e1, "end_line": 12.0},
+          "checked_at": "2026-11-13T09:00:00.5+09:00",
+          "valid_time": "2026-11-13T00:00:00Z/2026-11-13T09:00:00+09:00"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": [
+    {
+      "id": "cv-vm",
+      "scope": {
+        "provider": "gcp",
+        "target_ids": ["vm"],
+        "zone": "asia-northeast1-a",
+        "filter": {"fields": ["existence"], "labels": ["web"]}
+      },
+      "status": "complete",
+      "checked_at": "2026-11-13T09:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+A newer complete read of the same source replaces the older one (M1). No ID of a node or an edge changes, evidence that says the same keeps its ID, and attributes.region follows the evidence (A1).

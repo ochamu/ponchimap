@@ -1,0 +1,15 @@
+schema_version: "0.1"
+groups:
+  - id: g-a
+    label: "A"
+    members: [n101]
+  - id: g-a
+    label: "B"
+    members: [n102]
+aggregates:
+  - id: g-a
+    label: "C"
+    members: [n103]
+  - id: agg-b
+    label: "D"
+    members: [n102]

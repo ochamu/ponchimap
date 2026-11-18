@@ -1,0 +1,2 @@
+error	8:15	view.listed_twice	/groups/1/members/0	g-b	already listed
+error	15:15	view.listed_twice	/aggregates/1/members/0	a-b	already listed

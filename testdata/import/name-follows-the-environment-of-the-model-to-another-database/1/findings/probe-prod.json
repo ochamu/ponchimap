@@ -1,0 +1,118 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-probe-prod-1",
+    "source": "probe-prod",
+    "route": "cli",
+    "operation": "probe",
+    "target": {
+      "repository": ".",
+      "environment": "prod"
+    },
+    "checked_at": "2026-11-16T09:06:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "w",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-api-prod"
+      },
+      "evidence": [
+        {
+          "id": "pw",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe-prod.json"
+          },
+          "checked_at": "2026-11-16T09:06:00Z"
+        }
+      ]
+    },
+    {
+      "id": "db",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "6f1c2a3b-0000-4000-8000-00000000d1de",
+        "logical_name": "orders"
+      },
+      "evidence": [
+        {
+          "id": "pd",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe-prod.json"
+          },
+          "checked_at": "2026-11-16T09:06:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "b",
+      "from": "w",
+      "to": "db",
+      "relation": "configuration",
+      "slot": "DB",
+      "evidence": [
+        {
+          "id": "pb",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "db"
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/probe-prod.json"
+          },
+          "checked_at": "2026-11-16T09:06:00Z"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "c1",
+      "scope": {
+        "provider": "cloudflare",
+        "account_id": "example-account-01",
+        "environment": "prod",
+        "target_ids": [
+          "w",
+          "db"
+        ]
+      },
+      "status": "complete",
+      "checked_at": "2026-11-16T09:06:00Z"
+    }
+  ]
+}

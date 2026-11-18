@@ -1,0 +1,1 @@
+A read that did not finish keeps the evidence it does not restate (M2), and its coverage is added. The candidate without evidence only names the node.

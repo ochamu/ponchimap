@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "database",
+      "provider": "example",
+      "service": "example.api",
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "code",
+          "supports": [
+            {"key": "call.implemented", "value": true}
+          ],
+          "ref": {"type": "file", "path": "src/api.ts"}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

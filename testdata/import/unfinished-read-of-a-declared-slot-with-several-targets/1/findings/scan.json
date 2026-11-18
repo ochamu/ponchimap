@@ -1,0 +1,225 @@
+{
+  "schema_version": "0.1",
+  "acquisition": {
+    "id": "aq-scan-1",
+    "source": "repository-scan",
+    "route": "repository",
+    "operation": "scan",
+    "target": {
+      "repository": ".",
+      "environment": "dev"
+    },
+    "checked_at": "2026-11-16T09:00:00Z",
+    "complete": true
+  },
+  "nodes": [
+    {
+      "id": "q",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.queues",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "order-events"
+      },
+      "evidence": [
+        {
+          "id": "q1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "queues/wrangler.toml",
+            "start_line": 1,
+            "end_line": 3
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "w-billing",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-billing"
+      },
+      "evidence": [
+        {
+          "id": "w1-billing",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "billing/wrangler.toml",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "w-mailer",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-mailer"
+      },
+      "evidence": [
+        {
+          "id": "w1-mailer",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "mailer/wrangler.toml",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "w-search",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "shop-search"
+      },
+      "evidence": [
+        {
+          "id": "w1-search",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "search/wrangler.toml",
+            "start_line": 1,
+            "end_line": 4
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "c-billing",
+      "from": "q",
+      "to": "w-billing",
+      "relation": "configuration",
+      "slot": "consumers",
+      "evidence": [
+        {
+          "id": "b1-billing",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "w-billing"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "billing/wrangler.toml",
+            "start_line": 6,
+            "end_line": 9
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "c-mailer",
+      "from": "q",
+      "to": "w-mailer",
+      "relation": "configuration",
+      "slot": "consumers",
+      "evidence": [
+        {
+          "id": "b1-mailer",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "w-mailer"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "mailer/wrangler.toml",
+            "start_line": 6,
+            "end_line": 9
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "c-search",
+      "from": "q",
+      "to": "w-search",
+      "relation": "configuration",
+      "slot": "consumers",
+      "evidence": [
+        {
+          "id": "b1-search",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "w-search"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "search/wrangler.toml",
+            "start_line": 6,
+            "end_line": 9
+          },
+          "checked_at": "2026-11-16T09:00:00Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev"
+  },
+  "nodes": [
+    {
+      "id": "w",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.workers",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "ev-w",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "a",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "identity": {},
+      "attributes": {},
+      "evidence": [
+        {
+          "id": "ev-a",
+          "kind": "deployed",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "query",
+            "path": "findings/query.json"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "db",
+      "from": "w",
+      "to": "a",
+      "relation": "configuration",
+      "attributes": {
+        "purpose": "接続設定"
+      },
+      "evidence": [
+        {
+          "id": "d1",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "connection.configured",
+              "value": true
+            },
+            {
+              "key": "connection.target",
+              "value": "a"
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml"
+          },
+          "checked_at": "2026-11-13T09:00:00Z"
+        }
+      ],
+      "slot": "DB"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "cv-edge",
+      "scope": {
+        "provider": "cloudflare",
+        "target_ids": [
+          "db"
+        ]
+      },
+      "status": "not_attempted",
+      "checked_at": "2026-11-13T09:00:00Z"
+    }
+  ]
+}

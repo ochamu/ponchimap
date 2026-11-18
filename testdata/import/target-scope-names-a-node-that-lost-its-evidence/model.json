@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1",
+  "target": {
+    "repository": ".",
+    "environment": "dev",
+    "scope": [
+      {
+        "provider": "cloudflare",
+        "service": "cloudflare.d1",
+        "target_ids": [
+          "n001"
+        ]
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "kind": "resource",
+      "provider": "cloudflare",
+      "service": "cloudflare.d1",
+      "environment": "dev",
+      "identity": {
+        "account_id": "example-account-01",
+        "native_id": "example-database-id"
+      },
+      "evidence": [
+        {
+          "id": "ev001",
+          "kind": "declared",
+          "supports": [
+            {
+              "key": "existence",
+              "value": true
+            }
+          ],
+          "ref": {
+            "type": "file",
+            "path": "wrangler.toml",
+            "start_line": 7,
+            "end_line": 10
+          },
+          "checked_at": "2026-11-16T08:00:00Z",
+          "acquisition_id": "aq-scan-0"
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "coverage": []
+}

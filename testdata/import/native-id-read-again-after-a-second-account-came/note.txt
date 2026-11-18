@@ -1,0 +1,1 @@
+The extraction states a worker by its native ID and writes no owner. The read of one account adds the owner to that node (N2). The read of a second account finds the same native ID there, which is another node. Then the extraction is read again: its description now fits two nodes, and it stays with the node that it was taken as before (N4). Nothing is added and nothing leaves.

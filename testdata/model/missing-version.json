@@ -1,0 +1,8 @@
+{
+  "target": {"repository": ".", "environment": "dev"},
+  "nodes": [
+    {"id": "a", "kind": "thing", "provider": "p", "service": "s", "evidence": []}
+  ],
+  "edges": [],
+  "coverage": []
+}

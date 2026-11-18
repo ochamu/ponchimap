@@ -1,0 +1,9 @@
+schema_version: "0.1"
+hidden: [n101, e101, n101, e101]
+groups:
+  - id: g-a
+    label: "A"
+    members:
+      - n102
+      - n103
+      - n102
