@@ -19,10 +19,10 @@
 
 ## はじめる
 
-Go 1.27.4 以降が要ります。このリポジトリを取得したフォルダで、ponchimap の CLI を入れます。
+Go 1.27.4 以降が要ります。ponchimap の CLI を入れます。
 
 ```bash
-go install ./cmd/ponchimap
+go install github.com/ochamu/ponchimap/cmd/ponchimap@latest
 ```
 
 `go install` は `ponchimap` を Go の bin フォルダ（通常 `~/go/bin`）に置きます。そのフォルダを PATH に入れておきます。エージェントも PATH から `ponchimap` を探します。
@@ -33,7 +33,7 @@ go install ./cmd/ponchimap
 ponchimap init
 ```
 
-そのフォルダで Claude Code  Codex などのエージェント を起動し、次のように頼みます。
+そのフォルダで Claude Code や Codex などのエージェントを起動し、次のように頼みます。
 
 ```text
 このリポジトリの構成図を作って
@@ -45,18 +45,19 @@ ponchimap init
 
 ## 見本で試す
 
-エージェントもクラウドのアカウントも使わずに、図ができるまでを試せます。手で書いた調査入力の見本を取り込んで描きます。見本には、設定ファイルを読んだ結果とクラウドに照会した結果を、架空の値で書いてあります。どのコマンドもネットワークを使いません。
+エージェントもクラウドのアカウントも使わずに、図ができるまでを試せます。手で書いた調査入力の見本を取り込んで描きます。見本には、設定ファイルを読んだ結果とクラウドに照会した結果を、架空の値で書いてあります。見本はこのリポジトリにあるので、まず `git clone` で取得します。ponchimap のコマンドはどれもネットワークを使いません。
 
 ```bash
+git clone https://github.com/ochamu/ponchimap.git ~/ponchimap
 mkdir -p ~/ponchimap-demo && cd ~/ponchimap-demo
 ponchimap init
-cp path/to/ponchimap/examples/first-run/findings/*.json .ponchimap/findings/
+cp ~/ponchimap/examples/first-run/findings/*.json .ponchimap/findings/
 ponchimap import && ponchimap lint && ponchimap render
 ```
 
-`path/to/ponchimap` はこのリポジトリを取得したフォルダです。`docs/architecture/overview.png` に、見本の図（[examples/first-run/overview.png](examples/first-run/overview.png)）と同じ図ができます。
+`docs/architecture/overview.png` に、見本の図（[examples/first-run/overview.png](examples/first-run/overview.png)）と同じ図ができます。
 
-エージェントで試すときは、見本のアプリ `examples/memo-app` をこのリポジトリの外に写して `git init` し、「はじめる」と同じように `ponchimap init` を実行してから頼みます。見本には dev と production の2つの環境があり、どちらを描いてもかまいません。識別子は架空の値なので、頼むときに「クラウドへの照会はしないで」と添えます。
+エージェントで試すときは、見本のアプリ `~/ponchimap/examples/memo-app` を `~/ponchimap` の外に写して `git init` し、「はじめる」と同じように `ponchimap init` を実行してから頼みます。見本には dev と production の2つの環境があり、どちらを描いてもかまいません。識別子は架空の値なので、頼むときに「クラウドへの照会はしないで」と添えます。
 
 ## できるもの
 
