@@ -1,0 +1,20 @@
+{
+  "name": "ponchimap",
+  "interface": {
+    "displayName": "ponchimap"
+  },
+  "plugins": [
+    {
+      "name": "ponchimap",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ponchimap"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

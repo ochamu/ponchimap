@@ -1,0 +1,12 @@
+{
+  "name": "ponchimap",
+  "description": "Draws an architecture diagram of the cloud services an app uses, with the evidence for every box and line. The Skill guides your coding agent; the ponchimap CLI draws the figure and the report. Install the CLI with: go install github.com/ochamu/ponchimap/cmd/ponchimap@latest",
+  "author": {
+    "name": "ochamu",
+    "url": "https://github.com/ochamu"
+  },
+  "homepage": "https://github.com/ochamu/ponchimap",
+  "repository": "https://github.com/ochamu/ponchimap",
+  "license": "Apache-2.0",
+  "keywords": ["architecture-diagram", "infrastructure", "cloud", "d2", "skill"]
+}
