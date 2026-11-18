@@ -47,7 +47,7 @@ Skill を名指しして頼むこともできます。Claude Code では `/ponch
 
 ### プラグインとして入れる
 
-Skill は `init` で置く代わりに Claude Code や Codex のプラグインとして入れることもできます。一度入れれば、どのリポジトリでも `init` を自分で実行せずに頼めます。CLI は上の手順のとおりに入れておきます。
+プラグインを一度入れると、まだ `init` を実行していないアプリのフォルダでも、Claude Code や Codex に構成図を頼めます。CLI は上の手順のとおりに入れておきます。
 
 Claude Code では次のコマンドで入れます。
 
@@ -65,7 +65,11 @@ codex plugin marketplace add ochamu/ponchimap
 codex plugin add ponchimap@ponchimap
 ```
 
-入れたあとに起動したエージェントで、Claude Code では `/ponchimap:ponchimap`、Codex では `$ponchimap:ponchimap` を依頼の頭に付けて頼みます。プラグインの Skill はまず `ponchimap init` を実行し、リポジトリに置かれた Skill に従って続けます。初めて頼むリポジトリでは、入れてある CLI に同梱の Skill を `init` が置きます。違う Skill がすでに置いてあるときは、`init` はそれを残して警告し、エージェントがその警告を伝えます。
+インストール後にエージェントを起動し、Claude Code では `/ponchimap:ponchimap`、Codex では `$ponchimap:ponchimap` を依頼の頭に付けます。エージェントは指定したアプリのフォルダで `ponchimap init` を実行し、そのフォルダで調査と描画を続けます。フォルダを指定しなければ、現在の作業フォルダを使います。
+
+Codex の権限では `.agents/` に書き込めず初期化が止まったら、案内されたアプリのフォルダで端末から一度 `ponchimap init` を実行し、Codex に同じ依頼をしてください。途中まで作成したファイルはそのまま使えます。
+
+`init` は CLI に同梱の Skill と参照ファイルのうち、アプリのフォルダにないものを追加します。既存ファイルの内容が同梱版と異なる場合は、そのファイルを残して警告します。エージェントは警告を伝え、アプリのフォルダにある手順と参照ファイルに従います。
 
 ## 見本で試す
 

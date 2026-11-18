@@ -9,9 +9,7 @@ import (
 )
 
 const (
-	repoRoot = "../.."
-	// The plugin carries only this entry Skill. It sends the agent to the
-	// Skill that init places, so that the steps always match the CLI.
+	repoRoot    = "../.."
 	pluginEntry = "plugins/ponchimap/skills/ponchimap/SKILL.md"
 )
 

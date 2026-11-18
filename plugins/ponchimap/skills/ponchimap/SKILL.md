@@ -5,8 +5,7 @@ description: Investigates which cloud resources and external services an app use
 
 # ponchimap
 
-The ponchimap plugin installs only this entry point. The steps for the diagram ship inside the ponchimap CLI, so that they always match the CLI that runs them. Get them and follow them:
-
 1. Run `ponchimap version`. If the command is missing, tell the user to install the CLI with `go install github.com/ochamu/ponchimap/cmd/ponchimap@latest` (Go 1.27.4 or later) and to put Go's bin folder, usually `~/go/bin`, on the PATH. Then stop. Do not install it yourself.
-2. In the repository's root folder, run `ponchimap init`. It places the Skill of this CLI and keeps what is already there. If it prints a warning, tell the user what it says.
-3. Read the Skill that `init` placed: `.claude/skills/ponchimap/SKILL.md` in Claude Code, `.agents/skills/ponchimap/SKILL.md` in other agents. Follow it from its first step to its end for the user's request, as if the user had invoked it. Its references are in the `references/` folder beside it.
+2. Run `ponchimap init` in the app folder the user wants to diagram. Use the current working folder if the user did not specify one. Use that same folder for the rest of the request, including when it is a subfolder of a Git repository.
+3. Report any warnings from `init`. On a nonzero exit, report the error. If Codex was denied permission to write under `.agents/`, give the user the app folder's path and ask them to run `ponchimap init` there once in their terminal, then repeat their request. Stop on any nonzero exit even if `init` already created some files.
+4. After `init` succeeds, read `.claude/skills/ponchimap/SKILL.md` in Claude Code or `.agents/skills/ponchimap/SKILL.md` in Codex and other agents, relative to the app folder. Follow that Skill and use its adjacent `references/` folder. If `init` reports `init.skill_differs`, use the files it kept there, including any customized instructions or references.
