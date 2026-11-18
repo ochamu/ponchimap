@@ -39,9 +39,33 @@ ponchimap init
 このリポジトリの構成図を作って
 ```
 
+Skill を名指しして頼むこともできます。Claude Code では `/ponchimap`、Codex では `$ponchimap` を依頼の頭に付けます。
+
 エージェントは `init` が置いた Skill に従って、設定ファイル、コード、資料を読みます。環境が複数あって依頼が名指していなければ、どの環境を描くかを尋ねます。サービスの CLI のサインイン先が対象のアカウントと合わないときも、照会の前に尋ねます。調べたことは調査入力（JSON のファイル）に書き、ponchimap の CLI で図とレポートにします。最後に、図とレポートの場所、主な要素の役割、確かめられなかった点とその理由を答えます。
 
 もう一度頼むと、エージェントは前の調査入力を読んだうえでリポジトリと資料を調べ直し、同じ要素を同じIDのまま更新します。`architecture.view.yaml` に書いた表示名やグループは残ります。
+
+### プラグインとして入れる
+
+Skill は `init` で置く代わりに Claude Code や Codex のプラグインとして入れることもできます。一度入れれば、どのリポジトリでも `init` を自分で実行せずに頼めます。CLI は上の手順のとおりに入れておきます。
+
+Claude Code では次のコマンドで入れます。
+
+```bash
+claude plugin install ponchimap --marketplace ochamu/ponchimap
+```
+
+Codex では次の2つのコマンドで入れます。
+
+```bash
+codex plugin marketplace add ochamu/ponchimap
+```
+
+```bash
+codex plugin add ponchimap@ponchimap
+```
+
+入れたあとに起動したエージェントで、Claude Code では `/ponchimap:ponchimap`、Codex では `$ponchimap:ponchimap` を依頼の頭に付けて頼みます。プラグインの Skill はまず `ponchimap init` を実行し、CLI に同梱の Skill に従って続けます。そのため、手順はいつも入れてある CLI のバージョンに合います。
 
 ## 見本で試す
 
