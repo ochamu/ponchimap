@@ -65,7 +65,7 @@ codex plugin marketplace add ochamu/ponchimap
 codex plugin add ponchimap@ponchimap
 ```
 
-入れたあとに起動したエージェントで、Claude Code では `/ponchimap:ponchimap`、Codex では `$ponchimap:ponchimap` を依頼の頭に付けて頼みます。プラグインの Skill はまず `ponchimap init` を実行し、CLI に同梱の Skill に従って続けます。そのため、手順はいつも入れてある CLI のバージョンに合います。
+入れたあとに起動したエージェントで、Claude Code では `/ponchimap:ponchimap`、Codex では `$ponchimap:ponchimap` を依頼の頭に付けて頼みます。プラグインの Skill はまず `ponchimap init` を実行し、リポジトリに置かれた Skill に従って続けます。初めて頼むリポジトリでは、入れてある CLI に同梱の Skill を `init` が置きます。違う Skill がすでに置いてあるときは、`init` はそれを残して警告し、エージェントがその警告を伝えます。
 
 ## 見本で試す
 
