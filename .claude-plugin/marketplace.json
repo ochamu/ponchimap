@@ -1,0 +1,15 @@
+{
+  "name": "ponchimap",
+  "description": "The ponchimap plugin: a Skill that has your coding agent draw an evidence-backed architecture diagram with the ponchimap CLI.",
+  "owner": {
+    "name": "ochamu",
+    "url": "https://github.com/ochamu"
+  },
+  "plugins": [
+    {
+      "name": "ponchimap",
+      "source": "./plugins/ponchimap",
+      "description": "Draws an architecture diagram of the cloud services an app uses, with the evidence for every box and line."
+    }
+  ]
+}
