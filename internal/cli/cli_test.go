@@ -372,9 +372,17 @@ func TestVersionPrintsTheVersionsOfTheToolD2AndGoOnOneLine(t *testing.T) {
 	if required == nil {
 		t.Fatal("go.mod requires no D2")
 	}
-	// A binary of go test is a development build.
 	want := answer{code: 0, stdout: fmt.Sprintf("ponchimap (devel), d2 %s, %s\n", required[1], runtime.Version())}
 	if got := run("version"); got != want {
 		t.Errorf("version answers %+v, want %+v", got, want)
+	}
+}
+
+func TestToolVersionPrefersTheReleaseTag(t *testing.T) {
+	original := version
+	t.Cleanup(func() { version = original })
+	version = "  v1.2.3-rc.1\n"
+	if got := toolVersion(); got != "v1.2.3-rc.1" {
+		t.Errorf("toolVersion() = %q, want v1.2.3-rc.1", got)
 	}
 }

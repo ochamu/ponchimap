@@ -6,9 +6,13 @@ import (
 	"io"
 	"runtime"
 	"runtime/debug"
+	"strings"
 
 	"github.com/ochamu/ponchimap/internal/render/d2render"
 )
+
+// Release builds set version with -ldflags -X when building from a checkout.
+var version string
 
 func runVersion(_ context.Context, args []string, stdout, _ io.Writer) outcome {
 	if o, stop := parseFlags(newFlagSet("version"), args, stdout); stop {
@@ -18,9 +22,10 @@ func runVersion(_ context.Context, args []string, stdout, _ io.Writer) outcome {
 	return outcome{}
 }
 
-// toolVersion is the version of the main module that Go put into the binary.
-// A binary of go run or go test has none and is a development build.
 func toolVersion() string {
+	if tag := strings.TrimSpace(version); tag != "" {
+		return tag
+	}
 	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" {
 		return info.Main.Version
 	}
