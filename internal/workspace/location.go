@@ -18,7 +18,7 @@ func SamePath(first, second string) bool { return locate(first).is(locate(second
 func CheckPaths(inputs, outputs []string) error {
 	writes := make([]location, len(outputs))
 	for i, path := range outputs {
-		writes[i] = locate(path)
+		writes[i] = entry(path)
 		if writes[i].existing == nil {
 			return fmt.Errorf("cannot resolve output path %q", path)
 		}
@@ -32,10 +32,13 @@ func CheckPaths(inputs, outputs []string) error {
 		if path == "" {
 			continue
 		}
-		read := locate(path)
-		for i, write := range writes {
-			if read.is(write) {
-				return fmt.Errorf("input %q and output %q refer to the same file", path, outputs[i])
+		// A write harms an input that is a link in two places: the file the
+		// link leads to, and the link itself.
+		for _, read := range []location{locate(path), entry(path)} {
+			for i, write := range writes {
+				if read.is(write) {
+					return fmt.Errorf("input %q and output %q refer to the same file", path, outputs[i])
+				}
 			}
 		}
 	}
@@ -47,6 +50,20 @@ type location struct {
 	rest     string
 }
 
+// entry is where a write to path lands. Save never follows a link at the
+// last element of a path: it refuses one at a target and removes one at a
+// temporary name. So a link there is a name in its directory, whether or not
+// it leads anywhere.
+func entry(path string) location {
+	if info, err := os.Lstat(path); err != nil || info.Mode()&fs.ModeSymlink == 0 {
+		return locate(path)
+	}
+	parent, name := split(path)
+	at := locate(parent)
+	at.rest = filepath.Join(at.rest, name)
+	return at
+}
+
 func locate(path string) location {
 	var rest string
 	for {
@@ -54,23 +71,28 @@ func locate(path string) location {
 			return location{info, rest}
 		}
 		if _, err := os.Lstat(path); err == nil {
-			// A dangling or cyclic link is not a place to create a file.
+			// Nothing can be made below a dangling or cyclic link.
 			return location{}
 		}
-		// Dir and Join clean away "link/.." before Stat can see which
-		// directory actually contains the missing file.
-		parent, name := filepath.Split(path)
-		if parent == "" {
-			parent = "."
-		} else if len(parent) > len(filepath.VolumeName(parent))+1 {
-			parent = parent[:len(parent)-1]
-		}
+		parent, name := split(path)
 		if parent == path {
 			return location{}
 		}
 		rest = filepath.Join(name, rest)
 		path = parent
 	}
+}
+
+// split keeps the parent as it is written. Dir and Join clean away "link/.."
+// before Stat can see which directory actually contains the file.
+func split(path string) (parent, name string) {
+	parent, name = filepath.Split(path)
+	if parent == "" {
+		parent = "."
+	} else if len(parent) > len(filepath.VolumeName(parent))+1 {
+		parent = parent[:len(parent)-1]
+	}
+	return parent, name
 }
 
 func (l location) is(other location) bool {
