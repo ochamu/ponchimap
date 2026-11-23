@@ -29,7 +29,7 @@
 <a href="docs/images/long-labels-and-mismatches.png"><img src="docs/images/long-labels-and-mismatches.png" alt="不一致と未照合を含む構成図の例。Cloudflare Workers と Cloud Functions for Firebase のカードに「不一致」の印、Cloudflare R2 のカードに「未照合」の印が付き、OpenAI API が破線で描かれている" width="860"></a>
 
 <details>
-<summary>同じ見本から生成したレポートの「食い違い」の抜粋</summary>
+<summary>同じ見本から生成したレポートの「食い違い」の抜粋（リンクとエスケープの記号は省略）</summary>
 
 ```markdown
 - 不一致: n301 Cloudflare Workers、e301 接続設定（n301 → n302）、e302 接続設定（n301 → n303）。設定項目（slot）「DB_PRIMARY」の接続先が根拠によって違う
