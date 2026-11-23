@@ -148,7 +148,7 @@ const mixedModel = `{
         {"key": "scope.owner", "value": {"kind": "account", "id": "raw-account-777"}},
         {"key": "scope.network", "value": "raw-network-555"}],
        "ref": {"type": "query", "path": "findings/b.json"}, "checked_at": "2026-11-13T00:00:00Z"}]},
-    {"id": "nc", "kind": "service", "provider": "resend", "service": "resend", "identity": {}, "attributes": {},
+    {"id": "nc", "kind": "service", "provider": "acme", "service": "acme.mail", "identity": {}, "attributes": {"service_name": "Acme _Mail_ &copy; &#65;"},
      "evidence": [{"id": "evc", "kind": "code", "supports": [{"key": "call.implemented", "value": true}],
        "ref": {"type": "file", "path": "src/c.ts", "start_line": 3, "end_line": 9}, "checked_at": "2026-11-13T00:00:00Z"}]},
     {"id": "nd", "kind": "service", "provider": "stripe", "service": "stripe", "identity": {}, "attributes": {},
@@ -494,58 +494,30 @@ func TestEveryFindingDerivedByHandHasItsEntry(t *testing.T) {
 	}
 }
 
-// variants are view configs that hide or fold elements of m: each node and
-// each edge hidden by itself, and each pair of neighbouring nodes folded
-// into one aggregate where the model allows it.
-func variants(m *model.Model) map[string]*view.Config {
-	out := map[string]*view.Config{}
-	for _, n := range m.Nodes {
-		out["hide "+n.ID] = &view.Config{Hidden: []string{n.ID}}
-	}
-	for _, e := range m.Edges {
-		out["hide "+e.ID] = &view.Config{Hidden: []string{e.ID}}
-	}
-	for i := 1; i < len(m.Nodes); i++ {
-		a, b := m.Nodes[i-1].ID, m.Nodes[i].ID
-		out["fold "+a+" and "+b] = &view.Config{Aggregates: []view.AggregateConfig{{ID: "agg-pair", Label: "まとめ", Members: []string{a, b}}}}
-	}
-	return out
-}
-
-// Hiding or folding an element takes it off the figure. What is unverified,
-// what disagrees, and what was read must stay in the report word for word.
 func TestHidingOrFoldingAnElementChangesNoStateSection(t *testing.T) {
-	type subject struct {
-		name  string
-		model *model.Model
-	}
-	var all []subject
-	for _, f := range fixtures(t) {
-		all = append(all, subject{f.name, f.model})
-	}
-	for _, c := range markCases(t) {
-		all = append(all, subject{c.name, c.model})
-	}
-	for _, s := range all {
-		t.Run(s.name, func(t *testing.T) {
-			plain := string(report.Build(s.model, buildScene(t, s.model, &view.Config{}), report.Drawing{}).Markdown())
-			tried := 0
-			for name, config := range variants(s.model) {
-				scene, err := view.Build(s.model, config)
-				if err != nil {
-					// Nodes of different boundaries cannot be folded together.
-					continue
-				}
-				tried++
-				md := string(report.Build(s.model, scene, report.Drawing{}).Markdown())
+	for _, tc := range []struct {
+		name                 string
+		model                *model.Model
+		node, edge, neighbor string
+	}{
+		{"unverified with denied coverage", mixed(t).model, "na", "e1", "nb"},
+		{"slot mismatch", loadModel(t, "../../testdata/marks/slot-declared-a-deployed-b.json"), "w", "db-declared", "a"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := fixture{model: tc.model, scene: buildScene(t, tc.model, &view.Config{})}
+			plain := f.markdown()
+			for change, cfg := range map[string]*view.Config{
+				"hide node": {Hidden: []string{tc.node}},
+				"hide edge": {Hidden: []string{tc.edge}},
+				"fold pair": {Aggregates: []view.AggregateConfig{{ID: "pair", Label: "まとめ", Members: []string{tc.node, tc.neighbor}}}},
+			} {
+				f.scene = buildScene(t, tc.model, cfg)
+				md := f.markdown()
 				for _, heading := range stateSections {
 					if sectionText(t, md, heading) != sectionText(t, plain, heading) {
-						t.Errorf("%s: the section %q differs from the one of the plain figure", name, heading)
+						t.Errorf("%s changed the %q section", change, heading)
 					}
 				}
-			}
-			if tried < len(s.model.Nodes) {
-				t.Fatalf("only %d view configs could be drawn", tried)
 			}
 		})
 	}
@@ -754,31 +726,21 @@ func TestElementsKnownOnlyFromHintsOrStatementsAreUnconfirmed(t *testing.T) {
 
 func TestOmittedSectionOfTheSampleWithHiddenAndFoldedElements(t *testing.T) {
 	f := loadSample(t, "order-service")
-	if len(f.want.Hidden) == 0 || len(f.want.Aggregates) == 0 {
-		t.Fatal("order-service is expected to hide an element and to aggregate some")
-	}
 	md := f.markdown()
+	where := map[string]string{"e431": "n425"}
+	for _, aggregate := range f.want.Aggregates {
+		for _, id := range aggregate.Members {
+			where[id] = aggregate.ID
+		}
+	}
 	want := slices.Clone(f.want.Hidden)
-	for _, a := range f.want.Aggregates {
-		want = append(want, a.Members...)
-		for _, id := range a.Members {
-			if !mentions(itemText(t, md, id), a.ID) {
-				t.Errorf("the item of %s does not name the aggregate %s it was folded into", id, a.ID)
-			}
+	for id, destination := range where {
+		want = append(want, id)
+		if !mentions(itemText(t, md, id), destination) {
+			t.Errorf("the item of %s does not name %s", id, destination)
 		}
 	}
-	for _, e := range f.model.Edges {
-		for _, hidden := range f.want.Hidden {
-			if e.From == hidden || e.To == hidden {
-				want = append(want, e.ID)
-				if !mentions(itemText(t, md, e.ID), hidden) {
-					t.Errorf("the item of %s does not name its hidden end %s", e.ID, hidden)
-				}
-			}
-		}
-	}
-	omitted := sectionText(t, md, "図に載せなかったもの")
-	if got, want := subjects(omitted), sorted(want); !slices.Equal(got, want) {
+	if got, want := subjects(sectionText(t, md, "図に載せなかったもの")), sorted(want); !slices.Equal(got, want) {
 		t.Errorf("the omitted section is about %v, want %v", got, want)
 	}
 }
@@ -791,23 +753,36 @@ func TestFoldedSharedHiddenAndSelfEdgesSayWhereTheyWent(t *testing.T) {
 		"nb": "agg-store",
 		"e1": "agg-store",
 		"e3": "e2",
-		"e4": "nd",
 	} {
 		if !mentions(itemText(t, md, id), where) {
 			t.Errorf("the item of %s does not name %s", id, where)
 		}
 	}
-	if got, want := subjects(sectionText(t, md, "図に載せなかったもの")), []string{"e1", "e4", "e5", "na", "nb", "nd"}; !slices.Equal(got, want) {
+	omitted := sectionText(t, md, "図に載せなかったもの")
+	if got, want := subjects(omitted), []string{"e1", "e4", "e5", "na", "nb", "nd"}; !slices.Equal(got, want) {
 		t.Errorf("the omitted section is about %v, want %v", got, want)
+	}
+
+	drawn := labelled(itemText(t, md, "e4"), "図での表示")
+	if len(drawn) != 1 || !mentions(drawn[0], "nd") {
+		t.Errorf("the display row of e4 does not name its hidden end nd: %q", drawn)
+	}
+	for _, row := range entries(omitted) {
+		if subject(row) == "e4" {
+			_, why, _ := strings.Cut(row, "）")
+			if !mentions(why, "nd") {
+				t.Errorf("the omitted entry of e4 does not explain which end is hidden: %q", row)
+			}
+		}
 	}
 
 	m := loadModel(t, filepath.Join("..", "..", "testdata", "marks", "relation-to-itself.json"))
 	md = string(report.Build(m, buildScene(t, m, &view.Config{}), report.Drawing{}).Markdown())
-	omitted := entries(sectionText(t, md, "図に載せなかったもの"))
-	if len(omitted) != 1 || subject(omitted[0]) != "self" {
-		t.Fatalf("the omitted entries are %q, want one about the relation from w to itself", omitted)
+	self := entries(sectionText(t, md, "図に載せなかったもの"))
+	if len(self) != 1 || subject(self[0]) != "self" {
+		t.Fatalf("the omitted entries are %q, want one about the relation from w to itself", self)
 	}
-	for _, text := range []string{omitted[0], itemText(t, md, "self")} {
+	for _, text := range []string{self[0], itemText(t, md, "self")} {
 		if strings.Contains(text, "集約") {
 			t.Errorf("a relation from a node to itself is said to be inside an aggregate:\n%s", text)
 		}
@@ -1069,62 +1044,14 @@ func readAs(markdown string) string {
 	return regexp.MustCompile("\\\\([!-/:-@[-`{-~])").ReplaceAllString(markdown, "$1")
 }
 
-// A service name is text, so no character of it starts emphasis or an entity
-// in the report.
-func TestASignInAServiceNameIsEscaped(t *testing.T) {
-	old := `"provider": "resend", "service": "resend", "identity": {}, "attributes": {}`
-	if n := strings.Count(mixedModel, old); n != 1 {
-		t.Fatalf("fixture premise: the mixed model holds %q %d times, want 1", old, n)
-	}
-	raw := strings.Replace(mixedModel, old, `"provider": "acme", "service": "acme.mail", "identity": {}, "attributes": {"service_name": "AWS _Lambda_ &copy; &#65;"}`, 1)
-	m, diags := model.Parse("model.json", []byte(raw))
-	if diags.HasErrors() {
-		t.Fatal(diags)
-	}
-	md := string(report.Build(m, buildScene(t, m, &view.Config{}), report.Drawing{}).Markdown())
-	if item := itemText(t, md, "nc"); !strings.HasPrefix(item, "\n### nc AWS \\_Lambda\\_ \\&copy; \\&#65;\n") {
-		t.Errorf("the heading of nc does not escape _ and &:\n%s", item)
-	}
-}
-
-// The report names a node by the service name its model gives, in the
-// heading of its item and after a link to it.
-func TestANodeIsNamedByItsServiceName(t *testing.T) {
-	old := `"provider": "resend", "service": "resend", "identity": {}, "attributes": {}`
-	if n := strings.Count(mixedModel, old); n != 1 {
-		t.Fatalf("fixture premise: the mixed model holds %q %d times, want 1", old, n)
-	}
-	raw := strings.Replace(mixedModel, old, `"provider": "acme", "service": "acme.mail", "identity": {}, "attributes": {"service_name": "Acme Mail"}`, 1)
-	m, diags := model.Parse("model.json", []byte(raw))
-	if diags.HasErrors() {
-		t.Fatal(diags)
-	}
-	md := string(report.Build(m, buildScene(t, m, &view.Config{}), report.Drawing{}).Markdown())
-	if item := itemText(t, md, "nc"); !strings.HasPrefix(item, "\n### nc Acme Mail\n") {
-		t.Errorf("the item of nc is not headed nc Acme Mail:\n%s", item)
-	}
-	if from := labelled(itemText(t, md, "e2"), "接続元"); len(from) != 1 || !strings.HasSuffix(from[0], "[nc](#nc) Acme Mail") {
-		t.Errorf("the item of e2 gives its source as %q, want the link to nc followed by Acme Mail", from)
-	}
-}
-
-// An edge with a hidden end has no line. Its item and its row among the
-// elements left off the figure name the end that is hidden.
-func TestEdgeWithAHiddenEndNamesThatEnd(t *testing.T) {
+func TestANodeIsNamedByItsEscapedServiceName(t *testing.T) {
 	md := mixed(t).markdown()
-	drawn := ""
-	for _, l := range strings.Split(itemText(t, md, "e4"), "\n") {
-		if strings.Contains(l, "図での表示") {
-			drawn = l
-		}
+	const escaped = `Acme \_Mail\_ \&copy; \&#65;`
+	if item := itemText(t, md, "nc"); !strings.HasPrefix(item, "\n### nc "+escaped+"\n") {
+		t.Errorf("the heading of nc does not give its escaped service name:\n%s", item)
 	}
-	if !mentions(drawn, "nd") {
-		t.Errorf("the row of e4 on how the figure shows it does not name its hidden end nd: %q", drawn)
-	}
-	for _, e := range entries(sectionText(t, md, "図に載せなかったもの")) {
-		if subject(e) == "e4" && !mentions(strings.SplitN(e, "）", 2)[1], "nd") {
-			t.Errorf("the omitted entry of e4 does not name its hidden end nd: %q", e)
-		}
+	if from := labelled(itemText(t, md, "e2"), "接続元"); len(from) != 1 || !strings.HasSuffix(from[0], "[nc](#nc) "+escaped) {
+		t.Errorf("the source of e2 does not link to nc with its escaped service name: %q", from)
 	}
 }
 

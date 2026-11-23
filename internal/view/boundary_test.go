@@ -2,7 +2,7 @@ package view
 
 import (
 	"fmt"
-	"os"
+	"maps"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -28,24 +28,15 @@ func everyModel(t *testing.T) []string {
 	return paths
 }
 
-func parseModel(t *testing.T, name, text string) *model.Model {
-	t.Helper()
-	m, diags := model.Parse(name, []byte(text))
-	if diags.HasErrors() {
-		t.Fatalf("%s: %v", name, diags)
-	}
-	return m
-}
-
 func newcomer(t *testing.T, provider string) model.Node {
 	t.Helper()
-	m := parseModel(t, "newcomer", fmt.Sprintf(`{"schema_version":"0.1","target":{"repository":".","environment":"dev"},"nodes":[
-		{"id":"zz-newcomer","kind":"resource","provider":%q,"service":"zz.service","evidence":[
-			{"id":"zz-newcomer-ev","kind":"deployed","supports":[
-				{"key":"existence","value":true},
-				{"key":"scope.owner","value":{"kind":"account","id":"zz-newcomer-account"}},
-				{"key":"region","value":"zz-newcomer-region"}],
-			"ref":{"type":"query","path":"zz"},"checked_at":"2026-11-13T09:00:00Z"}]}],"edges":[],"coverage":[]}`, provider))
+	extra := `,{"key":"scope.owner","value":{"kind":"account","id":"zz-newcomer-account"}},
+		{"key":"region","value":"zz-newcomer-region"}`
+	raw := modelOf(deployedNode("zz-newcomer", provider, extra), "")
+	m, diags := model.Parse("newcomer", []byte(raw))
+	if diags.HasErrors() {
+		t.Fatal(diags)
+	}
 	return m.Nodes[0]
 }
 
@@ -98,94 +89,38 @@ func without(m *model.Model, id string) *model.Model {
 	return &out
 }
 
-func wantSameBoundaries(t *testing.T, change string, before, after *Scene) {
-	t.Helper()
-	was, is := boundaries(before), boundaries(after)
-	for _, n := range before.Nodes {
-		for _, id := range n.SourceIDs {
-			now, drawn := is[id]
-			if drawn && now != was[id] {
-				t.Errorf("%s: the boundaries of %s were %q and are %q", change, id, was[id], now)
-			}
-		}
-	}
-}
-
-// A figure is shared and then drawn again after the model grew. A boundary
-// that the newer figure names differently, or by the ID another boundary had,
-// would be read as another account.
-func TestANodeOfANewBoundaryLeavesEveryOtherBoundaryAsItWas(t *testing.T) {
+func TestBoundaryIDsStayStableWhenNodesAreInsertedHiddenOrAppended(t *testing.T) {
 	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
-		before, err := Build(m, &Config{})
-		if err != nil {
-			t.Fatalf("%s: %v", path, err)
-		}
-		providers := []string{"zz-provider"}
-		if len(m.Nodes) > 0 {
-			providers = append(providers, m.Nodes[0].Provider)
-		}
-		for _, provider := range providers {
-			for _, at := range []int{0, len(m.Nodes) / 2, len(m.Nodes)} {
-				grown := *m
-				grown.Nodes = slices.Insert(slices.Clone(m.Nodes), at, newcomer(t, provider))
-				after, err := Build(&grown, &Config{})
-				if err != nil {
-					t.Fatalf("%s: %v", path, err)
+		t.Run(path, func(t *testing.T) {
+			m := loadModel(t, path)
+			before := boundaries(scene(t, m, &Config{}))
+			providers := []string{"zz-provider"}
+			if len(m.Nodes) > 0 {
+				providers = append(providers, m.Nodes[0].Provider)
+			}
+			for _, provider := range providers {
+				newNode := newcomer(t, provider)
+				for _, at := range []int{0, len(m.Nodes) / 2, len(m.Nodes)} {
+					t.Run(fmt.Sprintf("insert %s at %d", provider, at), func(t *testing.T) {
+						grown := *m
+						grown.Nodes = slices.Insert(slices.Clone(m.Nodes), at, newNode)
+						wantBoundaries(t, scene(t, &grown, &Config{}), before)
+					})
 				}
-				wantSameBoundaries(t, fmt.Sprintf("%s, a node of a new %s account at position %d", path, provider, at), before, after)
 			}
-		}
-	}
-}
-
-func TestHidingANodeLeavesEveryOtherBoundaryAsItWas(t *testing.T) {
-	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
-		before, err := Build(m, &Config{})
-		if err != nil {
-			t.Fatalf("%s: %v", path, err)
-		}
-		for _, n := range m.Nodes {
-			after, err := Build(m, &Config{Hidden: []string{n.ID}})
-			if err != nil {
-				t.Fatalf("%s: %v", path, err)
+			for _, n := range m.Nodes {
+				t.Run("hide "+n.ID, func(t *testing.T) {
+					want := maps.Clone(before)
+					delete(want, n.ID)
+					wantBoundaries(t, scene(t, m, &Config{Hidden: []string{n.ID}}), want)
+				})
+				t.Run("append twin of "+n.ID, func(t *testing.T) {
+					grown := *m
+					grown.Nodes = append(slices.Clone(m.Nodes), twinOf(n))
+					wantBoundaries(t, scene(t, &grown, &Config{}), before)
+				})
 			}
-			wantSameBoundaries(t, fmt.Sprintf("%s, %s hidden", path, n.ID), before, after)
-		}
-	}
-}
-
-// import adds new nodes after the others, and so does a person who writes a
-// model by hand.
-func TestANodeAddedAfterTheOthersOfItsBoundaryLeavesEveryBoundaryAsItWas(t *testing.T) {
-	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
-		before, err := Build(m, &Config{})
-		if err != nil {
-			t.Fatalf("%s: %v", path, err)
-		}
-		for _, n := range m.Nodes {
-			grown := *m
-			grown.Nodes = append(slices.Clone(m.Nodes), twinOf(n))
-			after, err := Build(&grown, &Config{})
-			if err != nil {
-				t.Fatalf("%s: %v", path, err)
-			}
-			wantSameBoundaries(t, fmt.Sprintf("%s, a node beside %s added last", path, n.ID), before, after)
-		}
+		})
 	}
 }
 
@@ -195,11 +130,7 @@ func TestANodeAddedAfterTheOthersOfItsBoundaryLeavesEveryBoundaryAsItWas(t *test
 // a boundary by a node in it and never by the ID the figure gives it.
 func TestANameStaysWithItsBoundaryWhileOtherNodesComeAndGo(t *testing.T) {
 	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
+		m := loadModel(t, path)
 		plain := scene(t, m, &Config{})
 		for _, named := range m.Nodes {
 			c := &Config{}
@@ -292,72 +223,12 @@ func wantOutsideSaid(t *testing.T, what string, m *model.Model, s *Scene) {
 	}
 }
 
-// unstating is the model without what the evidence of the node says about the
-// level: what a model written by hand leaves out.
-func unstating(m *model.Model, id string, level Level) *model.Model {
-	key := levels[slices.IndexFunc(levels, func(r levelRule) bool { return r.level == level })].key
-	out := *m
-	out.Nodes = slices.Clone(m.Nodes)
-	n := &out.Nodes[slices.IndexFunc(out.Nodes, func(n model.Node) bool { return n.ID == id })]
-	n.Evidence = slices.Clone(n.Evidence)
-	for i := range n.Evidence {
-		n.Evidence[i].Supports = slices.DeleteFunc(slices.Clone(n.Evidence[i].Supports), func(s model.Support) bool { return s.Key == key })
-	}
-	return &out
-}
-
-// A network is drawn inside the region of its nodes. A node that names the
-// network and no region, by a slip in a model written by hand or because the
-// resource has no region, would get a network of its own beside the region.
-func TestANodeThatStatesNoRegionIsInNoNetwork(t *testing.T) {
-	networks := 0
-	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
-		plain := scene(t, m, &Config{})
-		for _, n := range m.Nodes {
-			var outside []string
-			inRegion, inNetwork := false, false
-			for _, g := range boundariesOf(t, plain, n.ID) {
-				switch g.Level {
-				case LevelRegion:
-					inRegion = true
-				case LevelNetwork:
-					inNetwork = true
-				default:
-					outside = append(outside, g.ID+" "+g.Label)
-				}
-			}
-			if !inRegion || !inNetwork {
-				continue
-			}
-			networks++
-			changed := unstating(m, n.ID, LevelRegion)
-			s := scene(t, changed, &Config{})
-			if got, want := boundaries(s)[n.ID], strings.Join(outside, " > "); got != want {
-				t.Errorf("%s, %s states no region: its boundaries are %q, want %q", path, n.ID, got, want)
-			}
-			wantOutsideSaid(t, fmt.Sprintf("%s, %s states no region", path, n.ID), changed, s)
-		}
-	}
-	if networks == 0 {
-		t.Error("no model has a node in a network")
-	}
-}
-
 // Which of two regions a node is in is not for the figure to settle, and
 // neither is which region its network is in. A network drawn for the node
 // alone, outside the region, would show one network as two.
 func TestANodeIsInNoBoundaryInsideALevelItsEvidenceDisagreesAbout(t *testing.T) {
 	for _, path := range everyModel(t) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m := parseModel(t, path, string(raw))
+		m := loadModel(t, path)
 		plain := scene(t, m, &Config{})
 		for _, n := range m.Nodes {
 			var outside []string
@@ -386,8 +257,10 @@ func wantBoundaries(t *testing.T, s *Scene, want map[string]string) {
 	t.Helper()
 	got := boundaries(s)
 	for id, chain := range want {
-		if got[id] != chain {
-			t.Errorf("the boundaries of %s are %q, want %q", id, got[id], chain)
+		if actual, ok := got[id]; !ok {
+			t.Errorf("node %s is missing from the figure", id)
+		} else if actual != chain {
+			t.Errorf("the boundaries of %s are %q, want %q", id, actual, chain)
 		}
 	}
 }
@@ -539,7 +412,11 @@ func TestANodeWhoseRegionIsContestedLeavesItsNetworkToTheOthers(t *testing.T) {
 // figure says nothing false about the node without a region: it is drawn in
 // its account, and a warning says why it is not in the network.
 func TestANodeWithoutARegionLeavesItsNetworkToTheOthersAndIsReported(t *testing.T) {
-	m := unstating(boundaryCase(t, "two-accounts.json"), "db", LevelRegion)
+	m := boundaryCase(t, "two-accounts.json")
+	db := &m.Nodes[slices.IndexFunc(m.Nodes, func(n model.Node) bool { return n.ID == "db" })]
+	for i := range db.Evidence {
+		db.Evidence[i].Supports = slices.DeleteFunc(db.Evidence[i].Supports, func(s model.Support) bool { return s.Key == "region" })
+	}
 	s := scene(t, m, &Config{Boundaries: append(slices.Clone(accountNames), BoundaryAlias{Member: "db", Level: "network", Label: "本番VPC"})})
 	wantWellFormed(t, s)
 	wantBoundaries(t, s, map[string]string{

@@ -1,0 +1,81 @@
+name: release
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.event.deleted == false
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -count=1 ./...
+      - name: Build and package the release binaries
+        shell: bash
+        env:
+          CGO_ENABLED: '0'
+        run: |
+          stage=$(mktemp -d)
+          dist="$RUNNER_TEMP/dist"
+          mkdir -p "$dist"
+          cp LICENSE README.md internal/assets/fonts/OFL.txt "$stage/"
+          for target in linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64; do
+            os=${target%/*}
+            arch=${target#*/}
+            binary=ponchimap
+            if [[ $os == windows ]]; then
+              binary=ponchimap.exe
+            fi
+            GOOS="$os" GOARCH="$arch" go build -trimpath \
+              -ldflags "-s -w -X github.com/ochamu/ponchimap/internal/cli.version=$GITHUB_REF_NAME" \
+              -o "$stage/$binary" ./cmd/ponchimap
+            archive="$dist/ponchimap-$os-$arch"
+            if [[ $os == windows ]]; then
+              (cd "$stage" && zip -q "$archive.zip" "$binary" LICENSE OFL.txt README.md)
+            else
+              tar --format=ustar -czf "$archive.tar.gz" -C "$stage" "$binary" LICENSE OFL.txt README.md
+            fi
+          done
+          cd "$dist"
+          sha256sum *.tar.gz *.zip > SHA256SUMS.txt
+      - name: Verify the packaged CLI on the build host
+        shell: bash
+        run: |
+          host="$(go env GOHOSTOS)-$(go env GOHOSTARCH)"
+          unpacked=$(mktemp -d)
+          tar -xzf "$RUNNER_TEMP/dist/ponchimap-$host.tar.gz" -C "$unpacked"
+          version=$("$unpacked/ponchimap" version)
+          echo "$version"
+          [[ $version == "ponchimap $GITHUB_REF_NAME, "* ]]
+          scripts/first-run.sh "$unpacked/ponchimap"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-assets
+          path: ${{ runner.temp }}/dist/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-assets
+          path: dist
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+            --verify-tag --generate-notes dist/*.tar.gz dist/*.zip dist/SHA256SUMS.txt

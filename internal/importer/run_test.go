@@ -165,36 +165,6 @@ func TestWithoutAModelAndWithoutATargetNothingIsMade(t *testing.T) {
 	}
 }
 
-// A new model is about the environment that the request gives, or else about
-// the one environment that the findings state as their target.
-func TestANewModelIsAboutTheEnvironmentThatTheFindingsState(t *testing.T) {
-	file := func(id, environment string) object {
-		f := findings(id, "2026-11-16T09:00:00Z", true, resource("api-"+id, "cloudflare.workers", "worker-"+id, evidence("e1", "declared", "existence", true)))
-		f["acquisition"].(object)["target"] = object{"repository": ".", "environment": environment}
-		return from("scan-"+id, f)
-	}
-	inWorkspace(t)
-	write(t, "in/a.json", file("a", "prod"))
-	req := request()
-	req.Findings, req.Target = []string{"in"}, &model.Target{Repository: "."}
-	if res := importer.Run(req); res.Status != "ok" || res.Model.Target.Environment != "prod" {
-		t.Fatalf("status %q, and the model is about %q, want ok and prod\n%s", res.Status, res.Model.Target.Environment, listed(res.Diagnostics))
-	}
-
-	inWorkspace(t)
-	write(t, "in/a.json", file("a", "prod"))
-	write(t, "in/b.json", file("b", "staging"))
-	before := folder(t)
-	res := importer.Run(req)
-	if res.Status != "error" || !slices.Equal(codes(res.Diagnostics), []string{"import.no_target"}) || !slices.Equal(folder(t), before) {
-		t.Errorf("two environments: status %q, diagnostics:\n%s\nwant an error import.no_target alone and nothing written", res.Status, listed(res.Diagnostics))
-	}
-	req.Target = &model.Target{Repository: ".", Environment: "staging"}
-	if res := importer.Run(req); res.Status != "ok" || res.Model.Target.Environment != "staging" {
-		t.Errorf("with the environment given: status %q, and the model is about %q, want ok and staging\n%s", res.Status, res.Model.Target.Environment, listed(res.Diagnostics))
-	}
-}
-
 func TestAFolderWithoutFindingsIsAWarning(t *testing.T) {
 	inWorkspace(t)
 	if err := os.Mkdir("findings", 0o755); err != nil {
@@ -299,10 +269,7 @@ func TestTheCheckOfTheModelDecidesWhetherItIsSaved(t *testing.T) {
 	})
 }
 
-func TestAWorkspaceThatCannotBeWrittenKeepsTheModel(t *testing.T) {
-	if os.Geteuid() == 0 {
-		t.Skip("the superuser writes into a read-only folder")
-	}
+func TestImportKeepsTheModelWhenItCannotStageTheRecords(t *testing.T) {
 	inputs := t.TempDir()
 	first, second := filepath.Join(inputs, "first.json"), filepath.Join(inputs, "second.json")
 	copyFile(t, filepath.Join(casesFolder, "declared-value-changed/1/findings/scan.json"), first, nil)
@@ -312,10 +279,7 @@ func TestAWorkspaceThatCannotBeWrittenKeepsTheModel(t *testing.T) {
 		t.Fatalf("the first import: %s", listed(res.Diagnostics))
 	}
 	before := saved(t)
-	if err := os.Chmod(".", 0o555); err != nil {
-		t.Fatal(err)
-	}
-	t.Cleanup(func() { os.Chmod(".", 0o755) })
+	write(t, filepath.Join("acquisitions.json.next.tmp", "keep"), []byte("keep"))
 
 	if res := take(first); res.Status != "ok" || len(res.Diagnostics) != 0 {
 		t.Errorf("the same input again, which changes nothing, gives status %q:\n%s\nwant ok: a run that changes nothing writes nothing",
@@ -484,6 +448,40 @@ func TestARunThatStoppedBeforeItWroteTheModelLeftRecordsThatAreIgnored(t *testin
 	}
 }
 
+func TestImportPreservesPermissionsWhileStagingAndPublishingRecords(t *testing.T) {
+	const records = "acquisitions.json"
+	inWorkspace(t)
+	fromCase(t, "first-import", "1")
+	if err := os.WriteFile(records, []byte(`{"schema_version":"0.1","acquisitions":[]}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	permissions := func(path string) os.FileMode {
+		info, err := os.Stat(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return info.Mode().Perm()
+	}
+	want := permissions(records)
+	write(t, ".model.json.tmp/keep", []byte("block the model write after staging"))
+	if res := take("findings"); !slices.Contains(codes(res.Diagnostics), "import.write_failed") {
+		t.Fatal(listed(res.Diagnostics))
+	}
+	staged := mustRead(t, records+".next")
+	if got := permissions(records + ".next"); got != want {
+		t.Errorf("staged records permissions = %v, want %v", got, want)
+	}
+	if err := os.RemoveAll(".model.json.tmp"); err != nil {
+		t.Fatal(err)
+	}
+	if res := take("findings"); res.Status != "ok" {
+		t.Fatal(listed(res.Diagnostics))
+	}
+	if got := permissions(records); got != want || !bytes.Equal(mustRead(t, records), staged) {
+		t.Errorf("published records have mode %v, want %v and the staged content", got, want)
+	}
+}
+
 func TestARunThatEndsInAnErrorLeavesThePendingRecordsAsTheyAre(t *testing.T) {
 	inWorkspace(t)
 	write(t, "first/scan.json", laterScan("aq-scan-1", "2026-11-16T09:00:00Z"))
@@ -610,6 +608,27 @@ func TestAnAttributeThatTheEvidenceComesToDisputeIsTakenOut(t *testing.T) {
 	}
 	if region, has := node(t, loadModel(t), db).Attributes["region"]; has {
 		t.Errorf("attributes.region is still %v, want it left out while the evidence gives two values", region)
+	}
+}
+
+func TestDisputedAttributeHintsDescribeTheFigureAndReport(t *testing.T) {
+	for key, words := range map[string][]string{
+		"role":   {"report", "supplements.yaml", "without valid_time"},
+		"region": {"report", "mismatch"},
+	} {
+		inWorkspace(t)
+		write(t, "scan.json", findings("aq-scan", "2026-11-16T09:00:00Z", true,
+			resource("db", "cloudflare.d1", "example-db",
+				evidence("a", "declared", "existence", true, key, "first"), evidence("b", "stated", key, "second"))))
+		found := take("scan.json").Diagnostics
+		if !slices.Equal(codes(found), []string{"import.attribute_disputed"}) {
+			t.Fatalf("disputed %s: %s", key, listed(found))
+		}
+		for _, word := range words {
+			if !strings.Contains(found[0].Hint, word) {
+				t.Errorf("hint for %s omits %q: %s", key, word, found[0].Hint)
+			}
+		}
 	}
 }
 

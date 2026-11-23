@@ -61,7 +61,7 @@ var (
 		"Restore the file, or remove it. Without it, import treats the evidence of earlier acquisitions as written by hand, and a later read does not replace it."}
 	writeFailed = notice{diag.Error, "import.write_failed",
 		"the file could not be written",
-		"Check that the folder exists and can be written, then run the import again."}
+		"Check that the folder exists and is writable. If the target exists, check that it is a regular file. Then run the import again."}
 
 	noFindings = notice{diag.Warning, "import.no_findings",
 		"the folder holds no *.json file",
@@ -93,10 +93,10 @@ var (
 	disputed = map[string]notice{
 		"role": {diag.Warning, "import.attribute_disputed",
 			"the evidence gives more than one value for role, so attributes.role was left out",
-			"Check which value is right. The figure shows the values side by side as a mismatch."},
+			"The model keeps the role values as evidence, and the report lists them. To set attributes.role, give the node one role without valid_time in supplements.yaml."},
 		"region": {diag.Warning, "import.attribute_disputed",
 			"the evidence gives more than one value for region, so attributes.region was left out",
-			"Check which value is right. The figure shows the values side by side as a mismatch."},
+			"Check the region values in the report. If the figure compares those values, it marks the node as a mismatch."},
 	}
 )
 

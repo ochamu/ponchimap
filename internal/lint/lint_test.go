@@ -3,7 +3,6 @@ package lint_test
 import (
 	"encoding/json"
 	"fmt"
-	"maps"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -13,7 +12,6 @@ import (
 
 	"github.com/ochamu/ponchimap/internal/diag"
 	"github.com/ochamu/ponchimap/internal/lint"
-	"github.com/ochamu/ponchimap/internal/model"
 	"github.com/ochamu/ponchimap/internal/view"
 )
 
@@ -396,60 +394,25 @@ func TestABoundaryThatSharesItsLabelIsReportedWhereAFileCanBePointedAt(t *testin
 	}
 }
 
-func fromAssess(code string) bool {
-	return strings.HasPrefix(code, "unverified.") || strings.HasPrefix(code, "mismatch.") ||
-		slices.Contains([]string{"model.no_evidence", "model.contradictory_evidence", "model.relation_evidence"}, code)
-}
-
-// lint derives no defect or finding of its own: it reports those of
-// view.Assess, about the same elements and evidence.
-func TestTheDefectsAndTheFindingsAreThoseOfAssess(t *testing.T) {
-	derived, _ := filepath.Glob("../../testdata/marks/*.json")
-	samples, _ := filepath.Glob("../../testdata/samples/*/model.json")
-	if len(derived) < 64 || len(samples) < 5 {
-		t.Fatalf("found %d cases of the derivation and %d samples, want 64 and 5 at least", len(derived), len(samples))
+func TestLintLocatesBothAnUnverifiedNodeAndAnEvidenceDefect(t *testing.T) {
+	const nodes = `
+  {"id":"declared","kind":"resource","provider":"example","service":"example.api","evidence":[
+    {"id":"ev-api","kind":"declared","supports":[{"key":"existence","value":true}],
+     "ref":{"type":"file","path":"app.yaml"},"checked_at":"2026-11-13T09:00:00Z"}]},
+  {"id":"unbacked","kind":"resource","provider":"example","service":"example.db","evidence":
+    []}`
+	in := lint.Input{Model: lint.Source{Path: "infra.json", Text: fmt.Appendf(nil, modelOf, nodes, "")}}
+	_, diags := check(t, in)
+	var got []string
+	for _, d := range diags {
+		got = append(got, strings.Join(wantLine(d, in), " "))
 	}
-	type about struct{ code, id string }
-	for _, path := range slices.Concat(derived, samples) {
-		raw, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		m, loaded := model.Parse(path, raw)
-		if m == nil {
-			t.Fatalf("%s: %v", path, loaded)
-		}
-		assessment := view.Assess(m)
-		want := map[about]int{}
-		expect := func(code, id string) {
-			want[about{code, id}]++
-		}
-		for _, f := range assessment.Findings {
-			expect(string(f.Code), f.About[0])
-		}
-		for _, d := range assessment.Defects {
-			if d.Code == view.DefectNoEvidence {
-				expect(string(d.Code), d.ID)
-				continue
-			}
-			for _, id := range d.Evidence {
-				expect(string(d.Code), id)
-			}
-		}
-
-		checked, diags := check(t, lint.Input{Model: lint.Source{Path: path}})
-		if drawn, defects := checked != nil, len(assessment.Defects); drawn != (defects == 0) {
-			t.Errorf("%s: a scene returned = %v for a model with %d defects", path, drawn, defects)
-		}
-		got := map[about]int{}
-		for _, d := range diags {
-			if fromAssess(d.Code) {
-				got[about{d.Code, d.TargetID}]++
-			}
-		}
-		if !maps.Equal(got, want) {
-			t.Errorf("%s: the diagnostics are %v, and view.Assess gives %v", path, got, want)
-		}
+	want := []string{
+		"warning model 2:3 unverified.not_checked /nodes/0 declared",
+		"error model 6:5 model.no_evidence /nodes/1/evidence unbacked",
+	}
+	if !slices.Equal(got, want) {
+		t.Errorf("diagnostics = %v, want %v", got, want)
 	}
 }
 

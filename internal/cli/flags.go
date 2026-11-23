@@ -7,7 +7,6 @@ import (
 	"io"
 	"io/fs"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/ochamu/ponchimap/internal/lint"
@@ -118,45 +117,4 @@ func unnamed(paths ...flagPath) (o outcome, stop bool) {
 		}
 	}
 	return outcome{}, false
-}
-
-// location is where a path leads on the file system: the deepest part of the
-// path that exists, and the rest of the path below it, which is empty unless
-// the file is yet to be made.
-type location struct {
-	existing fs.FileInfo
-	rest     string
-}
-
-func locate(path string) location {
-	// The path is asked for first as it is written. The kernel reads
-	// "link/.." through the link, and filepath.Abs removes the two elements,
-	// which gives the path of another file.
-	if info, err := os.Stat(path); err == nil {
-		return location{existing: info}
-	}
-	abs, err := filepath.Abs(path)
-	if err != nil {
-		abs = filepath.Clean(path)
-	}
-	rest := ""
-	for {
-		if info, err := os.Stat(abs); err == nil {
-			return location{info, rest}
-		}
-		parent := filepath.Dir(abs)
-		if parent == abs {
-			// Not even the root of the path exists, so the rest is all of it.
-			return location{rest: filepath.Join(abs, rest)}
-		}
-		abs, rest = parent, filepath.Join(filepath.Base(abs), rest)
-	}
-}
-
-// is says that two locations are one file. The rests are compared without
-// their case: a file system that ignores case makes one file of Report.md
-// and report.md.
-func (l location) is(other location) bool {
-	samePart := l.existing == nil && other.existing == nil || os.SameFile(l.existing, other.existing)
-	return samePart && strings.EqualFold(l.rest, other.rest)
 }

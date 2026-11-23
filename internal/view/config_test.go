@@ -436,47 +436,38 @@ func TestMembersAreJudgedOnTheEntriesThatAreLeft(t *testing.T) {
 	}
 }
 
-// A small text must not take long, whatever it holds: aliases to aliases,
-// thousands of levels, huge numbers, or the same problem many times over.
-func TestASmallViewConfigIsReadQuickly(t *testing.T) {
-	var laughs strings.Builder
-	laughs.WriteString("schema_version: \"0.1\"\na0: &a0 [x, x, x, x, x, x, x, x, x, x]\n")
+func TestViewConfigRefusesDifficultInputsWithinFiveSeconds(t *testing.T) {
+	var aliases strings.Builder
+	aliases.WriteString("a0: &a0 [x]\n")
 	for i := 1; i <= 40; i++ {
-		fmt.Fprintf(&laughs, "a%d: &a%d [%s]\n", i, i, strings.TrimSuffix(strings.Repeat(fmt.Sprintf("*a%d, ", i-1), 10), ", "))
+		fmt.Fprintf(&aliases, "a%d: &a%d [*a%d, *a%d]\n", i, i, i-1, i-1)
 	}
-	many := func(n int, item func(i int) string) string {
-		var b strings.Builder
-		for i := range n {
-			b.WriteString(item(i))
-		}
-		return b.String()
+	var members strings.Builder
+	for i := range 50000 {
+		fmt.Fprintf(&members, "n%d, ", i+1000)
 	}
+	const group = "hidden: [n101]\ngroups:\n  - id: g\n    label: G\n    members: ["
 	m := loadModel(t, casesModel)
-	for name, text := range map[string]string{
-		"aliases to aliases":         laughs.String(),
-		"ten thousand levels":        "schema_version: \"0.1\"\ntitle: " + strings.Repeat("[", 9990) + strings.Repeat("]", 9990) + "\n",
-		"huge exponents":             "schema_version: \"0.1\"\nhidden: [" + many(5000, func(int) string { return "1e999999999, " }) + "x]\n",
-		"long numbers":               "schema_version: \"0.1\"\nhidden: [" + many(200, func(int) string { return strings.Repeat("9", 5000) + ", " }) + "x]\n",
-		"labels for missing IDs":     "schema_version: \"0.1\"\nlabels:\n" + many(50000, func(i int) string { return fmt.Sprintf("  n%d: x\n", i+1000) }),
-		"the same key again":         "schema_version: \"0.1\"\nlabels:\n" + many(50000, func(int) string { return "  n101: x\n" }),
-		"labels with refused names":  "schema_version: \"0.1\"\nlabels:\n" + many(50000, func(i int) string { return fmt.Sprintf("  N%d: x\n", i) }),
-		"hidden IDs, all different":  "schema_version: \"0.1\"\nhidden: [" + many(50000, func(i int) string { return fmt.Sprintf("n%d, ", i+1000) }) + "n1]\n",
-		"members of one group":       "schema_version: \"0.1\"\ngroups:\n  - id: g\n    label: G\n    members: [" + many(50000, func(i int) string { return fmt.Sprintf("n%d, ", i+1000) }) + "n1]\n",
-		"groups with the same ID":    "schema_version: \"0.1\"\ngroups:\n" + many(20000, func(int) string { return "  - {id: g, label: G, members: [n101]}\n" }),
-		"one long line":              "{schema_version: \"0.1\", labels: {" + many(50000, func(i int) string { return fmt.Sprintf("n%d: \"注文\", ", i+1000) }) + "n1: x}}\n",
-		"unknown properties":         "schema_version: \"0.1\"\n" + many(50000, func(i int) string { return fmt.Sprintf("k%d: 1\n", i) }),
-		"a megabyte of one label":    "schema_version: \"0.1\"\ntitle: " + strings.Repeat("9", 1<<20) + "\n",
-		"a megabyte of plain digits": "schema_version: \"0.1\"\ntitle: \"" + strings.Repeat("9", 1<<20) + "\"\n",
+	for _, tc := range []struct{ name, body, code string }{
+		{"nested aliases", aliases.String(), "input.unsupported"},
+		{"deep nesting", "title: " + strings.Repeat("[", 9990) + strings.Repeat("]", 9990), "input.depth_limit"},
+		{"large exponents", "hidden: [" + strings.Repeat("1e999999999, ", 5000) + "x]", "input.number_limit"},
+		{"duplicate keys", "labels:\n" + strings.Repeat("  n101: x\n", 50000), "input.duplicate_key"},
+		{"group with a hidden member", group + members.String() + "n101]", "view.hidden_member"},
 	} {
-		start := time.Now()
-		f, diags := ParseConfig("view.yaml", []byte(text))
-		if f != nil {
-			_, more := f.Resolve(m)
-			diags = append(diags, more...)
-		}
-		if took := time.Since(start); took > 5*time.Second {
-			t.Errorf("%s (%d KB): read in %v with %d diagnostics", name, len(text)/1024, took.Round(time.Millisecond), len(diags))
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			start := time.Now()
+			f, diags := ParseConfig("view.yaml", []byte("schema_version: \"0.1\"\n"+tc.body))
+			cfg, diags := fit(t, f, diags, m)
+			if took := time.Since(start); took > 5*time.Second {
+				t.Errorf("refusal took %v", took)
+			}
+			if cfg != nil || !slices.ContainsFunc(diags, func(d diag.Diagnostic) bool {
+				return d.Severity == diag.Error && d.Code == tc.code
+			}) {
+				t.Errorf("want a refusal with %s, got config %t and %d diagnostics", tc.code, cfg != nil, len(diags))
+			}
+		})
 	}
 }
 

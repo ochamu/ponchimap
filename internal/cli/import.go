@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"os"
 	"path/filepath"
 	"slices"
 
@@ -24,10 +23,6 @@ type imported struct {
 	Candidate string `json:"candidate"`
 	ID        string `json:"id"`
 }
-
-// recordsName is the file of the acquisition records, which import keeps
-// next to the model.
-const recordsName = "acquisitions.json"
 
 func runImport(_ context.Context, args []string, stdout, stderr io.Writer) outcome {
 	flags := newFlagSet("import")
@@ -52,7 +47,7 @@ func runImport(_ context.Context, args []string, stdout, stderr io.Writer) outco
 		supplements = ""
 	}
 
-	req := importer.Request{Model: modelPath, Findings: []string{asStored(findings)}, Supplements: asStored(supplements),
+	req := importer.Request{Model: modelPath, Findings: []string{findings}, Supplements: supplements,
 		Workspace: filepath.Dir(modelPath),
 		Check: func(path string, text []byte) diag.List {
 			_, list := lint.Check(lint.Input{Model: lint.Source{Path: path, Text: text}})
@@ -89,36 +84,8 @@ func runImport(_ context.Context, args []string, stdout, stderr io.Writer) outco
 	for _, m := range res.IDs {
 		saved.IDs = append(saved.IDs, imported{m.Input, m.Kind, m.Candidate, m.ID})
 	}
-	o.artifacts = []artifact{saved, {Kind: "acquisitions", Path: filepath.Join(filepath.Dir(modelPath), recordsName)}}
+	o.artifacts = []artifact{saved, {Kind: "acquisitions", Path: req.RecordsPath()}}
 	o.lines = []string{fmt.Sprintf("%s: %s, %s; %d added, %d removed", modelPath,
 		lint.Count(len(res.Model.Nodes), "node"), lint.Count(len(res.Model.Edges), "edge"), len(res.Added), len(res.Removed))}
 	return o
-}
-
-// asStored is the path of an input as the model and the records keep it:
-// from the directory the command runs in, with forward slashes. The path of
-// a supplements file goes into the evidence that the model holds, and the
-// path of a findings file into the records, so one file has to have one
-// path however the command line spells it, and an absolute path would put
-// the names of the user's directories into a model that is shared.
-//
-// The spelling is changed only when the other spelling leads to the same
-// file: removing "link/.." from a path that goes through a link gives the
-// path of another file.
-func asStored(path string) string {
-	if path == "" {
-		return ""
-	}
-	stored := filepath.Clean(path)
-	if wd, err := os.Getwd(); err == nil {
-		if abs, err := filepath.Abs(path); err == nil {
-			if rel, err := filepath.Rel(wd, abs); err == nil {
-				stored = rel
-			}
-		}
-	}
-	if !locate(stored).is(locate(path)) {
-		return path
-	}
-	return filepath.ToSlash(stored)
 }

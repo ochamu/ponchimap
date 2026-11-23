@@ -75,6 +75,14 @@ func draw(ctx context.Context, args []string, stdout io.Writer) (*drawing, outco
 		return nil, o
 	}
 	svgPath, pngPath := filepath.Join(*output, svgName), filepath.Join(*output, pngName)
+	model, config := in.read()
+	outputs := []string{svgPath, pngPath, *reportPath}
+	for _, path := range outputs {
+		outputs = append(outputs, workspace.TemporaryPath(path))
+	}
+	if err := workspace.CheckPaths([]string{model.Path, config.Path}, outputs); err != nil {
+		return nil, refused("%s", err)
+	}
 	if path := notOurs(svgPath, pngPath); path != "" {
 		return nil, outcome{result: inputError, diagnostics: diag.List{notReplaced(path)}}
 	}
@@ -82,7 +90,6 @@ func draw(ctx context.Context, args []string, stdout io.Writer) (*drawing, outco
 		override.Seed = view.Seed(1 + rand.Int64N(largestRerolledSeed))
 	}
 
-	model, config := in.read()
 	checked, list := lint.Check(lint.Input{Model: model, View: config, Layout: override})
 	if checked == nil {
 		return nil, outcome{result: inputError, diagnostics: list}

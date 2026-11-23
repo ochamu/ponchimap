@@ -16,7 +16,7 @@ Git のリポジトリでないフォルダでも動きます。ただし Skill 
 
 ## 利用者補足
 
-利用者補足は、モデルにある要素について利用者が知っていることを書き足す YAML のファイルです。`.ponchimap/supplements.yaml` に置くと `import` が読み、書いた内容を資料や利用者の説明（`stated`）の根拠として取り込みます。役割（`role`）を書くと、図とレポートの役割がその文になります。要素は加えられないので、新しい要素は調査入力に書きます。
+利用者補足は、モデルにある要素について利用者が知っていることを書き足す YAML のファイルです。`.ponchimap/supplements.yaml` に置くと `import` が読み、書いた内容を資料や利用者の説明（`stated`）の根拠として取り込みます。`valid_time` のない役割（`role`）を1つ書くと、ほかの根拠が役割をどう述べていても `attributes.role` はその文になり、図とレポートの役割もその文になります。要素は加えられないので、新しい要素は調査入力に書きます。
 
 見本の [examples/first-run/supplements.yaml](../examples/first-run/supplements.yaml) は、見本の API のノードに役割を書き足します。
 
@@ -48,7 +48,7 @@ boundaries:
     label: "メモアプリのアカウント"
 ```
 
-`member` にはノードのID（`n-` で始まるID）を書きます。レポートの境界の見出しにあるID（`bd_o_…`）は書けません。名指ししたノードがその境界に入っている間は、ほかのノードが増減しても名前が残ります。ノードが別の境界に移ると、名前も一緒に移ります。
+`member` にはモデルにあるノードのIDを書きます。`import` が付けたIDは `n-` で始まりますが、手で書いたモデルのID（`n101` など）も書けます。レポートの境界の見出しにあるID（`bd_o_…`）は書けません。名指ししたノードがその境界に入っている間は、ほかのノードが増減しても名前が残ります。ノードが別の境界に移ると、名前も一緒に移ります。
 
 ## 終了コード
 
@@ -58,7 +58,7 @@ boundaries:
 | 2 | 引数か入力を直せば通る失敗 |
 | 4 | 実行の失敗。保存できない、配置できない、取り消された、本体の欠陥 |
 
-`init`、`import`、`lint`、`render` の人が読む行は標準エラーに出ます。`help`、`version`、`-h` の文は標準出力に出ます。`init`、`import`、`lint`、`render` は、`--json` を付けると結果（`status`、`diagnostics`、`artifacts`）を JSON で標準出力に書きます。
+`init`、`import`、`lint`、`render` の人が読む行は標準エラーに出ます。`help`、`version`、`-h` の文は標準出力に出ます。`--json` を付けたときは、`help` と `-h` の文が標準エラーに出て、標準出力には JSON だけが残ります。`version` は `--json` を受け付けず、付けると終了コード2で終わります。`init`、`import`、`lint`、`render` は、`--json` を付けると結果（`status`、`diagnostics`、`artifacts`）を JSON で標準出力に書きます。
 
 - `status` は `ok`、`partial`、`error` のどれかです
 - `diagnostics` の各項目は `severity`、`code`、`message`、`location` を持ちます。`location` は `pointer` を必ず持ち、`path`、`line`、`column` は分かるときだけ持ちます。`hint` と `target_id` も値があるときだけ入ります

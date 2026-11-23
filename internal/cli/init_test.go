@@ -158,6 +158,11 @@ func TestInitAgainKeepsWhatTheUserChanged(t *testing.T) {
 	if !strings.Contains(a.stderr, "line 2 ") {
 		t.Errorf("the standard error does not point at line 2 of .gitignore, which names the workspace:\n%s", a.stderr)
 	}
+	for _, s := range skillFolders {
+		if line := "kept " + filepath.Join(root, s.folder) + " "; !strings.Contains(a.stderr, line) {
+			t.Errorf("the standard error has no line %q:\n%s", line, a.stderr)
+		}
+	}
 }
 
 func TestInitMakesOnlyWhatIsMissing(t *testing.T) {
@@ -628,26 +633,6 @@ func TestInitPlacesTheSkillWhereClaudeCodeAndCodexReadIt(t *testing.T) {
 	for _, agent := range []string{"Claude Code", "Codex"} {
 		if !strings.Contains(a.lastLine(), agent) {
 			t.Errorf("the last line does not say to ask %s next: %s", agent, a.lastLine())
-		}
-	}
-}
-
-func TestInitAgainKeepsTheSkill(t *testing.T) {
-	root := t.TempDir()
-	if a := initIn(root); a.code != 0 {
-		t.Fatalf("init: exit code %d\n%s", a.code, a.stderr)
-	}
-	before := snapshot(t, root)
-	a := initIn(root, "--json")
-	if after := snapshot(t, root); a.code != 0 || !maps.Equal(before, after) {
-		t.Errorf("init again: exit code %d, and the files changed: %v\n%s", a.code, !maps.Equal(before, after), a.stderr)
-	}
-	if out := machine(t, a.stdout); out.Status != "ok" || len(out.Artifacts) != 0 || len(out.Diagnostics) != 0 {
-		t.Errorf("init again answers %+v, want ok with no artifact and no diagnostic", out)
-	}
-	for _, s := range skillFolders {
-		if line := "kept " + filepath.Join(root, s.folder) + " "; !strings.Contains(a.stderr, line) {
-			t.Errorf("the standard error has no line %q:\n%s", line, a.stderr)
 		}
 	}
 }

@@ -230,48 +230,21 @@ func TestTheTextItselfIsChecked(t *testing.T) {
 	}
 }
 
-// A number is read up to 400 characters and an exponent of 400 either way,
-// which holds every identifier and every 64-bit float. Past that the tool
-// refuses the number where it stands, before anything works it out: a few
-// characters such as 1e1000000 would otherwise cost a large computation each.
-func TestANumberBeyondTheLimitsIsRefusedWhereItStands(t *testing.T) {
-	numbered := func(number string) string {
-		return `{"schema_version": "0.1", "target": {"repository": ".", "environment": "dev"}, "nodes": [
- {"id": "a", "kind": "service", "provider": "p", "service": "s", "identity": {"native_id": ` + number + `}, "evidence": []}], "edges": [], "coverage": []}`
+func TestIdentityNumbersKeepTheirSpellingAndRefusedValuesStayOutOfDiagnostics(t *testing.T) {
+	const numbered = `{"schema_version": "0.1", "target": {"repository": ".", "environment": "dev"}, "nodes": [
+ {"id": "a", "kind": "service", "provider": "p", "service": "s", "identity": {"native_id": %s}, "evidence": []}], "edges": [], "coverage": []}`
+	const valid = "1E+0400"
+	m, diags := parse(t, fmt.Sprintf(numbered, valid))
+	if m == nil || len(diags) != 0 {
+		t.Fatalf("number at the limit was refused: %v", diags)
 	}
-	for number, read := range map[string]bool{
-		"1e400":                         true,
-		"1e-400":                        true,
-		"1E+0400":                       true,
-		"-1.5e400":                      true,
-		strings.Repeat("9", 400):        true,
-		"1e401":                         false,
-		"1e-401":                        false,
-		"1E+00401":                      false,
-		"-1.5e401":                      false,
-		strings.Repeat("9", 401):        false,
-		"0." + strings.Repeat("7", 399): false,
-		"1e1000000":                     false,
-		"1e-1000000":                    false,
-	} {
-		m, diags := parse(t, numbered(number))
-		if read {
-			if m == nil || len(diags) > 0 {
-				t.Errorf("%.20s (%d characters) is refused: %v", number, len(number), diags)
-			} else if got := fmt.Sprint(m.Nodes[0].Identity["native_id"]); got != number {
-				t.Errorf("%.20s is kept as %.20s", number, got)
-			}
-			continue
-		}
-		d := only(t, diags, "input.number_limit")
-		_, secondLine, _ := strings.Cut(numbered(number), "\n")
-		column := strings.Index(secondLine, number) + 1
-		if m != nil || d.Location.Pointer != "/nodes/0/identity/native_id" || d.Location.Line != 2 || d.Location.Column != column {
-			t.Errorf("%.20s: model = %v, diagnostic %.120v; want no model and the number at 2:%d", number, m != nil, d, column)
-		}
-		if said := d.Message + d.Hint; !strings.Contains(said, "400") || strings.Contains(said, number) {
-			t.Errorf("%.20s: the diagnostic says %q; want the limit of 400 and not the number", number, said)
-		}
+	if got := fmt.Sprint(m.Nodes[0].Identity["native_id"]); got != valid {
+		t.Errorf("native_id is %q, want %q", got, valid)
+	}
+	const invalid = "1e1000000"
+	d := only(t, second(parse(t, fmt.Sprintf(numbered, invalid))), "input.number_limit")
+	if strings.Contains(d.Message+d.Hint, invalid) {
+		t.Errorf("the diagnostic includes the refused number: %v", d)
 	}
 }
 

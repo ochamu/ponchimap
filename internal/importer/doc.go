@@ -11,8 +11,8 @@
 // its source says now, and acquisitions are older or newer by checked_at,
 // then by ID. The nodes, edges, evidence and coverage of a findings file are
 // candidates, whose IDs mean something only inside the file. Evidence and
-// coverage are written by hand when they have no acquisition_id, or one that
-// the records do not hold.
+// coverage count as written by hand when their acquisition_id is absent or
+// matches neither a record nor a findings acquisition the run takes in.
 //
 // # Identity
 //
@@ -176,8 +176,9 @@
 // given later still leaves by M1, every acquisition that the model names, and
 // the supplements. While an acquisition and an element stay in the model, its
 // record also keeps what its candidates said of the element, which the
-// matching and A2 read. Without the records, all evidence counts as written
-// by hand.
+// matching and A2 read. Without the records, the importer replaces existing
+// evidence whose acquisition_id matches a findings acquisition it takes in
+// during this run. It treats all other existing evidence as written by hand.
 //
 // A run works everything out in memory, Check included. Then it writes the
 // records to acquisitions.json.next, writes the model unless its bytes are the

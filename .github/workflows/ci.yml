@@ -14,19 +14,24 @@ jobs:
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
+      - name: Check Go formatting
+        run: test -z "$(gofmt -l .)"
       - run: go vet ./...
       - run: go test -count=1 ./...
-      - name: The five samples render, and order-service draws the figure of the README
+      - name: Build the command
+        run: go build -o "$RUNNER_TEMP/ponchimap" ./cmd/ponchimap
+      - name: Render all samples and compare the published figures
         run: |
-          for model in testdata/samples/*/model.json; do
-            dir=$(dirname "$model")
+          samples=(testdata/samples/*/)
+          test "${#samples[@]}" -ge 5
+          for dir in "${samples[@]}"; do
             out="$RUNNER_TEMP/samples/$(basename "$dir")"
-            go run ./cmd/ponchimap render --model "$dir/model.json" --view "$dir/view.yaml" \
+            "$RUNNER_TEMP/ponchimap" render --model "${dir}model.json" --view "${dir}view.yaml" \
               --output "$out" --report "$out/report.md"
+            test -s "$out/overview.png"
           done
           cmp "$RUNNER_TEMP/samples/order-service/overview.png" docs/images/order-service.png
-      - name: Build the command for the first run
-        run: go build -o "$RUNNER_TEMP/ponchimap" ./cmd/ponchimap
+          cmp "$RUNNER_TEMP/samples/long-labels-and-mismatches/overview.png" docs/images/long-labels-and-mismatches.png
       # A new network namespace has only a loopback interface, and it is down.
       # The step first shows that nothing is reachable from there.
       - name: The first run of the README works with no network
@@ -38,3 +43,24 @@ jobs:
             fi
             scripts/first-run.sh "$1"
           ' sh "$RUNNER_TEMP/ponchimap"
+
+  cross-platform:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - name: Preserve the line endings of test fixtures
+        if: runner.os == 'Windows'
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -count=1 ./...
+      - name: Run the README example
+        if: runner.os == 'macOS'
+        run: scripts/first-run.sh

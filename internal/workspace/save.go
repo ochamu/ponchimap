@@ -25,16 +25,22 @@ type File struct {
 // the files before it in the order are replaced and the rest are not, so a
 // caller puts the file that records the others last.
 //
+// A replacement keeps the target's permission bits. A new file is created
+// with 0644 subject to the process umask.
+//
 // Saving the same files again gives the same state. A failed Save removes its
 // temporary files and leaves the directories it made. A killed one leaves
 // temporary files, which the next Save of the same paths replaces. A path
 // stands once in the files. An empty path is refused like a target that is
 // no regular file. The error is an *Error.
 func Save(files []File) error {
-	for _, f := range files {
-		if err := blocked(f.Path); err != nil {
+	previous := make([]fs.FileInfo, len(files))
+	for i, f := range files {
+		info, err := targetInfo(f.Path)
+		if err != nil {
 			return failed(f, err)
 		}
+		previous[i] = info
 	}
 	for _, f := range files {
 		if f.Data == nil {
@@ -48,7 +54,7 @@ func Save(files []File) error {
 		if f.Data == nil {
 			continue
 		}
-		if err := Create(temporary(f.Path), f.Data); err != nil {
+		if err := Create(TemporaryPath(f.Path), f.Data, previous[i]); err != nil {
 			discard(files[:i+1])
 			return failed(f, err)
 		}
@@ -56,7 +62,7 @@ func Save(files []File) error {
 	for i, f := range files {
 		var err error
 		if f.Data != nil {
-			err = os.Rename(temporary(f.Path), f.Path)
+			err = os.Rename(TemporaryPath(f.Path), f.Path)
 		} else if err = os.Remove(f.Path); errors.Is(err, fs.ErrNotExist) {
 			err = nil
 		}
@@ -76,46 +82,85 @@ var (
 	errEmptyPath  = errors.New("is an empty path")
 )
 
-// blocked says why no file can be put at path or removed from it, or nothing.
+// targetInfo returns nil for a new file and refuses a nonregular target.
 // A directory at a target fails the rename only after the files before it
 // were replaced, so every target is looked at before anything is written.
-func blocked(path string) error {
+func targetInfo(path string) (fs.FileInfo, error) {
 	if path == "" {
 		// Lstat calls an empty path a file that does not exist.
-		return errEmptyPath
+		return nil, errEmptyPath
 	}
 	info, err := os.Lstat(path)
 	switch {
 	case errors.Is(err, fs.ErrNotExist):
-		return nil
+		// On Windows, Lstat returns ERROR_PATH_NOT_FOUND (matching ErrNotExist)
+		// when a parent component is a file rather than a directory.
+		return nil, parentDirBlocked(path)
 	case err != nil:
-		return err
+		return nil, err
 	case !info.Mode().IsRegular():
-		return ErrNotRegular
+		return nil, ErrNotRegular
 	}
-	return nil
+	return info, nil
 }
 
-// temporary is where the content for path waits until it is renamed over
+func parentDirBlocked(path string) error {
+	for dir := filepath.Dir(path); ; {
+		info, err := os.Stat(dir)
+		switch {
+		case err == nil:
+			if !info.IsDir() {
+				return ErrNotFolder
+			}
+			return nil
+		case errors.Is(err, fs.ErrNotExist):
+			if _, lerr := os.Lstat(dir); lerr == nil {
+				return ErrNotFolder
+			}
+			parent := filepath.Dir(dir)
+			if parent == dir {
+				return nil
+			}
+			dir = parent
+		default:
+			return err
+		}
+	}
+}
+
+// TemporaryPath is where the content for path waits until it is renamed over
 // path. It is in the directory of path, so that the rename stays on one file
 // system, and it has one name per path, so that the file a killed run left is
 // replaced by the next run and does not stay for good.
-func temporary(path string) string {
+func TemporaryPath(path string) string {
 	return filepath.Join(filepath.Dir(path), "."+filepath.Base(path)+".tmp")
 }
 
-// Create makes the file at path anew with data, for a caller that then
-// renames it over its target. A repository can hold anything under a name
-// that a command writes to. Whatever is there is removed and the file is made
-// anew, never opened: content written to a symbolic link would land in the
-// file that it points to.
-func Create(path string, data []byte) error {
+// Create makes the file at path anew with data and the permissions of the
+// previous regular file. Without one it uses 0644 subject to the umask.
+// A repository can hold anything under a name that a command writes to.
+// Whatever is there is removed and the file is made anew, never opened:
+// content written to a symbolic link would land in the file it points to.
+func Create(path string, data []byte, previous fs.FileInfo) error {
+	perm := fs.FileMode(0o644)
+	keepMode := previous != nil && previous.Mode().IsRegular()
+	if keepMode {
+		perm = previous.Mode().Perm()
+	}
 	os.Remove(path)
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, perm)
 	if err != nil {
 		return err
 	}
 	_, err = f.Write(data)
+	if err == nil && keepMode {
+		// OpenFile applies the current umask even when replacing a file.
+		// Chmod only when the mode actually differs, so filesystems that do not
+		// support POSIX chmod do not fail when permissions already match.
+		if info, statErr := f.Stat(); statErr != nil || info.Mode().Perm() != perm {
+			err = f.Chmod(perm)
+		}
+	}
 	if err == nil {
 		err = f.Sync()
 	}
@@ -129,7 +174,7 @@ func Create(path string, data []byte) error {
 func discard(files []File) {
 	for _, f := range files {
 		if f.Data != nil {
-			os.Remove(temporary(f.Path))
+			os.Remove(TemporaryPath(f.Path))
 		}
 	}
 }
