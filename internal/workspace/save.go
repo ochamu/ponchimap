@@ -93,13 +93,39 @@ func targetInfo(path string) (fs.FileInfo, error) {
 	info, err := os.Lstat(path)
 	switch {
 	case errors.Is(err, fs.ErrNotExist):
-		return nil, nil
+		// On Windows, Lstat returns ERROR_PATH_NOT_FOUND (matching ErrNotExist)
+		// when a parent component is a file rather than a directory.
+		return nil, parentDirBlocked(path)
 	case err != nil:
 		return nil, err
 	case !info.Mode().IsRegular():
 		return nil, ErrNotRegular
 	}
 	return info, nil
+}
+
+func parentDirBlocked(path string) error {
+	for dir := filepath.Dir(path); ; {
+		info, err := os.Stat(dir)
+		switch {
+		case err == nil:
+			if !info.IsDir() {
+				return ErrNotFolder
+			}
+			return nil
+		case errors.Is(err, fs.ErrNotExist):
+			if _, lerr := os.Lstat(dir); lerr == nil {
+				return ErrNotFolder
+			}
+			parent := filepath.Dir(dir)
+			if parent == dir {
+				return nil
+			}
+			dir = parent
+		default:
+			return err
+		}
+	}
 }
 
 // TemporaryPath is where the content for path waits until it is renamed over
