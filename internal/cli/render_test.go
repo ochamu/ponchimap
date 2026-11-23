@@ -2,6 +2,7 @@ package cli
 
 import (
 	"maps"
+	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -37,6 +38,95 @@ func TestRenderRejectsOverlappingPaths(t *testing.T) {
 			a := run("render", "--model", "model.json", "--output", "out", "--report", tc.report, "--json")
 			checkPathRefusal(t, a, before)
 		})
+	}
+}
+
+func symlink(t *testing.T, leadsTo, path string) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(leadsTo, path); err != nil {
+		t.Skipf("this system makes no symbolic link: %v", err)
+	}
+}
+
+func TestRenderRejectsPathsThatOverlapThroughALink(t *testing.T) {
+	for _, tc := range []struct {
+		name          string
+		link, leadsTo func(dir string) string
+		model, report func(link string) string
+	}{
+		{
+			name:    "report reaches the SVG through a linked directory",
+			link:    func(string) string { return filepath.Join(t.TempDir(), "alias") },
+			leadsTo: func(dir string) string { return filepath.Join(dir, "out") },
+			model:   func(string) string { return "model.json" },
+			report:  func(link string) string { return filepath.Join(link, "overview.svg") },
+		},
+		{
+			name:    "model is a link to the file at the report",
+			link:    func(string) string { return "linked.json" },
+			leadsTo: func(string) string { return "model.json" },
+			model:   func(link string) string { return link },
+			report:  func(string) string { return "model.json" },
+		},
+		{
+			name:    "model is a link at the temporary SVG",
+			link:    func(string) string { return filepath.Join("out", ".overview.svg.tmp") },
+			leadsTo: func(string) string { return filepath.Join("..", "model.json") },
+			model:   func(link string) string { return link },
+			report:  func(string) string { return "report.md" },
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			dir := t.TempDir()
+			t.Chdir(dir)
+			writeFile(t, "model.json", generatedModel(1))
+			writeFile(t, "out/overview.svg", string(marked([]byte("<svg/>"))))
+			link := tc.link(dir)
+			symlink(t, tc.leadsTo(dir), link)
+			before := snapshot(t, ".")
+			a := run("render", "--model", tc.model(link), "--output", "out", "--report", tc.report(link), "--json")
+			checkPathRefusal(t, a, before)
+		})
+	}
+}
+
+// Save removes whatever stands at a temporary name and makes the file anew,
+// so a link there stops no render and nothing is written through it.
+func TestRenderReplacesALinkAtATemporaryName(t *testing.T) {
+	for _, tc := range []struct{ name, leadsTo string }{
+		{"to nothing", "nowhere"},
+		{"to the model", filepath.Join("..", "model.json")},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Chdir(t.TempDir())
+			model := generatedModel(1)
+			writeFile(t, "model.json", model)
+			symlink(t, tc.leadsTo, filepath.Join("out", ".overview.svg.tmp"))
+			a := run("render", "--model", "model.json", "--output", "out", "--report", "report.md")
+			if a.code != 0 || !exists("out/overview.svg") {
+				t.Fatalf("exit code %d, want 0 and the SVG saved\n%s", a.code, a.stderr)
+			}
+			if exists("out/nowhere") || readFile(t, "model.json") != model {
+				t.Error("render wrote through the link at the temporary name")
+			}
+		})
+	}
+}
+
+func TestRenderRefusesALinkToNothingAtTheReportAsItRefusesAnyLink(t *testing.T) {
+	t.Chdir(t.TempDir())
+	writeFile(t, "model.json", generatedModel(1))
+	symlink(t, "nowhere", "report.md")
+	a := run("render", "--model", "model.json", "--output", "out", "--report", "report.md", "--json")
+	out := machine(t, a.stdout)
+	if d := only(t, out.Diagnostics, "output.unwritable"); a.code != 4 || d.Location.Path != "report.md" {
+		t.Errorf("exit code %d, diagnostics %v; want 4 and output.unwritable at report.md", a.code, codes(out.Diagnostics))
+	}
+	if exists("nowhere") || exists("out") {
+		t.Error("render made a file although it refused the report")
 	}
 }
 

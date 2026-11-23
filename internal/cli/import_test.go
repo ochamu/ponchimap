@@ -296,6 +296,30 @@ func TestImportSavesNoModelThatLintRefuses(t *testing.T) {
 	}
 }
 
+func TestImportReplacesALinkToNothingAtATemporaryName(t *testing.T) {
+	nowhere := filepath.Join(t.TempDir(), "nowhere")
+	inRepository(t, scanAndProbe)
+	symlink(t, nowhere, ".ponchimap/acquisitions.json.next.tmp")
+	if a := run("import"); a.code != 0 || !exists(defaultModel) {
+		t.Errorf("import beside a link to nothing: exit code %d, want 0 and the model saved\n%s", a.code, a.stderr)
+	}
+	if exists(nowhere) {
+		t.Error("import wrote through the link at the temporary name")
+	}
+}
+
+func TestImportRefusesALinkToNothingAtTheModelAsItRefusesAnyLink(t *testing.T) {
+	nowhere := filepath.Join(t.TempDir(), "nowhere")
+	inRepository(t, scanAndProbe)
+	symlink(t, nowhere, defaultModel)
+	a := run("import", "--json")
+	out := machine(t, a.stdout)
+	if a.code != 4 || !slices.Contains(codes(out.Diagnostics), "import.write_failed") || exists(nowhere) {
+		t.Errorf("exit code %d, diagnostics %v, and the link's target was made: %t; want 4, import.write_failed, and no file\n%s",
+			a.code, codes(out.Diagnostics), exists(nowhere), a.stderr)
+	}
+}
+
 // The model is saved as render saves its files: nothing is written through a
 // symbolic link.
 func TestImportDoesNotWriteTheModelThroughALink(t *testing.T) {
