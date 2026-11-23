@@ -4,7 +4,7 @@ Each folder is an app drawn as a figure. `model.json` is the model and `view.yam
 
 The tests in `internal/view` compare the display with `expected.json`, and the tests in `internal/report` read it too. The tests in `internal/cli`, `internal/lint`, `internal/model` and `internal/render/d2render` also run over the samples.
 
-CI renders every sample and fails unless the PNG of `order-service` is byte-identical to `docs/images/order-service.png`, the figure in the README.
+CI renders every sample and fails unless the PNGs of `order-service` and `long-labels-and-mismatches` are byte-identical to `docs/images/order-service.png` and `docs/images/long-labels-and-mismatches.png`, the figures in the README.
 
 - `small-order-app` has seven nodes on Cloudflare, Firebase, and two outside services.
 - `dev-prod-and-shared` has a development and a production environment beside the resources they share, in nested boundaries.
