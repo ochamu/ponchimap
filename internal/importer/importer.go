@@ -7,10 +7,12 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strings"
 
 	"github.com/ochamu/ponchimap/internal/diag"
 	"github.com/ochamu/ponchimap/internal/input"
 	"github.com/ochamu/ponchimap/internal/model"
+	saving "github.com/ochamu/ponchimap/internal/workspace"
 )
 
 type Request struct {
@@ -26,6 +28,9 @@ type Request struct {
 	// It may be nil.
 	Check func(path string, text []byte) diag.List
 }
+
+// RecordsPath is where the request saves the acquisition records.
+func (r Request) RecordsPath() string { return filepath.Join(r.Workspace, recordsName) }
 
 type Result struct {
 	Status      Status
@@ -45,7 +50,7 @@ const (
 )
 
 type Mapping struct {
-	Input     string // the file, as given
+	Input     string // the findings path stored in the acquisition records
 	Kind      string // node, edge, evidence, coverage
 	Candidate string // the ID in that file
 	ID        string // the ID in the model; "" when nothing of it was kept
@@ -66,7 +71,14 @@ func Run(req Request) *Result {
 }
 
 func run(req Request) (diag.List, *Result) {
+	req.Supplements = asStored(req.Supplements)
 	paths, found := findingsFiles(req.Findings)
+	ws := workspace{folder: req.Workspace}
+	outputs := []string{req.Model, saving.TemporaryPath(req.Model), req.RecordsPath(), ws.path(pendingName), ws.path(pendingTempName)}
+	if err := saving.CheckPaths(append(paths, req.Supplements), outputs); err != nil {
+		return diag.List{{Severity: diag.Error, Code: "usage.invalid", Message: err.Error(),
+			Hint: "Choose distinct paths for the inputs, model, acquisition records, and temporary files."}}, nil
+	}
 
 	in := given{modelPath: req.Model}
 	var modelText []byte
@@ -116,7 +128,6 @@ func run(req Request) (diag.List, *Result) {
 		}
 	}
 
-	ws := workspace{folder: req.Workspace}
 	list := ws.read(modelText)
 	found = append(found, list...)
 	in.records = ws.records
@@ -173,7 +184,8 @@ func findingsFiles(given []string) (paths []string, found diag.List) {
 			paths = append(paths, path)
 		}
 	}
-	for _, path := range given {
+	for _, inputPath := range given {
+		path := asStored(inputPath)
 		info, err := os.Stat(path)
 		if err != nil || !info.IsDir() {
 			add(path)
@@ -184,10 +196,12 @@ func findingsFiles(given []string) (paths []string, found diag.List) {
 			found = append(found, unreadable("folder", path, err))
 			continue
 		}
+		// Join would clean link/.. before asStored could check the actual file.
+		prefix := strings.TrimSuffix(path, "/") + "/"
 		holds := false
 		for _, entry := range entries {
 			if match, _ := filepath.Match("*.json", entry.Name()); match && !entry.IsDir() {
-				add(filepath.Join(path, entry.Name()))
+				add(asStored(prefix + entry.Name()))
 				holds = true
 			}
 		}
@@ -196,6 +210,27 @@ func findingsFiles(given []string) (paths []string, found diag.List) {
 		}
 	}
 	return paths, found
+}
+
+// A relative path keeps the user's directory names out of the model and the
+// acquisition records. Cleaning link/.. can point to another file, so keep
+// the original spelling when the two paths lead to different places.
+func asStored(path string) string {
+	if path == "" {
+		return ""
+	}
+	stored := filepath.Clean(path)
+	if wd, err := os.Getwd(); err == nil {
+		if abs, err := filepath.Abs(path); err == nil {
+			if rel, err := filepath.Rel(wd, abs); err == nil {
+				stored = rel
+			}
+		}
+	}
+	if stored != path && !saving.SamePath(stored, path) {
+		stored = path
+	}
+	return filepath.ToSlash(stored)
 }
 
 // checkAcquisitions is the last stage of reading: an acquisition ID names one

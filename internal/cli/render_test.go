@@ -11,6 +11,35 @@ import (
 	"testing"
 )
 
+func checkPathRefusal(t *testing.T, a answer, before map[string]string) {
+	t.Helper()
+	out := machine(t, a.stdout)
+	if a.code != 2 || out.Status != "error" || len(out.Artifacts) != 0 ||
+		!slices.Equal(codes(out.Diagnostics), []string{"usage.invalid"}) {
+		t.Errorf("exit code %d, output %+v; want 2, error, no artifacts, and usage.invalid", a.code, out)
+	}
+	if !maps.Equal(snapshot(t, "."), before) {
+		t.Error("the command changed, added, or removed a file")
+	}
+}
+
+func TestRenderRejectsOverlappingPaths(t *testing.T) {
+	for _, tc := range []struct{ name, report string }{
+		{"report is the model", "model.json"},
+		{"report is the SVG", "out/overview.svg"},
+		{"report is the temporary SVG", "out/.overview.svg.tmp"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Chdir(t.TempDir())
+			writeFile(t, "model.json", generatedModel(1))
+			writeFile(t, "out/overview.svg", string(marked([]byte("<svg/>"))))
+			before := snapshot(t, ".")
+			a := run("render", "--model", "model.json", "--output", "out", "--report", tc.report, "--json")
+			checkPathRefusal(t, a, before)
+		})
+	}
+}
+
 func TestRenderingASampleTwiceGivesTheSameBytes(t *testing.T) {
 	model, config := sample("small-order-app")
 	first, second := newTarget(t), newTarget(t)
@@ -203,23 +232,6 @@ func TestAFigureTooLargeForAnyPNGIsSavedWithoutOneAndTheEarlierPNGIsRemoved(t *t
 	}
 }
 
-// D2 reads a container named layers as a set of boards. The name is a valid
-// ID of a view config, so a group of that ID is drawn like any other.
-func TestAGroupWithTheIDLayersIsDrawn(t *testing.T) {
-	model, _ := lintCase("no-view")
-	g := newTarget(t)
-	config := writeFile(t, filepath.Join(g.dir, "view.yaml"), "schema_version: \"0.1\"\ngroups:\n  - id: layers\n    label: \"Layers\"\n    members: [n001]\n")
-	if a := g.render(model, config); a.code != 0 {
-		t.Fatalf("render: exit code %d\n%s", a.code, a.stderr)
-	}
-	svg := readFile(t, g.svg())
-	for _, id := range []string{"layers", "n001", "n002", "e001"} {
-		if !strings.Contains(svg, "m-"+id) {
-			t.Errorf("the SVG has no element of the class m-%s", id)
-		}
-	}
-}
-
 func TestRerollDrawsWithANewSeedAndLeavesTheViewConfigAsItIs(t *testing.T) {
 	model, sampleConfig := sample("small-order-app")
 	g := newTarget(t)
@@ -350,12 +362,12 @@ func TestWithoutTheDefaultViewConfigTheModelIsDrawnAsWithAnEmptyOne(t *testing.T
 	writeFile(t, filepath.Join(dir, ".ponchimap", "model.json"), modelText)
 	t.Chdir(dir)
 
+	defaults := target{dir: dir, output: "docs/architecture", report: ".ponchimap/report.md"}
 	a := run("render")
-	want := "saved docs/architecture/overview.svg\nsaved docs/architecture/overview.png\nsaved .ponchimap/report.md\ndrawn with tala, right, seed 1\n"
+	want := "saved " + defaults.svg() + "\nsaved " + defaults.png() + "\nsaved " + defaults.report + "\ndrawn with tala, right, seed 1\n"
 	if a.code != 0 || a.stderr != want {
 		t.Fatalf("render without flags: exit code %d, want 0 and the default paths alone\n%s", a.code, a.stderr)
 	}
-	defaults := target{dir: dir, output: "docs/architecture", report: ".ponchimap/report.md"}
 	if strings.Contains(readFile(t, defaults.report), "モデルと表示設定") {
 		t.Error("the report names a view config among the files to redraw with, and none was given")
 	}

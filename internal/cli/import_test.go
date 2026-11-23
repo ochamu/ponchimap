@@ -70,6 +70,53 @@ func readModel(t *testing.T, path string) savedModel {
 
 const defaultModel = ".ponchimap/model.json"
 
+func TestImportRejectsOverlappingPaths(t *testing.T) {
+	for _, path := range []string{".ponchimap/acquisitions.json", ".ponchimap/findings/scan.json"} {
+		t.Run(path, func(t *testing.T) {
+			inRepository(t, scanAndProbe)
+			before := snapshot(t, ".")
+			checkPathRefusal(t, run("import", "--model", path, "--json"), before)
+		})
+	}
+}
+
+func TestImportOnlyProtectsTheSupplementsWhenTheyAreRead(t *testing.T) {
+	inRepository(t, scanAndProbe)
+	const path = ".ponchimap/supplements.yaml"
+	args := []string{"import", "--model", path, "--json"}
+	if a := run(args...); a.code != 0 || !exists(path) {
+		t.Fatalf("import with missing default supplements: exit code %d\n%s", a.code, a.stderr)
+	}
+	before := snapshot(t, ".")
+	checkPathRefusal(t, run(args...), before)
+}
+
+func TestImportRecordsTheSameInputForAFileAndItsDirectory(t *testing.T) {
+	const want = ".ponchimap/findings/scan.json"
+	for _, input := range []string{filepath.FromSlash(want), filepath.Dir(want)} {
+		t.Run(input, func(t *testing.T) {
+			inRepository(t, "first-import/1")
+			a := run("import", "--input", input, "--json")
+			out := machine(t, a.stdout)
+			if a.code != 0 || len(out.Artifacts) != 2 || len(out.Artifacts[0].IDs) == 0 {
+				t.Fatalf("exit code %d, output %+v; want a model with candidate IDs and acquisition records", a.code, out)
+			}
+			for _, id := range out.Artifacts[0].IDs {
+				if id.Input != want {
+					t.Errorf("candidate %q came from %q, want %q", id.Candidate, id.Input, want)
+				}
+			}
+			var records struct{ Acquisitions []struct{ Input string } }
+			if err := json.Unmarshal([]byte(readFile(t, ".ponchimap/acquisitions.json")), &records); err != nil {
+				t.Fatal(err)
+			}
+			if len(records.Acquisitions) != 1 || records.Acquisitions[0].Input != want {
+				t.Errorf("acquisition inputs %v, want %q", records.Acquisitions, want)
+			}
+		})
+	}
+}
+
 func TestImportMakesTheModelWithNoFlagAndLintAcceptsIt(t *testing.T) {
 	inRepository(t, scanAndProbe)
 	a := run("import", "--json")
@@ -78,7 +125,7 @@ func TestImportMakesTheModelWithNoFlagAndLintAcceptsIt(t *testing.T) {
 		t.Fatalf("exit code %d, status %q, diagnostics %v; want 0, ok, and none\n%s", a.code, out.Status, codes(out.Diagnostics), a.stderr)
 	}
 	if len(out.Artifacts) != 2 || out.Artifacts[0].Kind != "model" || out.Artifacts[0].Path != defaultModel ||
-		out.Artifacts[1].Kind != "acquisitions" || out.Artifacts[1].Path != ".ponchimap/acquisitions.json" {
+		out.Artifacts[1].Kind != "acquisitions" || out.Artifacts[1].Path != filepath.Join(".ponchimap", "acquisitions.json") {
 		t.Fatalf("the artifacts are %+v, want the model and the acquisition records at their default places", out.Artifacts)
 	}
 	saved := out.Artifacts[0]
@@ -281,9 +328,21 @@ func TestANewModelIsAboutTheEnvironmentOfTheFindingsOrTheOneThatIsGiven(t *testi
 	changeFindings(t, "probe.json", func(file map[string]any) {
 		file["acquisition"].(map[string]any)["target"].(map[string]any)["environment"] = "prod"
 	})
+	before := snapshot(t, ".")
 	a := run("import", "--json")
-	if out := machine(t, a.stdout); a.code != 2 || !slices.Equal(codes(out.Diagnostics), []string{"import.no_target"}) || exists(defaultModel) {
-		t.Fatalf("findings of two environments: exit code %d, diagnostics %v; want 2, import.no_target alone, and no model", a.code, codes(out.Diagnostics))
+	out := machine(t, a.stdout)
+	if a.code != 2 || out.Status != "error" || len(out.Artifacts) != 0 || !slices.Equal(codes(out.Diagnostics), []string{"import.no_target"}) {
+		t.Fatalf("findings of two environments: exit code %d, output %+v; want 2, error, no artifacts, and import.no_target", a.code, out)
+	}
+	if !mapsEqual(snapshot(t, "."), before) {
+		t.Fatal("import changed the workspace after refusing the mixed environments")
+	}
+	const inferred = "inferred.json"
+	if a := run("import", "--input", ".ponchimap/findings/probe.json", "--model", inferred); a.code != 0 {
+		t.Fatalf("import of the prod findings: exit code %d\n%s", a.code, a.stderr)
+	}
+	if got := readModel(t, inferred).Target.Environment; got != "prod" {
+		t.Errorf("environment inferred from the probe = %q, want prod", got)
 	}
 	if a := run("import", "--environment", "prod"); a.code != 0 || readModel(t, defaultModel).Target.Environment != "prod" {
 		t.Fatalf("with --environment prod: exit code %d, and the model is about %q; want 0 and prod\n%s", a.code, readModel(t, defaultModel).Target.Environment, a.stderr)

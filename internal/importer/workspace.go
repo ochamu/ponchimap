@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	recordsName = "acquisitions.json"
-	pendingName = recordsName + ".next"
+	recordsName     = "acquisitions.json"
+	pendingName     = recordsName + ".next"
+	pendingTempName = pendingName + ".tmp"
 )
 
 type workspace struct {
@@ -63,25 +64,24 @@ func (w *workspace) save(modelPath string, oldModel, newModel []byte, records []
 	}
 	text := recordsFile{SchemaVersion: recordsVersion, ModelDigest: digestOf(newModel), Acquisitions: records}.text()
 	sameModel := bytes.Equal(newModel, oldModel)
+	sameFiles := sameModel && bytes.Equal(text, w.current)
 	switch {
-	case sameModel && bytes.Equal(text, w.current) && !w.pending:
+	case sameFiles && !w.pending:
 		return nil
-	case sameModel && bytes.Equal(text, w.current) && !w.readPending:
+	case sameFiles && !w.readPending:
 		if err := os.Remove(w.path(pendingName)); err != nil {
 			return failed(w.path(pendingName), err)
 		}
 		return nil
-	case sameModel && bytes.Equal(text, w.current):
-	default:
-		if err := replaceFile(w.path(pendingName), text); err != nil {
-			return failed(w.path(pendingName), err)
-		}
-		if !sameModel {
-			// The model is saved as every command saves a file for the user: a
-			// directory or a symbolic link at its path is refused.
-			if err := saving.Save([]saving.File{{Path: modelPath, Data: newModel}}); err != nil {
-				return failed(modelPath, err)
-			}
+	}
+	if err := w.replaceFile(text); err != nil {
+		return failed(w.path(pendingName), err)
+	}
+	if !sameModel {
+		// The model is saved as every command saves a file for the user: a
+		// directory or a symbolic link at its path is refused.
+		if err := saving.Save([]saving.File{{Path: modelPath, Data: newModel}}); err != nil {
+			return failed(modelPath, err)
 		}
 	}
 	if err := os.Rename(w.path(pendingName), w.path(recordsName)); err != nil {
@@ -90,9 +90,23 @@ func (w *workspace) save(modelPath string, oldModel, newModel []byte, records []
 	return nil
 }
 
-func replaceFile(path string, text []byte) error {
-	partial := path + ".tmp"
-	err := saving.Create(partial, text)
+func (w *workspace) replaceFile(text []byte) error {
+	previous, err := os.Lstat(w.path(recordsName))
+	if err != nil && !errors.Is(err, fs.ErrNotExist) {
+		return err
+	}
+	path := w.path(pendingName)
+	if w.readPending && (previous == nil || !previous.Mode().IsRegular()) {
+		previous, err = os.Lstat(path)
+		if err != nil {
+			return err
+		}
+		if !previous.Mode().IsRegular() {
+			return saving.ErrNotRegular
+		}
+	}
+	partial := w.path(pendingTempName)
+	err = saving.Create(partial, text, previous)
 	if err == nil {
 		err = os.Rename(partial, path)
 	}

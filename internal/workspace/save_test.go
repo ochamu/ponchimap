@@ -88,24 +88,31 @@ func TestSaveWritesTheFilesAndMakesTheirDirectories(t *testing.T) {
 		"docs/infra/report.md": "# Report\n",
 		"empty.json":           "",
 	})
+}
 
-	// A saved file has the mode of a file made with 0644, which the umask of
-	// the person who runs the test narrows.
-	made := filepath.Join(root, "made-with-0644")
-	if err := os.WriteFile(made, nil, 0o644); err != nil {
+func TestSavePreservesExistingModesAndCreatesFilesWith0644(t *testing.T) {
+	t.Chdir(t.TempDir())
+	seed(t, ".", map[string]string{"private": "old", "shared": "old"})
+	if err := os.Chmod("shared", 0o660); err != nil {
 		t.Fatal(err)
 	}
-	want, err := os.Stat(made)
-	if err != nil {
+	if err := os.WriteFile("with-umask", nil, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	for _, f := range files {
-		got, err := os.Stat(f.Path)
+	for path, reference := range map[string]string{"private": "private", "shared": "shared", "new": "with-umask"} {
+		want, err := os.Stat(reference)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if got.Mode() != want.Mode() {
-			t.Errorf("%s has the mode %v, want %v", f.Path, got.Mode(), want.Mode())
+		if err := Save([]File{{Path: path, Data: []byte("new")}}); err != nil {
+			t.Fatal(err)
+		}
+		got, err := os.Stat(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got.Mode().Perm() != want.Mode().Perm() {
+			t.Errorf("%s has mode %v, want %v", path, got.Mode().Perm(), want.Mode().Perm())
 		}
 	}
 }

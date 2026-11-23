@@ -5,7 +5,7 @@ description: Investigates which cloud resources and external services an app use
 
 # Infrastructure diagram
 
-You find out which cloud resources and services this repository's app uses and how they connect, write what you found as findings files, and run the `ponchimap` CLI. It draws `docs/architecture/overview.png` and `overview.svg`, and writes `.ponchimap/report.md`. Every box and line in the figure rests on evidence you recorded, and the CLI marks what was not checked against the real environment.
+You find out which cloud resources and services this repository's app uses and how they connect, write what you found as findings files, and run the `ponchimap` CLI. It draws `docs/architecture/overview.svg` and writes `.ponchimap/report.md`. When it can draw a PNG, it also saves `docs/architecture/overview.png`. Every box and line in the figure rests on evidence you recorded, and the CLI marks what was not checked against the real environment.
 
 This Skill and the CLI hold no knowledge of how any provider works. You learn each provider's configuration keys, commands, and identifiers from its CLI's help and its official documentation.
 
@@ -58,7 +58,7 @@ A fact with no row is something you remember, not something you confirmed. In on
 
 ### 2. Read the repository
 
-Before you open any file, run `git status --short --ignored`. The lines that start with `!!` are what Git ignores. Open none of those files and folders, except `.ponchimap/`. When the folder is not in a Git repository, the command fails. Then open no file of the repository: tell the user that this Skill reads a folder only inside Git, so that Git tells which files to leave unread, ask them to run `git init` there and ask you again, and stop.
+Before you open any file, run `git -c core.fsmonitor=false status --short --ignored`. The lines that start with `!!` are what Git ignores. Open none of those files and folders, except `.ponchimap/`. When the folder is not in a Git repository, the command fails. Then open no file of the repository: tell the user that this Skill reads a folder only inside Git, so that Git tells which files to leave unread, ask them to run `git init` there and ask you again, and stop.
 
 Then read in this order, with line numbers, and note each file and line range you rely on. Look in subfolders too: a repository can hold several configuration files and several manifests.
 
@@ -147,7 +147,9 @@ Warnings starting with `unverified.` and `coverage.` are expected, because they 
 
 ### 8. Look at the figure
 
-Open `docs/architecture/overview.png` and look at it. Fix only how it is shown, in `architecture.view.yaml`:
+After each render, check whether `docs/architecture/overview.png` exists. If it does, open it. When `render` reports `render.png_missing`, it removes any earlier PNG. Open `docs/architecture/overview.svg` in that case.
+
+In `architecture.view.yaml`, change only how the figure is shown.
 
 - `title`, `labels`, `boundaries`, `groups`, `aggregates`, and `hidden`. The comments in the file show the forms. The report's headings (`### n-xxxxxxxx ...`) and `ponchimap import --json` (`artifacts[0].ids`) give the IDs.
 - When the layout is hard to read, try `ponchimap render --engine elk`, `--direction down`, or `--reroll`. To keep a layout, change the values under `layout` in the view config.
@@ -157,7 +159,7 @@ Open `docs/architecture/overview.png` and look at it. Fix only how it is shown, 
 
 Tell the user, in their language:
 
-1. Where the outputs are: `docs/architecture/overview.png`, `docs/architecture/overview.svg`, and `.ponchimap/report.md`.
+1. The paths to `docs/architecture/overview.svg` and `.ponchimap/report.md`. Include `docs/architecture/overview.png` when it exists. If the render ended with `partial`, give the reason from `render.png_missing`.
 2. Which environment the figure shows, and why.
 3. The main parts and their roles, one line each.
 4. What the evidence is: which files, documents, and queries.
