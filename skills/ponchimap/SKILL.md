@@ -52,7 +52,7 @@ A fact with no row is something you remember, not something you confirmed. In on
 
 ### 1. Check the tool and the workspace
 
-1. Run `ponchimap version`. If the command is missing, tell the user that the CLI must be built and put on the PATH first (its README explains how), and stop.
+1. Run `ponchimap version`. If the command is missing, tell the user that the CLI must be installed and put on the PATH first (https://github.com/ochamu/ponchimap#readme explains how), and stop.
 2. If `.ponchimap/` does not exist, run `ponchimap init`. It is safe to run again.
 3. If `.ponchimap/findings/` holds files, this is a repeat request. Read every findings file, `.ponchimap/model.json` (its `target.environment` is the environment the figure describes), and `architecture.view.yaml`. Then follow "Repeat requests" below.
 

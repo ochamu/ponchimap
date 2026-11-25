@@ -1,6 +1,6 @@
 {
   "name": "ponchimap",
-  "description": "Draws an architecture diagram of the cloud services an app uses, with the evidence for every box and line. The Skill guides your coding agent; the ponchimap CLI draws the figure and the report. Install the CLI with: go install github.com/ochamu/ponchimap/cmd/ponchimap@latest",
+  "description": "Maps the cloud services an app uses. The Skill guides your coding agent, and the CLI draws the diagram and reports the evidence for each resource and connection. Install the CLI separately from a GitHub Releases archive when available or with go install github.com/ochamu/ponchimap/cmd/ponchimap@latest.",
   "author": {
     "name": "ochamu",
     "url": "https://github.com/ochamu"
